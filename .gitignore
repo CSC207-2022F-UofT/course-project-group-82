@@ -118,3 +118,6 @@ replay_pid*
 
 # Macos
 .DS_Store
+
+# Backend Security Keys
+backend/src/main/resources/application.properties
