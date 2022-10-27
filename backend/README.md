@@ -5,12 +5,18 @@
 
 1. Ensure your java version is set to 11 (tested on Azule 11.0.16)
 2. Navigate to `src/main/resources/application.properties` and add the key-values for the database connection
+   1. If the directory does not exist, then make it
+   2. Mark it as a resource directory
+   3. Create a new file called `application.properties`
+   4. Add the key-value pairs in the discord (Don't push this file to Github, it contains the database access keys which are private)
 3. Navigate to the backend folder from a terminal
 4. Run the command `./mvnw spring-boot:run` on MacOS or `mvnw spring-boot:run` on Windows
-4. The API is accessible at http://localhost:8080/ (A test route at [/hello](http://localhost:8080/hello))
+   * Or use your IDE to run it if you can figure it out
+5. The API is accessible at http://localhost:8080/ (A test route at [/](http://localhost:8080/))
 
 ### Contributing
 
+* Open the backend directory in your IDE (not the root folder) as otherwise your IDE may have trouble downloading the maven dependencies
 * Follow the pre-existing naming convention
 * This repository is Prettier enforced
 * To set it up locally first install the `prettier-plugin-java`
