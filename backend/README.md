@@ -9,6 +9,18 @@
 4. Run the command `./mvnw spring-boot:run` on MacOS or `mvnw spring-boot:run` on Windows
 4. The API is accessible at http://localhost:8080/ (A test route at [/hello](http://localhost:8080/hello))
 
+### Contributing
+
+* Follow the pre-existing naming convention
+* This repository is Prettier enforced
+* To set it up locally first install the `prettier-plugin-java`
+* You can do this either through `yarn` or `npm`
+* The installation command for `npm` globally is
+    * ```npm install -g prettier prettier-plugin-java```
+* To reformat your code
+    * `npx prettier --write "**/*.java"` or
+    * `prettier --write "**/*.java"`
+
 ### Debugging
 
 * An error during the run command is usually due to the wrong java version
