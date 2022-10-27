@@ -17,28 +17,35 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableMongoRepositories
 public class OuieatApplication {
 
-	@Autowired
-	public UserRepository userRepository;
+  @Autowired
+  public UserRepository userRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(OuieatApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(OuieatApplication.class, args);
+  }
 
-	@GetMapping("/register")
-	public String register() {
-		User newUser = new User("Arihant", "Bapna", "", "ari", "1234", "a@g.com");
-		Response response = UserImplementation.saveNewUser(userRepository, newUser);
-		return response.getJsonString();
-	}
+  @GetMapping("/register")
+  public String register() {
+    User newUser = new User("Arihant", "Bapna", "", "ari", "1234", "a@g.com");
+    Response response = UserImplementation.saveNewUser(userRepository, newUser);
+    return response.getJsonString();
+  }
 
-	@GetMapping("/login")
-	public String login(@RequestParam(value = "username") String username, @RequestParam(value="password") String password) {
-		Response response =  UserImplementation.loginUser(userRepository, username, password);
-		return response.getJsonString();
-	}
+  @GetMapping("/login")
+  public String login(
+    @RequestParam(value = "username") String username,
+    @RequestParam(value = "password") String password
+  ) {
+    Response response = UserImplementation.loginUser(
+      userRepository,
+      username,
+      password
+    );
+    return response.getJsonString();
+  }
 
-	@GetMapping("/error")
-	public String error(){
-		return "Error handling this response";
-	}
+  @GetMapping("/error")
+  public String error() {
+    return "Error handling this response";
+  }
 }

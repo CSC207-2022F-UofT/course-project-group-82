@@ -8,33 +8,39 @@ import org.apache.logging.log4j.Level;
 
 public class UserResponses {
 
-    public static Response RegistrationResponse(String status, String username){
-        String origin;
-        try {
-            origin = UserImplementation
-                    .class
-                    .getDeclaredMethod("saveNewUser", UserRepository.class, User.class)
-                    .getName();
-        } catch (NoSuchMethodException e){
-            OuiLogger.log(Level.ERROR, "No such method found thrown for saveNewUser");
-            origin = "NoSuchMethodException";
-        }
-        return new Response(status, username, origin, "client-register");
+  public static Response RegistrationResponse(String status, String username) {
+    String origin;
+    try {
+      origin =
+        UserImplementation.class.getDeclaredMethod(
+            "saveNewUser",
+            UserRepository.class,
+            User.class
+          )
+          .getName();
+    } catch (NoSuchMethodException e) {
+      OuiLogger.log(Level.ERROR, "No such method found thrown for saveNewUser");
+      origin = "NoSuchMethodException";
+    }
+    return new Response(status, username, origin, "client-register");
+  }
+
+  public static Response LoginResponse(String id, String status) {
+    String origin;
+    try {
+      origin =
+        UserImplementation.class.getDeclaredMethod(
+            "loginUser",
+            UserRepository.class,
+            String.class,
+            String.class
+          )
+          .getName();
+    } catch (NoSuchMethodException e) {
+      OuiLogger.log(Level.ERROR, "No such method found thrown for saveNewUser");
+      origin = "NoSuchMethodException";
     }
 
-    public static Response LoginResponse(String id, String status){
-        String origin;
-        try {
-            origin = UserImplementation
-                    .class
-                    .getDeclaredMethod("loginUser", UserRepository.class, String.class, String.class)
-                    .getName();
-        } catch (NoSuchMethodException e){
-            OuiLogger.log(Level.ERROR, "No such method found thrown for saveNewUser");
-            origin = "NoSuchMethodException";
-        }
-
-        return new Response(status, id, origin, "client-login");
-    }
-
+    return new Response(status, id, origin, "client-login");
+  }
 }
