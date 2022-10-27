@@ -1,9 +1,9 @@
 package com.ouieat.controllers;
 
+import com.ouieat.implementation.UserImplementation;
 import com.ouieat.models.User;
 import com.ouieat.models.UserLogin;
 import com.ouieat.repository.UserRepository;
-import com.ouieat.implementation.UserImplementation;
 import com.ouieat.requests.UserRequests;
 import com.ouieat.responses.Response;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,10 @@
 package com.ouieat.implementation;
 
+import com.ouieat.OuiLogger;
 import com.ouieat.models.User;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.Response;
 import com.ouieat.responses.UserResponses;
-import com.ouieat.OuiLogger;
-
 import java.util.ArrayList;
 import org.apache.logging.log4j.Level;
 
