@@ -1,4 +1,4 @@
-package com.ouieeat.ouieat.models;
+package com.ouieat.models;
 
 public class UserLogin {
 

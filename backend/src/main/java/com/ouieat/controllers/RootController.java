@@ -1,7 +1,6 @@
-package com.ouieeat.ouieat.controllers;
+package com.ouieat.controllers;
 
-import com.ouieeat.ouieat.responses.RootResponses;
-import java.time.LocalDateTime;
+import com.ouieat.responses.RootResponses;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,4 +1,4 @@
-package com.ouieeat.ouieat.responses;
+package com.ouieat.responses;
 
 public class UserResponses {
 

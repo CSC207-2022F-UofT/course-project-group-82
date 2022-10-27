@@ -1,6 +1,6 @@
-package com.ouieeat.ouieat.repository;
+package com.ouieat.repository;
 
-import com.ouieeat.ouieat.models.User;
+import com.ouieat.models.User;
 import java.util.ArrayList;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

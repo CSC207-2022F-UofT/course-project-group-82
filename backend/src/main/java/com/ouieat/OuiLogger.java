@@ -1,4 +1,4 @@
-package com.ouieeat.ouieat;
+package com.ouieat;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

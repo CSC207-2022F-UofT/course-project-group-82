@@ -1,4 +1,4 @@
-package com.ouieeat.ouieat;
+package com.ouieat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

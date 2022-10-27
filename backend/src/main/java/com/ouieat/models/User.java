@@ -1,4 +1,4 @@
-package com.ouieeat.ouieat.models;
+package com.ouieat.models;
 
 import java.util.ArrayList;
 import org.springframework.data.annotation.Id;

@@ -1,7 +1,7 @@
-package com.ouieeat.ouieat.controllers;
+package com.ouieat.controllers;
 
-import com.ouieeat.ouieat.OuiLogger;
-import com.ouieeat.ouieat.responses.ExceptionResponses;
+import com.ouieat.OuiLogger;
+import com.ouieat.responses.ExceptionResponses;
 import org.apache.logging.log4j.Level;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

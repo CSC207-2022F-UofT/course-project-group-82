@@ -1,9 +1,9 @@
-package com.ouieeat.ouieat.requests;
+package com.ouieat.requests;
 
-import com.ouieeat.ouieat.implementation.UserImplementation;
-import com.ouieeat.ouieat.models.User;
-import com.ouieeat.ouieat.repository.UserRepository;
-import com.ouieeat.ouieat.responses.Response;
+import com.ouieat.implementation.UserImplementation;
+import com.ouieat.models.User;
+import com.ouieat.repository.UserRepository;
+import com.ouieat.responses.Response;
 
 public class UserRequests {
 

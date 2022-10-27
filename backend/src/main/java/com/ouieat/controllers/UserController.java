@@ -1,11 +1,11 @@
-package com.ouieeat.ouieat.controllers;
+package com.ouieat.controllers;
 
-import com.ouieeat.ouieat.implementation.UserImplementation;
-import com.ouieeat.ouieat.models.User;
-import com.ouieeat.ouieat.models.UserLogin;
-import com.ouieeat.ouieat.repository.UserRepository;
-import com.ouieeat.ouieat.requests.UserRequests;
-import com.ouieeat.ouieat.responses.Response;
+import com.ouieat.models.User;
+import com.ouieat.models.UserLogin;
+import com.ouieat.repository.UserRepository;
+import com.ouieat.implementation.UserImplementation;
+import com.ouieat.requests.UserRequests;
+import com.ouieat.responses.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

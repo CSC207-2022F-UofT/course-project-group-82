@@ -1,4 +1,4 @@
-package com.ouieeat.ouieat.responses;
+package com.ouieat.responses;
 
 import java.time.LocalDateTime;
 
