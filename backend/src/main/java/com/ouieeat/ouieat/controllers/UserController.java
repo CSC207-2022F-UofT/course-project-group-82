@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
+  public final UserRepository userRepository;
+
   @Autowired
-  public UserRepository userRepository;
+  public UserController(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   @GetMapping("/register")
   public String register(
