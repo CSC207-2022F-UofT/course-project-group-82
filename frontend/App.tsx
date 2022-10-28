@@ -1,16 +1,20 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
-import classNames from "classnames";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+
+import LoginPage from "./src/pages/Login";
 
 export default function App() {
-  const viewClassnames = classNames(
-    "flex-1 items-center justify-center bg-white"
-  );
+  const Stack = createNativeStackNavigator();
 
   return (
-    <View className={viewClassnames}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={LoginPage}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
