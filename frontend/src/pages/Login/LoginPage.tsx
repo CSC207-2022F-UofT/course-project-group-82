@@ -8,6 +8,7 @@ import LogoHeader from "./components/LogoHeader";
 import UsernameInput from "./components/UsernameInput";
 import PasswordInput from "./components/PasswordInput";
 import FormCompletionInput from "./components/FormCompletionInput";
+import ErrorDisplay from "./components/ErrorDisplay";
 
 export function LoginPage() {
   const viewClassnames = classNames("w-1/2 m-auto h-full");
@@ -28,6 +29,8 @@ export function LoginPage() {
     setPassword(text);
   }
 
+  const [errors, setErrors] = useState<string>("");
+
   function doLogin() {}
 
   return (
@@ -45,6 +48,7 @@ export function LoginPage() {
                 password={password}
                 passwordChange={passwordChange}
               />
+              <ErrorDisplay error={errors} />
               <FormCompletionInput doLogin={doLogin} />
             </View>
           </View>
