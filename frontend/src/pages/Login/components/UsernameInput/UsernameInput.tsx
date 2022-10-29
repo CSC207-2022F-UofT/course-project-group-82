@@ -7,9 +7,9 @@ export function UsernameInput(props: {
 }) {
   const styles = StyleSheet.create({
     withUnderline: {
-      borderBottomWidth: 1,
-      borderColor: Colors.$outlineDisabledHeavy,
-      paddingBottom: 4,
+      backgroundColor: "#DEE3E7",
+      borderRadius: 10,
+      padding: 10,
     },
   });
 
@@ -17,7 +17,6 @@ export function UsernameInput(props: {
     <TextField
       placeholder={"Username"}
       fieldStyle={styles.withUnderline}
-      floatingPlaceholder
       onChangeText={props.usernameChange}
       value={props.username}
       enableErrors

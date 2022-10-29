@@ -7,9 +7,9 @@ export function PasswordInput(props: {
 }) {
   const styles = StyleSheet.create({
     withUnderline: {
-      borderBottomWidth: 1,
-      borderColor: Colors.$outlineDisabledHeavy,
-      paddingBottom: 4,
+      backgroundColor: "#DEE3E7",
+      borderRadius: 10,
+      padding: 10,
     },
   });
 
@@ -17,7 +17,6 @@ export function PasswordInput(props: {
     <TextField
       placeholder={"Password"}
       fieldStyle={styles.withUnderline}
-      floatingPlaceholder
       onChangeText={props.passwordChange}
       value={props.password}
       secureTextEntry={true}
