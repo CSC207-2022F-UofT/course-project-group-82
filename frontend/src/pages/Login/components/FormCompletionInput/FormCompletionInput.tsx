@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 
 export function FormCompletionInput(props: { doLogin: () => void }) {
   return (
-    <View className={"gap-3"}>
+    <View className={"gap-3 mt-1"}>
       <Button
         onPress={props.doLogin}
         label={"Log in"}

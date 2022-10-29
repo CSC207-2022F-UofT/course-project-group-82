@@ -29,6 +29,7 @@ export function LoginPage() {
     setPassword(text);
   }
 
+  const [errorVisible, setErrorVisible] = useState<boolean>(false);
   const [errors, setErrors] = useState<string>("");
 
   function doLogin() {}
@@ -48,7 +49,7 @@ export function LoginPage() {
                 password={password}
                 passwordChange={passwordChange}
               />
-              <ErrorDisplay error={errors} />
+              <ErrorDisplay error={errors} errorVisible={errorVisible} />
               <FormCompletionInput doLogin={doLogin} />
             </View>
           </View>
