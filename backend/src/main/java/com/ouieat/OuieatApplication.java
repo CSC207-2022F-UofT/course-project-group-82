@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 public class OuieatApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(OuieatApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(OuieatApplication.class, args);
+    }
 }

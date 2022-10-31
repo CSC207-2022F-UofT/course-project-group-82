@@ -121,3 +121,7 @@ replay_pid*
 
 # Backend Security Keys
 backend/src/main/resources/application.properties
+
+# Node
+
+node_modules

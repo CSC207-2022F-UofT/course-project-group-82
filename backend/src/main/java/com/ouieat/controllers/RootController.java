@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RootController {
 
-  @GetMapping("/")
-  public String any() {
-    return RootResponses.serviceRunning().getJsonString();
-  }
+    @GetMapping("/")
+    public String any() {
+        return RootResponses.serviceRunning().getJsonString();
+    }
 }

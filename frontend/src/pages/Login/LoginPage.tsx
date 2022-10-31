@@ -12,67 +12,67 @@ import LoginService from "../../services/User/Login";
 import { UserContext } from "../../context/UserContext";
 
 export function LoginPage() {
-  const viewClassnames = classNames("w-1/2 m-auto h-full");
+    const viewClassnames = classNames("w-1/2 m-auto h-full");
 
-  const innerViewClassnames = classNames("justify-center h-full w-full");
+    const innerViewClassnames = classNames("justify-center h-full w-full");
 
-  const formViewClassnames = classNames("mt-5");
+    const formViewClassnames = classNames("mt-5");
 
-  const [username, setUsername] = useState<string>("");
+    const [username, setUsername] = useState<string>("");
 
-  function usernameChange(text: string) {
-    setUsername(text);
-  }
-
-  const [password, setPassword] = useState<string>("");
-
-  function passwordChange(text: string) {
-    setPassword(text);
-  }
-
-  const [errorVisible, setErrorVisible] = useState<boolean>(false);
-  const [errors, setErrors] = useState<string>("");
-
-  const { userID, setUserID } = useContext(UserContext);
-
-  async function doLogin() {
-    let response = await LoginService(username, password);
-    if (response) {
-      setErrorVisible(false);
-      setErrors("");
-      console.log("Logged in user: " + response);
-      setUserID(typeof response === "string" ? response : "--error--" );
-    } else {
-      setErrors("Invalid username or password");
-      setErrorVisible(true);
+    function usernameChange(text: string) {
+        setUsername(text);
     }
-  }
 
-  return (
-    <ImageBackground source={BackgroundImage}>
-      <ErrorDisplay
-        error={errors}
-        errorVisible={errorVisible}
-        setErrorVisible={setErrorVisible}
-      />
-      <SafeAreaView className={"bg-[#f5]"}>
-        <View className={viewClassnames}>
-          <View className={innerViewClassnames}>
-            <LogoHeader />
-            <View className={formViewClassnames}>
-              <UsernameInput
-                username={username}
-                usernameChange={usernameChange}
-              />
-              <PasswordInput
-                password={password}
-                passwordChange={passwordChange}
-              />
-              <FormCompletionInput doLogin={doLogin} />
-            </View>
-          </View>
-        </View>
-      </SafeAreaView>
-    </ImageBackground>
-  );
+    const [password, setPassword] = useState<string>("");
+
+    function passwordChange(text: string) {
+        setPassword(text);
+    }
+
+    const [errorVisible, setErrorVisible] = useState<boolean>(false);
+    const [errors, setErrors] = useState<string>("");
+
+    const { userID, setUserID } = useContext(UserContext);
+
+    async function doLogin() {
+        let response = await LoginService(username, password);
+        if (response) {
+            setErrorVisible(false);
+            setErrors("");
+            console.log("Logged in user: " + response);
+            setUserID(typeof response === "string" ? response : "--error--");
+        } else {
+            setErrors("Invalid username or password");
+            setErrorVisible(true);
+        }
+    }
+
+    return (
+        <ImageBackground source={BackgroundImage}>
+            <ErrorDisplay
+                error={errors}
+                errorVisible={errorVisible}
+                setErrorVisible={setErrorVisible}
+            />
+            <SafeAreaView className={"bg-[#f5]"}>
+                <View className={viewClassnames}>
+                    <View className={innerViewClassnames}>
+                        <LogoHeader />
+                        <View className={formViewClassnames}>
+                            <UsernameInput
+                                username={username}
+                                usernameChange={usernameChange}
+                            />
+                            <PasswordInput
+                                password={password}
+                                passwordChange={passwordChange}
+                            />
+                            <FormCompletionInput doLogin={doLogin} />
+                        </View>
+                    </View>
+                </View>
+            </SafeAreaView>
+        </ImageBackground>
+    );
 }

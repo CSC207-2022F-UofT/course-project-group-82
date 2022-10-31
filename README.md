@@ -6,20 +6,20 @@ It also contains workflow documents that give instructions on how to manage your
 
 ## Checklist For Your Project
 
-- [ ] Verify the correct settings for your project repository
-- [ ] Set up Github Projects
-- [ ] Create the implementation plan using issues and Github Projects
-- [ ] Create deveopment branches for your features
-- [ ] Use pull requests to merge finished features into main branch
-- [ ] Conduct code reviews
+-   [ ] Verify the correct settings for your project repository
+-   [ ] Set up Github Projects
+-   [ ] Create the implementation plan using issues and Github Projects
+-   [ ] Create deveopment branches for your features
+-   [ ] Use pull requests to merge finished features into main branch
+-   [ ] Conduct code reviews
 
 **If your team has trouble with any of these steps, please ask on Piazza. For example, with how GitHub Classroom works, your team _may_ not have permissions to do some of the first few steps, in which case we'll post alternative instructions as needed.**
 
 ## Workflow Documents
 
-- Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
+-   Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
 
-- [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
+-   [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
 
 ## Gradle Project
 
