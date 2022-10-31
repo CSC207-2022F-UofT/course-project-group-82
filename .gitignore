@@ -125,3 +125,7 @@ backend/src/main/resources/application.properties
 # Node
 
 node_modules
+
+# IDEA
+
+.idea
