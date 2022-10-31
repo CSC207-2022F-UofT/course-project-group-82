@@ -41,7 +41,7 @@ export function LoginPage() {
       setErrorVisible(false);
       setErrors("");
       console.log("Logged in user: " + response);
-      setUserID(response);
+      setUserID(typeof response === "string" ? response : "--error--" );
     } else {
       setErrors("Invalid username or password");
       setErrorVisible(true);
