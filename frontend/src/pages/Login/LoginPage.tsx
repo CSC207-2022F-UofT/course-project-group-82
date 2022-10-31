@@ -1,14 +1,15 @@
 import classNames from "classnames";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import { View, ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
-import { TextField, Image, Button, Colors } from "react-native-ui-lib";
+import { useContext, useState } from "react";
 import BackgroundImage from "./assets/background.png";
 import LogoHeader from "./components/LogoHeader";
 import UsernameInput from "./components/UsernameInput";
 import PasswordInput from "./components/PasswordInput";
 import FormCompletionInput from "./components/FormCompletionInput";
 import ErrorDisplay from "./components/ErrorDisplay";
+import LoginService from "../../services/User/Login";
+import { UserContext } from "../../context/UserContext";
 
 export function LoginPage() {
   const viewClassnames = classNames("w-1/2 m-auto h-full");
@@ -32,10 +33,28 @@ export function LoginPage() {
   const [errorVisible, setErrorVisible] = useState<boolean>(false);
   const [errors, setErrors] = useState<string>("");
 
-  function doLogin() {}
+  const { userID, setUserID } = useContext(UserContext);
+
+  async function doLogin() {
+    let response = await LoginService(username, password);
+    if (response) {
+      setErrorVisible(false);
+      setErrors("");
+      console.log("Logged in user: " + response);
+      setUserID(response);
+    } else {
+      setErrors("Invalid username or password");
+      setErrorVisible(true);
+    }
+  }
 
   return (
     <ImageBackground source={BackgroundImage}>
+      <ErrorDisplay
+        error={errors}
+        errorVisible={errorVisible}
+        setErrorVisible={setErrorVisible}
+      />
       <SafeAreaView className={"bg-[#f5]"}>
         <View className={viewClassnames}>
           <View className={innerViewClassnames}>
@@ -49,7 +68,6 @@ export function LoginPage() {
                 password={password}
                 passwordChange={passwordChange}
               />
-              <ErrorDisplay error={errors} errorVisible={errorVisible} />
               <FormCompletionInput doLogin={doLogin} />
             </View>
           </View>

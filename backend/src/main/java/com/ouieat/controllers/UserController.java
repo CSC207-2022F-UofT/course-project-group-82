@@ -35,11 +35,6 @@ public class UserController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public String login(@RequestBody UserLogin userLogin) {
-    Response response = UserImplementation.loginUser(
-      userRepository,
-      userLogin.getUsername(),
-      userLogin.getPassword()
-    );
-    return response.getJsonString();
+    return UserRequests.doLogin(userRepository, userLogin);
   }
 }
