@@ -17,8 +17,9 @@ import FirstNameInput from "./components/FirstNameInput";
 import LastNameInput from "./components/LastNameInput";
 import FormCompletionInput from "./components/FormCompletionInput";
 import LogoHeader from "../Login/components/LogoHeader";
+import RegisterService from "../../services/User/Register";
 
-export function RegisterPage() {
+export function RegisterPage(props: { navigation: any }) {
   const viewClassnames = classNames("w-full m-auto h-full self-center");
   const innerViewClassnames = classNames("justify-center h-full w-full");
   const formViewClassnames = classNames("w-3/4 m-auto");
@@ -56,7 +57,24 @@ export function RegisterPage() {
   const [errorVisible, setErrorVisible] = useState<boolean>(false);
   const [errors, setErrors] = useState<string>("");
 
-  function doRegister() {}
+  async function doRegister() {
+    let response = await RegisterService(
+      firstName,
+      lastName,
+      email,
+      username,
+      password
+    );
+    if (response) {
+      setErrorVisible(false);
+      setErrors("");
+      console.log("Registered user: " + response);
+      props.navigation.navigate("Home");
+    } else {
+      setErrors("Could not register user");
+      setErrorVisible(true);
+    }
+  }
 
   return (
     <ImageBackground source={BackgroundImage}>

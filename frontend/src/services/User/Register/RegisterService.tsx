@@ -1,18 +1,21 @@
 import { OuiRequest } from "../../../networking/OuiRequest";
-import * as SecureStore from "expo-secure-store";
 import { stringMd5 } from "react-native-quick-md5";
-export async function LoginService(
+import * as SecureStore from "expo-secure-store";
+
+export async function RegisterService(
+  firstName: string,
+  lastName: string,
+  email: string,
   username: string,
   password: string
 ): Promise<boolean | string> {
-  // We assume that once the data reaches the services
-  // It has already undergone form validation
-  // And the data is ready to be made a request
-
   let response = await OuiRequest.make(
-    "/login",
+    "/register",
     {
-      username: username,
+      firstName,
+      lastName,
+      email,
+      username,
       password: stringMd5(password),
     },
     "post"
@@ -25,8 +28,7 @@ export async function LoginService(
   if (response.status === "success") {
     // Login was successful
     // Save the user token to a secure store context
-    await SecureStore.setItemAsync("userToken", response.data);
-    return response.data;
+    return true;
   }
   // Failed to login
   else {

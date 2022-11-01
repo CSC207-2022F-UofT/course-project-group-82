@@ -26,7 +26,7 @@ export function EmailInput(props: {
         "Email is invalid",
         "Password is too short",
       ]}
-      maxLength={16}
+      maxLength={50}
       migrate
     />
   );
