@@ -5,6 +5,7 @@ import { Logs } from "expo";
 import { useEffect, useState } from "react";
 import { UserContext } from "./src/context/UserContext";
 import DashboardPage from "./src/pages/Dashboard";
+import RegisterPage from "./src/pages/Register";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,11 +21,18 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           {!userID ? (
-            <Stack.Screen
-              name="Home"
-              component={LoginPage}
-              options={{ headerShown: false }}
-            />
+            <>
+              <Stack.Screen
+                name="Home"
+                component={LoginPage}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name={"Register"}
+                component={RegisterPage}
+                options={{ headerShown: false }}
+              />
+            </>
           ) : (
             <Stack.Screen
               name={"Dashboard"}
