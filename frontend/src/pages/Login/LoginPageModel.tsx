@@ -6,6 +6,7 @@ export function LoginPageModel(props: { navigation: any }) {
   const [password, setPassword] = useState<string>("");
   const [errorVisible, setErrorVisible] = useState<boolean>(false);
   const [errors, setErrors] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const controllerProps = {
     username,
@@ -16,6 +17,8 @@ export function LoginPageModel(props: { navigation: any }) {
     setErrorVisible,
     errors,
     setErrors,
+    loading,
+    setLoading,
   };
 
   return <LoginPageController {...controllerProps} />;

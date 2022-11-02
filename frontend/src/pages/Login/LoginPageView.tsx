@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { View, ImageBackground } from "react-native";
+import { View, ImageBackground, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import BackgroundImage from "./assets/background.png";
@@ -18,6 +18,7 @@ export function LoginPageView(props: {
   setErrors: React.Dispatch<React.SetStateAction<string>>;
   errorVisible: boolean;
   setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
   doLogin: () => void;
 }) {
   const viewClassnames = classNames("w-1/2 m-auto h-full");
@@ -25,6 +26,22 @@ export function LoginPageView(props: {
   const innerViewClassnames = classNames("justify-center h-full w-full");
 
   const formViewClassnames = classNames("mt-5");
+
+  function formView() {
+    return (
+      <View className={formViewClassnames}>
+        <UsernameInput
+          username={props.username}
+          usernameChange={props.usernameChange}
+        />
+        <PasswordInput
+          password={props.password}
+          passwordChange={props.passwordChange}
+        />
+        <FormCompletionInput doLogin={props.doLogin} />
+      </View>
+    );
+  }
 
   return (
     <ImageBackground source={BackgroundImage}>
@@ -37,17 +54,11 @@ export function LoginPageView(props: {
         <View className={viewClassnames}>
           <View className={innerViewClassnames}>
             <LogoHeader />
-            <View className={formViewClassnames}>
-              <UsernameInput
-                username={props.username}
-                usernameChange={props.usernameChange}
-              />
-              <PasswordInput
-                password={props.password}
-                passwordChange={props.passwordChange}
-              />
-              <FormCompletionInput doLogin={props.doLogin} />
-            </View>
+            {props.loading ? (
+              <Text className={"text-center"}>Loading...</Text>
+            ) : (
+              formView()
+            )}
           </View>
         </View>
       </SafeAreaView>

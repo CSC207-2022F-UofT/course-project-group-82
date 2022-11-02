@@ -12,6 +12,8 @@ export function LoginPageController(props: {
   setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
   errors: string;
   setErrors: React.Dispatch<React.SetStateAction<string>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   function usernameChange(text: string) {
     props.setUsername(text);
@@ -23,17 +25,37 @@ export function LoginPageController(props: {
 
   const { setUserID } = useContext(UserContext);
 
-  async function doLogin() {
+  function validateFormResponse(): boolean {
+    let response = true;
+
+    if (!props.username || !props.password) {
+      response = false;
+      props.setErrors("Fill all values");
+    }
+
+    props.setErrorVisible(!response);
+    return response;
+  }
+
+  async function connectLoginToBackend() {
     let response = await LoginService(props.username, props.password);
+    props.setErrorVisible(!!response);
+    props.setErrors(response ? "" : "Invalid username or password");
+
     if (response) {
-      props.setErrorVisible(false);
-      props.setErrors("");
       console.log("Logged in user: " + response);
       setUserID(typeof response === "string" ? response : "--error--");
-    } else {
-      props.setErrors("Invalid username or password");
-      props.setErrorVisible(true);
+      if (typeof response !== "string")
+        console.error("Response id sent back is not a string: " + response);
     }
+  }
+
+  async function doLogin() {
+    if (!validateFormResponse()) return;
+
+    props.setLoading(true);
+    await connectLoginToBackend();
+    props.setLoading(false);
   }
 
   const viewProps = {
