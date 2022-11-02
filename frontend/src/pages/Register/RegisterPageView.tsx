@@ -41,7 +41,7 @@ export function RegisterPageView(props: {
   const innerViewClassnames = classNames("justify-center h-full w-full");
   const formViewClassnames = classNames("w-3/4 m-auto");
 
-  function FormView() {
+  function formView() {
     return (
       <>
         <View className={"flex-row justify-around"}>
@@ -89,7 +89,7 @@ export function RegisterPageView(props: {
                 {props.loading ? (
                   <Text className={"text-center"}>Loading...</Text>
                 ) : (
-                  <FormView />
+                  formView()
                 )}
               </View>
             </View>

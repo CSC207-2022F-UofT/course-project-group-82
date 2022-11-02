@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import RegisterService from "../../services/User/Register";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RegisterPageView } from "./RegisterPageView";
 
 export function RegisterPageController(props: {
@@ -42,8 +41,37 @@ export function RegisterPageController(props: {
     props.setEmail(text);
   }
 
-  async function doRegister() {
-    props.setLoading(true);
+  const validateEmail = (email: string) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+
+  function validateFormResponse(): boolean {
+    let response = true;
+
+    if (
+      !props.firstName ||
+      !props.lastName ||
+      !props.username ||
+      !props.email ||
+      !props.username ||
+      !props.password
+    ) {
+      props.setErrors("Fill all values");
+      response = false;
+    }
+
+    if (!validateEmail(props.email)) {
+      props.setErrors("Enter a valid email address");
+      response = false;
+    }
+
+    props.setErrorVisible(!response);
+    return response;
+  }
+
+  async function connectRegisterToBackend() {
     let response = await RegisterService(
       props.firstName,
       props.lastName,
@@ -51,17 +79,20 @@ export function RegisterPageController(props: {
       props.username,
       props.password
     );
+    props.setErrorVisible(!!response);
+    props.setErrors(response ? "" : "Could not register user");
+
     if (response) {
-      props.setErrorVisible(false);
-      props.setErrors("");
       console.log("Registered user: " + response);
-      props.setLoading(false);
       props.navigation.navigate("Home");
-    } else {
-      props.setErrors("Could not register user");
-      props.setErrorVisible(true);
-      props.setLoading(false);
     }
+  }
+
+  async function doRegister() {
+    if (!validateFormResponse()) return;
+    props.setLoading(true);
+    await connectRegisterToBackend();
+    props.setLoading(false);
   }
 
   const viewProps = {
