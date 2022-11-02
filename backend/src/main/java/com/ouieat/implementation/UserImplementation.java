@@ -111,7 +111,7 @@ public class UserImplementation {
           Level.INFO,
           "No matching users found for username: " +
           username +
-          " with given credentails"
+          " with given credentials"
         );
         return UserResponses.LoginResponse(null, "failure");
       }
