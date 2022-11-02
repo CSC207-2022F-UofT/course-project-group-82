@@ -25,13 +25,5 @@ export async function RegisterService(
   console.log("Status: " + response.status);
 
   // A successful login
-  if (response.status === "success") {
-    // Login was successful
-    // Save the user token to a secure store context
-    return true;
-  }
-  // Failed to login
-  else {
-    return false;
-  }
+  return response.status === "success";
 }

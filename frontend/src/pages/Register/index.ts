@@ -1,3 +1,3 @@
-import { RegisterPage } from "./RegisterPage";
+import { RegisterPageModel } from "./RegisterPageModel";
 
-export default RegisterPage;
+export default RegisterPageModel;

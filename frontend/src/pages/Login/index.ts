@@ -1,3 +1,3 @@
-import { LoginPage } from "./LoginPage";
+import { LoginPageModel } from "./LoginPageModel";
 
-export default LoginPage;
+export default LoginPageModel;
