@@ -62,7 +62,7 @@ public class UserTests {
     // This fails because the username exists in the database
     String response = UserRequests.doRegister(
       userRepository,
-      new User("test", "test", "test", "TonytheBony", "test", "test")
+      new User("test", "test", "test", "TestUsername", "test", "test")
     );
     assertThat(response).contains("failure");
     OuiLogger.log(Level.INFO, "Testing register failure passed");
