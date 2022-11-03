@@ -7,7 +7,9 @@ import com.ouieat.responses.Response;
 import com.ouieat.responses.UserResponses;
 import java.util.ArrayList;
 import org.apache.logging.log4j.Level;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserImplementation {
 
   /*

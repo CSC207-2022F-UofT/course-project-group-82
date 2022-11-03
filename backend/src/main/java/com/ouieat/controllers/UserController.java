@@ -5,7 +5,6 @@ import com.ouieat.models.User;
 import com.ouieat.models.UserLogin;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.requests.UserRequests;
-import com.ouieat.responses.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
