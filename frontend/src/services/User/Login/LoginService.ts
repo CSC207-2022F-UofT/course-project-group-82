@@ -1,5 +1,6 @@
 import { OuiRequest } from "../../../networking/OuiRequest";
 import * as SecureStore from "expo-secure-store";
+import { stringMd5 } from "react-native-quick-md5";
 export async function LoginService(
   username: string,
   password: string
@@ -12,7 +13,7 @@ export async function LoginService(
     "/login",
     {
       username: username,
-      password: password,
+      password: stringMd5(password),
     },
     "post"
   );

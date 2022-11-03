@@ -1,4 +1,4 @@
-import { Image } from "react-native-ui-lib";
+import { AnimatedImage, Image } from "react-native-ui-lib";
 import LogoImage from "../../assets/smiley.png";
 import { Text, View } from "react-native";
 import classNames from "classnames";
@@ -8,7 +8,7 @@ export function LogoHeader() {
 
   return (
     <View>
-      <Image
+      <AnimatedImage
         style={{ width: "100%", height: undefined }}
         cover={true}
         aspectRatio={1.25}
