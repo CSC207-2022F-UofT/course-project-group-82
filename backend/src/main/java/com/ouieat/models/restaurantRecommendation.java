@@ -35,7 +35,7 @@ public class restaurantRecommendation {
 
     public void setReview(String review) {this.review = review;}
 
-    public String getRestaurant() {
+    public Restaurant getRestaurant() {
         return this.restaurant;
     }
 

@@ -9,7 +9,7 @@ public class Restaurant {
     private String cuisine;
 
 
-    public Restaurant(LocalDateTime openTime, LocalDate closeTime, Address address, String cuisine) {
+    public Restaurant(LocalDateTime openTime, LocalDateTime closeTime, Address address, String cuisine) {
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.address = address;
@@ -21,22 +21,22 @@ public class Restaurant {
         return this.openTime;
     }
 
-    public void setOpenTime(openTime) {  this.openTime = openTime;}
+    public void setOpenTime(LocalDateTime openTime) {  this.openTime = openTime;}
 
     public LocalDateTime getCloseTime () {
         return this.closeTime;
     }
 
-    public void setCloseTime(closeTime) {  this.closeTime = closeTime;}
+    public void setCloseTime(LocalDateTime closeTime) {  this.closeTime = closeTime;}
 
     public Address getAddress () {return this.address;}
 
-    public void setAddress(address) {  this.address = address;}
+    public void setAddress(Address address) {  this.address = address;}
 
     public String getCuisine () {
         return this.cuisine;
     }
 
-    public void setCuisine(cuisine) {  this.cuisine = cuisine;}
+    public void setCuisine(String cuisine) {  this.cuisine = cuisine;}
 
 }
