@@ -1,7 +1,7 @@
 package com.ouieat.models;
 import java.time.LocalDateTime;
 
-public class restaurantRecommendation {
+public class RestaurantRecommendation {
 
     private User user;
     private int rating;
@@ -9,7 +9,7 @@ public class restaurantRecommendation {
     private String review;
     private LocalDateTime postDate;
 
-    public restaurantRecommendation(User user, LocalDateTime postDate, int rating, Restaurant restaurant, String review) {
+    public RestaurantRecommendation(User user, LocalDateTime postDate, int rating, Restaurant restaurant, String review) {
         this.user = user;
         this.restaurant = restaurant;
         this.review = review;
