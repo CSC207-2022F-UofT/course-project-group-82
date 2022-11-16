@@ -19,8 +19,6 @@ public class Response {
     @JsonIgnore
     private final ResponseData responseData;
 
-    public String data;
-
     // String representation of the origin
     public String origin;
 
@@ -36,11 +34,13 @@ public class Response {
     ) {
         this.status = status;
         this.responseData = data;
-        this.data = this.serializeResponseData(data);
         this.origin = origin;
         this.destination = destination;
     }
 
+    /**
+     * Return this.responseData as a JSON string.
+     */
     private String serializeResponseData(ResponseData data) {
         if (data.getJsonString() != null) {
             return data.getJsonString();
@@ -66,7 +66,7 @@ public class Response {
     @JsonIgnore
     public String getJsonString() {
         ObjectMapper mapper = new ObjectMapper();
-        String mappedValue = null;
+        String mappedValue = "";
         try {
             mappedValue = mapper.writeValueAsString(this);
         } catch (StackOverflowError | JsonProcessingException e) {
@@ -77,6 +77,12 @@ public class Response {
             );
             OuiLogger.log(Level.ERROR, e.getMessage());
         }
+
+        // HACK: insert "data" property manually by stripping trailing "}" and re-adding it.
+        assert mappedValue.endsWith("}");
+        mappedValue = mappedValue.substring(0, mappedValue.length() - 1);
+        mappedValue += ",\"data\":" + this.serializeResponseData(this.responseData) + "}";
+
         return mappedValue;
     }
 
