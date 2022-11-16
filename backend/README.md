@@ -16,7 +16,7 @@ server.error.whitelabel.enabled=true
 1. Navigate to the backend folder from a terminal
 2. Ensure the port `8080` is free and open for the backend to use
 3. Run the command `./mvnw spring-boot:run` on MacOS or `mvnw spring-book:run` on Windows
-    - You could use your IDE as well
+   - You could use your IDE as well
 4. The API is accessible at `[http://localhost:8080/](http://localhost:8080/)` The root route is a test route to ensure the service is active
 
 # Testing
@@ -51,7 +51,7 @@ There are 6 packages to note here:
 
 Also to note the class `OuiLogger` that provides a statically accessible logger method for the Backend through `Log4J2`.
 
-And all files in this repository are to be *prettier* formatted before merging
+And all files in this repository are to be _prettier_ formatted before merging
 
 # Flow of Data
 
@@ -69,8 +69,8 @@ flowchart TD
 	controller --> exceptionHandler
 	requests --> exceptionHandler
 	exceptionHandler --> response
-	
-	
+
+
 ```
 
 # Explanation of the diagram:

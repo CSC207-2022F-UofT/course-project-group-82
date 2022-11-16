@@ -120,4 +120,7 @@ replay_pid*
 .DS_Store
 
 # Backend Security Keys
-backend/src/main/resources/application.properties
+application.properties
+
+# Node
+node_modules
