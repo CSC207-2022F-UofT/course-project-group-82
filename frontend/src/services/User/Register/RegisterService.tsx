@@ -9,7 +9,7 @@ export async function RegisterService(
     username: string,
     password: string
 ): Promise<boolean | string> {
-    let response = await OuiRequest.make(
+    let response = await OuiRequest.makeRequest(
         "/register",
         {
             firstName,

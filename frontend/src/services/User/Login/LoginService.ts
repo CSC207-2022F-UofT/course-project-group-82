@@ -9,7 +9,7 @@ export async function loginService(
     // It has already undergone form validation
     // And the data is ready to be made a request
 
-    let response = await OuiRequest.make(
+    let response = await OuiRequest.makeRequest(
         "/login",
         {
             username: username,
@@ -25,8 +25,9 @@ export async function loginService(
     if (response.status === "success") {
         // Login was successful
         // Save the user token to a secure store context
-        await SecureStore.setItemAsync("userToken", response.data);
-        return response.data;
+        let userID = response.data!.id;
+        await SecureStore.setItemAsync("userToken", userID);
+        return userID;
     }
     // Failed to login
     else {
