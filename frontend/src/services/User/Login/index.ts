@@ -1,3 +1,3 @@
-import { LoginService } from "./LoginService";
+import { loginService } from "./LoginService";
 
-export default LoginService;
+export default loginService;

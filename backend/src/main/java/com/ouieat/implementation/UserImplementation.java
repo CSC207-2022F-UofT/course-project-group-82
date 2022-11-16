@@ -2,10 +2,14 @@ package com.ouieat.implementation;
 
 import com.ouieat.OuiLogger;
 import com.ouieat.models.User;
+import com.ouieat.models.UserCredentials;
 import com.ouieat.repository.UserRepository;
+import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
 import com.ouieat.responses.UserResponses;
+import com.ouieat.responses.models.ErrorResponseData;
 import java.util.ArrayList;
+import java.util.Optional;
 import org.apache.logging.log4j.Level;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +33,7 @@ public class UserImplementation {
                 newUser.getUsername()
             );
             if (preExisting.size() > 0) {
-                return UserResponses.RegistrationResponse(
-                    "failure",
+                return ExceptionResponses.UserErrorResponse(
                     "Username already exists"
                 );
             }
@@ -38,9 +41,8 @@ public class UserImplementation {
                 userRepository.findUserByEmail(newUser.getEmail())
             );
             if (preExisting.size() > 0) {
-                return UserResponses.RegistrationResponse(
-                    "failure",
-                    "Email already exists"
+                return ExceptionResponses.UserErrorResponse(
+                    "Email is already in use"
                 );
             }
         } catch (Exception e) {
@@ -49,8 +51,7 @@ public class UserImplementation {
                 "Could not check uniqueness of user: " + newUser.getUsername()
             );
             OuiLogger.log(Level.ERROR, e.getMessage());
-            return UserResponses.RegistrationResponse(
-                "failure",
+            return ExceptionResponses.UserErrorResponse(
                 "Error validating information"
             );
         }
@@ -98,34 +99,34 @@ public class UserImplementation {
                 username,
                 password
             );
+
             if (found.size() > 1) {
                 OuiLogger.log(
                     Level.ERROR,
                     "More than one matched results for username: " + username
                 );
-                return UserResponses.LoginResponse(null, "failure");
+                return ExceptionResponses.UserErrorResponse(
+                    "More than one user with this name exists"
+                );
             } else if (found.size() == 1) {
                 OuiLogger.log(
                     Level.INFO,
                     "Successfully found matching user for username: " + username
                 );
-                return UserResponses.LoginResponse(
-                    found.get(0).getId(),
-                    "success"
-                );
+                return UserResponses.LoginResponse(found.get(0).getId());
             } else {
-                OuiLogger.log(
-                    Level.INFO,
+                return ExceptionResponses.UserErrorResponse(
                     "No matching users found for username: " +
                     username +
                     " with given credentials"
                 );
-                return UserResponses.LoginResponse(null, "failure");
             }
         } catch (Exception e) {
             OuiLogger.log(Level.ERROR, "Error logging in user : " + username);
             OuiLogger.log(Level.ERROR, e.getMessage());
-            return UserResponses.LoginResponse(null, "failure");
+            return ExceptionResponses.UserErrorResponse(
+                "Error logging in user : " + username
+            );
         }
     }
 }

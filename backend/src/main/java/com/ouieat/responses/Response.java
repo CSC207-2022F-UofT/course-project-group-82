@@ -16,7 +16,8 @@ public class Response {
     public String status;
 
     // Any object data that is being passed to the response
-    public String data;
+    @JsonIgnore
+    private final ResponseData responseData;
 
     // String representation of the origin
     public String origin;
@@ -27,21 +28,45 @@ public class Response {
     @JsonIgnore
     public Response(
         String status,
-        String data,
+        ResponseData data,
         String origin,
         String destination
     ) {
         this.status = status;
-        this.data = data;
+        this.responseData = data;
         this.origin = origin;
         this.destination = destination;
+    }
+
+    /**
+     * Return this.responseData as a JSON string.
+     */
+    private String serializeResponseData(ResponseData data) {
+        if (data.getJsonString() != null) {
+            return data.getJsonString();
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String mappedValue = null;
+
+        try {
+            mappedValue = mapper.writeValueAsString(data);
+        } catch (StackOverflowError | JsonProcessingException e) {
+            OuiLogger.log(
+                Level.ERROR,
+                "Could not convert response data object to a JSON string"
+            );
+            OuiLogger.log(Level.ERROR, e.getMessage());
+        }
+
+        return mappedValue;
     }
 
     // Get the JSON string representing this Response object
     @JsonIgnore
     public String getJsonString() {
         ObjectMapper mapper = new ObjectMapper();
-        String mappedValue = null;
+        String mappedValue = "";
         try {
             mappedValue = mapper.writeValueAsString(this);
         } catch (StackOverflowError | JsonProcessingException e) {
@@ -52,6 +77,12 @@ public class Response {
             );
             OuiLogger.log(Level.ERROR, e.getMessage());
         }
+
+        // HACK: insert "data" property manually by stripping trailing "}" and re-adding it.
+        assert mappedValue.endsWith("}");
+        mappedValue = mappedValue.substring(0, mappedValue.length() - 1);
+        mappedValue += ",\"data\":" + this.serializeResponseData(this.responseData) + "}";
+
         return mappedValue;
     }
 
@@ -69,7 +100,7 @@ public class Response {
             destination +
             " | " +
             "Data: " +
-            data.toString()
+            responseData.toString()
         );
     }
 }
