@@ -12,28 +12,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-  public final UserRepository userRepository;
+    public final UserRepository userRepository;
 
-  @Autowired
-  public UserController(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
+    @Autowired
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-  @PostMapping(
-    path = "/register",
-    consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE
-  )
-  public String registerPost(@RequestBody User newUser) {
-    return UserRequests.doRegister(userRepository, newUser);
-  }
+    @PostMapping(
+        path = "/register",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String registerPost(@RequestBody User newUser) {
+        return UserRequests.doRegister(userRepository, newUser);
+    }
 
-  @PostMapping(
-    path = "/login",
-    consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE
-  )
-  public String login(@RequestBody UserLogin userLogin) {
-    return UserRequests.doLogin(userRepository, userLogin);
-  }
+    @PostMapping(
+        path = "/login",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String login(@RequestBody UserLogin userLogin) {
+        return UserRequests.doLogin(userRepository, userLogin);
+    }
 }

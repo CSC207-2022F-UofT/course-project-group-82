@@ -48,7 +48,7 @@ When you work on a feature, you are always required to create a **branch** for t
 
 2. Select a name and click **Create branch** on the pop-up window. Use the provided command to check out the branch you just created on your local machine.
 
-   _Alternatively, you can create a branch manually, and link it to the issue._
+    _Alternatively, you can create a branch manually, and link it to the issue._
 
 3. Verify that the branch is successfully linked to the issue.
 
@@ -60,15 +60,15 @@ When you finish working on a feature, you are required to merge the feature bran
 
 1. After you make changes to the code and commit them to the feature branch, you will see a **Compare & pull request** button on the repository page. Click it to create a pull request.
 
-   _Alternatively, you can create a pull request in the **Pull requests** tab._
+    _Alternatively, you can create a pull request in the **Pull requests** tab._
 
 ![](images/create_pr.png)
 
 2. Give a meaningful title and description for the pull request, remember please make the name consistent.
 
-   2.1 First make sure that you are merging from the feature branch to the main branch (see blue box).
+    2.1 First make sure that you are merging from the feature branch to the main branch (see blue box).
 
-   2.2 Make sure that you set the correct fields as issues (see red box).
+    2.2 Make sure that you set the correct fields as issues (see red box).
 
 ![](images/new_pr.png)
 
@@ -89,16 +89,16 @@ When you finish working on a feature, you are required to merge the feature bran
 
 ## More Project Management and Other Resoruces (Optional)
 
-- Use issues to keep track of bugs, tasks and other things that need to be done by selecting the appropriate labels.
+-   Use issues to keep track of bugs, tasks and other things that need to be done by selecting the appropriate labels.
 
-- Use milestones to group issues into a set of deliverables. To create milestones, navigate to the **Milestones** tab and click **New milestone**.
+-   Use milestones to group issues into a set of deliverables. To create milestones, navigate to the **Milestones** tab and click **New milestone**.
 
-- Use Projects to tracks issues and collaborate with your team. See the [sample project (Password Manager example)](https://github.com/orgs/CSC207-2022F-UofT/projects/2) for reference.
+-   Use Projects to tracks issues and collaborate with your team. See the [sample project (Password Manager example)](https://github.com/orgs/CSC207-2022F-UofT/projects/2) for reference.
 
-- Github document for projects: https://docs.github.com/en/issues/planning-and-tracking-with-projects
+-   Github document for projects: https://docs.github.com/en/issues/planning-and-tracking-with-projects
 
-- Git operations: https://docs.github.com/en/get-started/using-git
+-   Git operations: https://docs.github.com/en/get-started/using-git
 
-- Git cheat sheet: https://education.github.com/git-cheat-sheet-education.pdf
+-   Git cheat sheet: https://education.github.com/git-cheat-sheet-education.pdf
 
-- I MESSED UP GIT WHAT TO DO?!: https://dangitgit.com/
+-   I MESSED UP GIT WHAT TO DO?!: https://dangitgit.com/

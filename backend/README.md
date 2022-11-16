@@ -16,25 +16,25 @@ server.error.whitelabel.enabled=true
 1. Navigate to the backend folder from a terminal
 2. Ensure the port `8080` is free and open for the backend to use
 3. Run the command `./mvnw spring-boot:run` on MacOS or `mvnw spring-book:run` on Windows
-   - You could use your IDE as well
+    - You could use your IDE as well
 4. The API is accessible at `[http://localhost:8080/](http://localhost:8080/)` The root route is a test route to ensure the service is active
 
 # Testing
 
-- Navigate to the `src/test/java/com/ouieat/OuieatApplicationTest.java` file and run the class using your IDE.
-- This will setup a Spring environment and establish the database connections required for the rest of the test files to work properly.
+-   Navigate to the `src/test/java/com/ouieat/OuieatApplicationTest.java` file and run the class using your IDE.
+-   This will setup a Spring environment and establish the database connections required for the rest of the test files to work properly.
 
 # Contributing
 
-- Open the backend directory in your IDE (not the project root folder) as otherwise your IDE may have trouble downloading the Maven dependencies
-- Follow the pre-existing naming convention
-- This repository is Prettier enforced (Install prettier globally on your computer and the prettier-java plugin to go with it).
+-   Open the backend directory in your IDE (not the project root folder) as otherwise your IDE may have trouble downloading the Maven dependencies
+-   Follow the pre-existing naming convention
+-   This repository is Prettier enforced (Install prettier globally on your computer and the prettier-java plugin to go with it).
 
 # Debugging
 
-- An error during the run command is usually either due to the wrong java version or blocked port
-- The “Whitelabel error” / “Error handling this Response” means you are missing imports specific to Spring or have misconfigured routes in your application
-- A sample successful build console output is:
+-   An error during the run command is usually either due to the wrong java version or blocked port
+-   The “Whitelabel error” / “Error handling this Response” means you are missing imports specific to Spring or have misconfigured routes in your application
+-   A sample successful build console output is:
 
 ![img.png](images/img.png)
 
@@ -147,31 +147,31 @@ This is the final job of the controller, it needs to give back the data requeste
 
 ## Models
 
-- These are objects that represent what our data will look like in database.
-- Each model is representative of one collection in our database.
-- A model prefixed class is usually manipulating / accessing data of that model
+-   These are objects that represent what our data will look like in database.
+-   Each model is representative of one collection in our database.
+-   A model prefixed class is usually manipulating / accessing data of that model
 
 ## Controllers
 
-- These are the endpoints that are accessible to a client
-- They define GET, POST, PUT request API endpoints
-- They call the required request from each model prefixed class
+-   These are the endpoints that are accessible to a client
+-   They define GET, POST, PUT request API endpoints
+-   They call the required request from each model prefixed class
 
 ## Repository
 
-- This package consists of **interfaces** that extend `MongoRepostory<Model, String>`
-- It basically works as the middle man between our database connection and our model
-- MongoRepository provides us with standard CRUD operations
-- We can add on to these by putting complex database manipulation functions here and calling them through an `@Autotowired` instantiation of the interface from anywhere in our code.
+-   This package consists of **interfaces** that extend `MongoRepostory<Model, String>`
+-   It basically works as the middle man between our database connection and our model
+-   MongoRepository provides us with standard CRUD operations
+-   We can add on to these by putting complex database manipulation functions here and calling them through an `@Autotowired` instantiation of the interface from anywhere in our code.
 
 ## Implementation
 
-- Classes in this package consist of `public` `static` functions that consume a `Repository` object along with some data and create a `Response` object that can be sent back to the client.
+-   Classes in this package consist of `public` `static` functions that consume a `Repository` object along with some data and create a `Response` object that can be sent back to the client.
 
 ## Responses
 
-- The package consists of a Response class, objects of which are what is finally sent back to the client
-- It also consists of `*Model*Responses` classes that provide methods to create Model-Implementation specific Responses easily
+-   The package consists of a Response class, objects of which are what is finally sent back to the client
+-   It also consists of `*Model*Responses` classes that provide methods to create Model-Implementation specific Responses easily
 
 ### Response class
 
