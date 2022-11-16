@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 @EnableMongoRepositories
 public class OuieatApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(OuieatApplication.class, args);
     }

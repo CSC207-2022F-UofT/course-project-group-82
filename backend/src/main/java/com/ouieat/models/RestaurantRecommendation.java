@@ -1,4 +1,5 @@
 package com.ouieat.models;
+
 import java.time.LocalDateTime;
 
 public class RestaurantRecommendation {
@@ -9,7 +10,13 @@ public class RestaurantRecommendation {
     private String review;
     private LocalDateTime postDate;
 
-    public RestaurantRecommendation(User user, LocalDateTime postDate, int rating, Restaurant restaurant, String review) {
+    public RestaurantRecommendation(
+        User user,
+        LocalDateTime postDate,
+        int rating,
+        Restaurant restaurant,
+        String review
+    ) {
         this.user = user;
         this.restaurant = restaurant;
         this.review = review;
@@ -33,7 +40,9 @@ public class RestaurantRecommendation {
         return this.review;
     }
 
-    public void setReview(String review) {this.review = review;}
+    public void setReview(String review) {
+        this.review = review;
+    }
 
     public Restaurant getRestaurant() {
         return this.restaurant;
@@ -42,5 +51,4 @@ public class RestaurantRecommendation {
     public LocalDateTime getDate() {
         return this.postDate;
     }
-
 }

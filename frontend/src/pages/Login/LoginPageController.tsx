@@ -4,65 +4,67 @@ import LoginService from "../../services/User/Login";
 import { LoginPageView } from "./LoginPageView";
 
 export function LoginPageController(props: {
-  username: string;
-  setUsername: React.Dispatch<React.SetStateAction<string>>;
-  password: string;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  errorVisible: boolean;
-  setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  errors: string;
-  setErrors: React.Dispatch<React.SetStateAction<string>>;
-  loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    username: string;
+    setUsername: React.Dispatch<React.SetStateAction<string>>;
+    password: string;
+    setPassword: React.Dispatch<React.SetStateAction<string>>;
+    errorVisible: boolean;
+    setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    errors: string;
+    setErrors: React.Dispatch<React.SetStateAction<string>>;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  function usernameChange(text: string) {
-    props.setUsername(text);
-  }
-
-  function passwordChange(text: string) {
-    props.setPassword(text);
-  }
-
-  const { setUserID } = useContext(UserContext);
-
-  function validateFormResponse(): boolean {
-    let response = true;
-
-    if (!props.username || !props.password) {
-      response = false;
-      props.setErrors("Fill all values");
+    function usernameChange(text: string) {
+        props.setUsername(text);
     }
 
-    props.setErrorVisible(!response);
-    return response;
-  }
-
-  async function connectLoginToBackend() {
-    let response = await LoginService(props.username, props.password);
-    props.setErrorVisible(!!response);
-    props.setErrors(response ? "" : "Invalid username or password");
-
-    if (response) {
-      console.log("Logged in user: " + response);
-      setUserID(typeof response === "string" ? response : "--error--");
-      if (typeof response !== "string")
-        console.error("Response id sent back is not a string: " + response);
+    function passwordChange(text: string) {
+        props.setPassword(text);
     }
-  }
 
-  async function doLogin() {
-    if (!validateFormResponse()) return;
+    const { setUserID } = useContext(UserContext);
 
-    props.setLoading(true);
-    await connectLoginToBackend();
-    props.setLoading(false);
-  }
+    function validateFormResponse(): boolean {
+        let response = true;
 
-  const viewProps = {
-    usernameChange,
-    passwordChange,
-    doLogin,
-  };
+        if (!props.username || !props.password) {
+            response = false;
+            props.setErrors("Fill all values");
+        }
 
-  return <LoginPageView {...props} {...viewProps} />;
+        props.setErrorVisible(!response);
+        return response;
+    }
+
+    async function connectLoginToBackend() {
+        let response = await LoginService(props.username, props.password);
+        props.setErrorVisible(!!response);
+        props.setErrors(response ? "" : "Invalid username or password");
+
+        if (response) {
+            console.log("Logged in user: " + response);
+            setUserID(typeof response === "string" ? response : "--error--");
+            if (typeof response !== "string")
+                console.error(
+                    "Response id sent back is not a string: " + response
+                );
+        }
+    }
+
+    async function doLogin() {
+        if (!validateFormResponse()) return;
+
+        props.setLoading(true);
+        await connectLoginToBackend();
+        props.setLoading(false);
+    }
+
+    const viewProps = {
+        usernameChange,
+        passwordChange,
+        doLogin,
+    };
+
+    return <LoginPageView {...props} {...viewProps} />;
 }

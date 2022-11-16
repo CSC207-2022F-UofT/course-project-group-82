@@ -12,23 +12,23 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class OuieatApplicationTests {
 
-  @LocalServerPort
-  private int port;
+    @LocalServerPort
+    private int port;
 
-  @Autowired
-  private RootController controller;
+    @Autowired
+    private RootController controller;
 
-  @Autowired
-  private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-  @Test
-  public void contextLoads() throws Exception {
-    assertThat(controller).isNotNull();
-  }
+    @Test
+    public void contextLoads() throws Exception {
+        assertThat(controller).isNotNull();
+    }
 
-  @Test
-  public void testUserFunctions() throws Exception {
-    assertThat(userRepository).isNotNull();
-    new UserTests(userRepository);
-  }
+    @Test
+    public void testUserFunctions() throws Exception {
+        assertThat(userRepository).isNotNull();
+        new UserTests(userRepository);
+    }
 }

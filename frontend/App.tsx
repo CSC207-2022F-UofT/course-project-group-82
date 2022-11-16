@@ -8,40 +8,40 @@ import DashboardPage from "./src/pages/Dashboard";
 import RegisterPage from "./src/pages/Register";
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
-  const [userID, setUserID] = useState<string | null>("");
-  const userValue = { userID, setUserID };
+    const Stack = createNativeStackNavigator();
+    const [userID, setUserID] = useState<string | null>("");
+    const userValue = { userID, setUserID };
 
-  useEffect(() => {
-    Logs.enableExpoCliLogging();
-  });
+    useEffect(() => {
+        Logs.enableExpoCliLogging();
+    });
 
-  return (
-    <UserContext.Provider value={userValue}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {!userID ? (
-            <>
-              <Stack.Screen
-                name="Home"
-                component={LoginPage}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name={"Register"}
-                component={RegisterPage}
-                options={{ headerShown: false }}
-              />
-            </>
-          ) : (
-            <Stack.Screen
-              name={"Dashboard"}
-              component={DashboardPage}
-              options={{ headerShown: false }}
-            />
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserContext.Provider>
-  );
+    return (
+        <UserContext.Provider value={userValue}>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    {!userID ? (
+                        <>
+                            <Stack.Screen
+                                name="Home"
+                                component={LoginPage}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name={"Register"}
+                                component={RegisterPage}
+                                options={{ headerShown: false }}
+                            />
+                        </>
+                    ) : (
+                        <Stack.Screen
+                            name={"Dashboard"}
+                            component={DashboardPage}
+                            options={{ headerShown: false }}
+                        />
+                    )}
+                </Stack.Navigator>
+            </NavigationContainer>
+        </UserContext.Provider>
+    );
 }
