@@ -2,6 +2,7 @@ package com.ouieat.repository;
 
 import com.ouieat.models.User;
 import java.util.ArrayList;
+import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

@@ -4,8 +4,7 @@ import { OuiResponse } from "./OuiResponse";
 export class OuiRequest {
     // Change this to the hosted url once uploaded
     // Change this to your computer's local ip address
-    static baseUrl: string =
-        process.env.BASE_URL || "http://100.71.199.108:8080";
+    static baseUrl: string = process.env.BASE_URL || "http://10.0.0.201:8080";
 
     static async make(url: string, data: any, method: string) {
         try {

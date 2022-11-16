@@ -1,14 +1,40 @@
 package com.ouieat.requests;
 
+import com.ouieat.OuiLogger;
 import com.ouieat.implementation.UserImplementation;
 import com.ouieat.models.User;
+import com.ouieat.models.UserCredentials;
 import com.ouieat.models.UserLogin;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
 import com.ouieat.responses.UserResponses;
+import java.util.List;
+import java.util.Optional;
+import org.apache.logging.log4j.Level;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+interface UserActionHandler {
+    Response onUserValidated(User user);
+}
 
 public class UserRequests {
+
+    private static String doUserAction(
+        UserRepository userRepository,
+        UserCredentials cred,
+        UserActionHandler handler
+    ) {
+        Optional<User> user = userRepository.findById(cred.getUserID());
+
+        if (user.isPresent()) {
+            return handler.onUserValidated(user.get()).getJsonString();
+        }
+
+        return ExceptionResponses
+            .InvalidUserCredentialsResponse()
+            .getJsonString();
+    }
 
     public static String doRegister(
         UserRepository userRepository,
@@ -58,5 +84,21 @@ public class UserRequests {
             userLogin.getPassword()
         );
         return response.getJsonString();
+    }
+
+    public static String getDashboard(
+        UserRepository userRepository,
+        UserCredentials credentials
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            credentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return UserResponses.DashboardResponse(user);
+                }
+            }
+        );
     }
 }

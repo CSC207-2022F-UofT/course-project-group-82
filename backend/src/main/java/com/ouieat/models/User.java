@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 
     @Id
-    private String Id;
+    private String id;
 
     private String firstName;
     private String lastName;
@@ -23,8 +23,6 @@ public class User {
     private ArrayList<String> postIds;
 
     private ArrayList<String> friendIds;
-    private ArrayList<String> followerIds;
-    private ArrayList<String> followingIds;
 
     public User(
         String firstName,
@@ -42,12 +40,10 @@ public class User {
         this.email = email;
         this.postIds = new ArrayList<String>();
         this.friendIds = new ArrayList<String>();
-        this.followerIds = new ArrayList<String>();
-        this.followingIds = new ArrayList<String>();
     }
 
     public String getId() {
-        return this.Id;
+        return this.id;
     }
 
     public String getFirstName() {
@@ -112,21 +108,5 @@ public class User {
 
     public void setFriendIds(ArrayList<String> friendIds) {
         this.friendIds = friendIds;
-    }
-
-    public ArrayList<String> getFollowerIds() {
-        return followerIds;
-    }
-
-    public void setFollowerIds(ArrayList<String> followerIds) {
-        this.followerIds = followerIds;
-    }
-
-    public ArrayList<String> getFollowingIds() {
-        return followingIds;
-    }
-
-    public void setFollowingIds(ArrayList<String> followingIds) {
-        this.followingIds = followingIds;
     }
 }

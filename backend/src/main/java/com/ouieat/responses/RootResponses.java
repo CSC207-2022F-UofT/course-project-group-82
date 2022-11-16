@@ -1,5 +1,6 @@
 package com.ouieat.responses;
 
+import com.ouieat.responses.models.MessageResponseData;
 import java.time.LocalDateTime;
 
 public class RootResponses {
@@ -13,6 +14,11 @@ public class RootResponses {
                 System.currentTimeMillis() +
                 "ms"
             );
-        return new Response("success", message, "RootController", "client");
+        return new Response(
+            "success",
+            new MessageResponseData(message),
+            "RootController",
+            "client"
+        );
     }
 }
