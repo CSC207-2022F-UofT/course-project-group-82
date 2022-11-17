@@ -73,12 +73,18 @@ export class APIResponse<T> {
         return this._destination;
     }
 
+    /**
+     * Get error message. Throw an error if request did not fail.
+     */
     getErrorMessage(): string {
         if (this.successful)
             throw new Error("Response succeeded; no error message provided");
         return this._errorMessage!;
     }
 
+    /**
+     * Get response data object. Throw an error if request was not successful.
+     */
     getData(): T {
         if (!this.successful)
             throw new Error("No response data; response failed");
