@@ -78,10 +78,8 @@ public class Filter {
   public void setServiceOption(String serviceOption){
       this.serviceOption = serviceOption;
   }
-  public String getServiceOption(String serviceOption){
+  public String getServiceOption(){
       return serviceOption;
   }
-
-
 
 }
