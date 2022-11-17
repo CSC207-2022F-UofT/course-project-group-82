@@ -1,6 +1,6 @@
-import { OuiRequest } from "../../../networking/OuiRequest";
 import * as SecureStore from "expo-secure-store";
 import { stringMd5 } from "react-native-quick-md5";
+import { OuiClient } from "../../../networking/OuiClient";
 export async function loginService(
     username: string,
     password: string
@@ -9,23 +9,17 @@ export async function loginService(
     // It has already undergone form validation
     // And the data is ready to be made a request
 
-    let response = await OuiRequest.makeRequest(
-        "/login",
-        {
-            username: username,
-            password: stringMd5(password),
-        },
-        "post"
-    );
+    let response = await OuiClient.post<{id: string}>("/login", {
+        username: username,
+        password: stringMd5(password),
+    });
 
     // After the response has been parsed:
-    console.log("Status: " + response.status);
 
-    // A successful login
-    if (response.status === "success") {
+    if (response.successful) {
         // Login was successful
         // Save the user token to a secure store context
-        let userID = response.data!.id;
+        let userID = response.getData().id;
         await SecureStore.setItemAsync("userToken", userID);
         return userID;
     }
