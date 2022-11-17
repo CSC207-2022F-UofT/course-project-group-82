@@ -28,8 +28,12 @@ public abstract class FilterRepository implements MongoRepository<User, String> 
     ArrayList<Filter> findRestaurantByRatings(float ratings) {
         return null;
     }
-    @Query("{distance:  '?0'}")
-    ArrayList<Filter> findRestaurantByDistance(float distance) {
+    @Query("{alcohol:  '?0'}")
+    ArrayList<Filter> findRestaurantByAlcohol(String alcohol) {
+        return null;
+    }
+    @Query("{serviceOption:  '?0'}")
+    ArrayList<Filter> findRestaurantByServiceOption(String serviceOption) {
         return null;
     }
 
