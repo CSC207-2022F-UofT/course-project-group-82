@@ -2,6 +2,7 @@ import React from "react";
 import {View, SafeAreaView, StyleSheet, TextInput, Text, ImageBackground, Button} from "react-native";
 import BackgroundImage from "./assets/userprofilebackground.png";
 import {AntDesign} from '@expo/vector-icons';
+import UploadImage from "./UploadImage";
 
 export const UserProfilePage = () => {
     const [username, onChangeUsername] = React.useState<string>();
@@ -15,9 +16,14 @@ export const UserProfilePage = () => {
             <ImageBackground
                 source={BackgroundImage}
                 style={styles.container}>
-                <SafeAreaView style={{alignItems: "center"}}>
-                    <Text style={{fontSize: 25}}>
+                <SafeAreaView style={{flex: 0.8, justifyContent: "center", alignItems: "center"}}>
+                    <Text style={{fontSize: 25, fontWeight: "bold"}}>
                         Edit Profile
+                        {"\n"}
+                    </Text>
+                    <UploadImage/>
+                    <Text>
+                        {"\n"}
                     </Text>
                     <View style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
                         <AntDesign name="idcard" size={24} color="black" />
