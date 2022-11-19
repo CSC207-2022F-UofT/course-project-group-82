@@ -1,3 +1,3 @@
-import { DashboardPage } from "./DashboardPage";
+import { DashboardPageModel } from "./DashboardPageModel";
 
-export default DashboardPage;
+export default DashboardPageModel;

@@ -9,7 +9,7 @@ export async function loginService(
     // It has already undergone form validation
     // And the data is ready to be made a request
 
-    let response = await OuiClient.post<{id: string}>("/login", {
+    let response = await OuiClient.post<{ id: string }>("/login", {
         username: username,
         password: stringMd5(password),
     });

@@ -1,4 +1,3 @@
-
 /**
  * Represents an API response with
  * response data type `T` (type of `data` field in API response)

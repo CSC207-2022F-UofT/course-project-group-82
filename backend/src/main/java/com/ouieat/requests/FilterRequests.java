@@ -1,4 +1,3 @@
 package com.ouieat.requests;
 
-public class FilterRequests {
-}
+public class FilterRequests {}
