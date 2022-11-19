@@ -17,7 +17,6 @@
 4. Set the exported constant to the URL that should be used as the target Oui-Eat server. If hosting the server locally, the network IP of the server should appear in the console.
 5. Run `npx expo start` or `npm start`.
 
-
 # Contributing
 
 -   Pages go inside the `src/pages/PageName`

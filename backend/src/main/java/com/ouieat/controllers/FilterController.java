@@ -1,4 +1,3 @@
 package com.ouieat.controllers;
 
-public class FilterController {
-}
+public class FilterController {}

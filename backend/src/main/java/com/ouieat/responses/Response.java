@@ -81,7 +81,8 @@ public class Response {
         // HACK: insert "data" property manually by stripping trailing "}" and re-adding it.
         assert mappedValue.endsWith("}");
         mappedValue = mappedValue.substring(0, mappedValue.length() - 1);
-        mappedValue += ",\"data\":" + this.serializeResponseData(this.responseData) + "}";
+        mappedValue +=
+            ",\"data\":" + this.serializeResponseData(this.responseData) + "}";
 
         return mappedValue;
     }

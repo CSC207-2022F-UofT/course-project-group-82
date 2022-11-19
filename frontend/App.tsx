@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { UserContext } from "./src/context/UserContext";
 import DashboardPage from "./src/pages/Dashboard";
 import RegisterPage from "./src/pages/Register";
+import NotificationsPage from "./src/pages/Notifications";
 
 export default function App() {
     const Stack = createNativeStackNavigator();
@@ -21,7 +22,7 @@ export default function App() {
             <NavigationContainer>
                 <Stack.Navigator>
                     {!userID ? (
-                        <>
+                        <Stack.Group>
                             <Stack.Screen
                                 name="Home"
                                 component={LoginPage}
@@ -32,13 +33,20 @@ export default function App() {
                                 component={RegisterPage}
                                 options={{ headerShown: false }}
                             />
-                        </>
+                        </Stack.Group>
                     ) : (
-                        <Stack.Screen
-                            name={"Dashboard"}
-                            component={DashboardPage}
-                            options={{ headerShown: false }}
-                        />
+                        <Stack.Group>
+                            <Stack.Screen
+                                name={"Dashboard"}
+                                component={DashboardPage}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name={"Notifications"}
+                                component={NotificationsPage}
+                                options={{ headerShown: false }}
+                            />
+                        </Stack.Group>
                     )}
                 </Stack.Navigator>
             </NavigationContainer>

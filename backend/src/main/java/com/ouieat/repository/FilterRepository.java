@@ -1,4 +1,3 @@
 package com.ouieat.repository;
 
-public class FilterRepository {
-}
+public class FilterRepository {}
