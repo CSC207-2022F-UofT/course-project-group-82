@@ -1,47 +1,52 @@
 package com.ouieat.models;
 
-import java.time.LocalDateTime;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "restaurant")
 public class Restaurant {
 
-    private LocalDateTime openTime;
-    private LocalDateTime closeTime;
-    private Address address;
+    private String address;
+    private float longitude;
+    private float latitude;
     private String cuisine;
 
+    private String name;
+
     public Restaurant(
-        LocalDateTime openTime,
-        LocalDateTime closeTime,
-        Address address,
-        String cuisine
+        float latitude,
+        float longitude,
+        String address,
+        String cuisine,
+        String name
     ) {
-        this.openTime = openTime;
-        this.closeTime = closeTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.address = address;
         this.cuisine = cuisine;
+        this.name = name;
     }
 
-    public LocalDateTime getOpenTime() {
-        return this.openTime;
+    public float getLatitude() {
+        return this.latitude;
     }
 
-    public void setOpenTime(LocalDateTime openTime) {
-        this.openTime = openTime;
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
-    public LocalDateTime getCloseTime() {
-        return this.closeTime;
+    public float getLongitude() {
+        return this.longitude;
     }
 
-    public void setCloseTime(LocalDateTime closeTime) {
-        this.closeTime = closeTime;
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return this.address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -51,5 +56,13 @@ public class Restaurant {
 
     public void setCuisine(String cuisine) {
         this.cuisine = cuisine;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

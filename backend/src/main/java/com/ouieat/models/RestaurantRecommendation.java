@@ -1,31 +1,36 @@
 package com.ouieat.models;
 
-import java.time.LocalDateTime;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document("recommendations")
 public class RestaurantRecommendation {
 
-    private User user;
+    private String userId;
     private int rating;
-    private Restaurant restaurant;
+    private String restaurantId;
     private String review;
-    private LocalDateTime postDate;
+    private String postDate;
+
+    private boolean recommends;
 
     public RestaurantRecommendation(
-        User user,
-        LocalDateTime postDate,
+        String userId,
+        String postDate,
         int rating,
-        Restaurant restaurant,
-        String review
+        String restaurantId,
+        String review,
+        boolean recommends
     ) {
-        this.user = user;
-        this.restaurant = restaurant;
+        this.userId = userId;
+        this.restaurantId = restaurantId;
         this.review = review;
         this.rating = rating;
         this.postDate = postDate;
+        this.recommends = recommends;
     }
 
-    public User getUser() {
-        return this.user;
+    public String getUserId() {
+        return this.userId;
     }
 
     public int getRating() {
@@ -44,11 +49,11 @@ public class RestaurantRecommendation {
         this.review = review;
     }
 
-    public Restaurant getRestaurant() {
-        return this.restaurant;
+    public String getRestaurantId() {
+        return this.restaurantId;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return this.postDate;
     }
 }
