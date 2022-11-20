@@ -27,11 +27,11 @@ export function RecommendRestaurantPageController(props: {
     function opinionChange(input: boolean) {
         props.setOpinion(input);
     }
-
+    /* commented out for simplicity
     function tagsChange(input: Array<string>) {
         props.setTags(input);
         // CHECK not sure if this works, given it's an array
-    }
+    }*/
 
     function validateFormResponse(): boolean {
         let response = true;
@@ -54,7 +54,7 @@ export function RecommendRestaurantPageController(props: {
         let response = await RecommendService(
             props.restaurantName,
             props.opinion,
-            props.tags
+            // props.tags
         );
         props.setErrorVisible(!!response);
         props.setErrors(response ? "" : "Could not create recommendation");
