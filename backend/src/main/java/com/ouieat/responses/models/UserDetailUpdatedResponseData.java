@@ -10,4 +10,3 @@ public class UserDetailUpdatedResponseData extends ResponseData {
         this.currentUserInfo = currentUserInfo;
     }
 }
-

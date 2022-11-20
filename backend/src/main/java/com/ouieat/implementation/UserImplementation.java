@@ -129,16 +129,18 @@ public class UserImplementation {
             );
         }
     }
-    public static Response updateUserDetails(UserRepository userRepository, User updatedUser){
+
+    public static Response updateUserDetails(
+        UserRepository userRepository,
+        User updatedUser
+    ) {
         try {
             userRepository.save(updatedUser);
             OuiLogger.log(
                 Level.INFO,
                 "Successfully updated the user: " + updatedUser.getUsername()
             );
-            return UserResponses.UpdateUserDetailsResponse(
-                updatedUser
-            );
+            return UserResponses.UpdateUserDetailsResponse(updatedUser);
         } catch (Exception e) {
             OuiLogger.log(
                 Level.ERROR,

@@ -47,6 +47,8 @@ public class ControllerExceptionHandler {
             Level.ERROR,
             "Unknown exception has occurred: " + e.getMessage()
         );
+        e.printStackTrace();
+
         return ExceptionResponses.UnknownExceptionResponse().getJsonString();
     }
 }
