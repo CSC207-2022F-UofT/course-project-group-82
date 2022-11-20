@@ -14,6 +14,4 @@ public interface FilterRepository extends MongoRepository<User, String> {
     ArrayList<Filter> findRestaurantByCuisine(String cuisine);
     @Query("{priceRange:  '?0'}")
     ArrayList<Filter> findRestaurantByPriceRange(Array[] PriceRange);
-
-
 }

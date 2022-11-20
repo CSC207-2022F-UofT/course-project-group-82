@@ -42,7 +42,6 @@ public class UserController {
 
     @GetMapping(
         path = "/dashboard",
-        consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String getDashboard(@RequestParam String userID) {
