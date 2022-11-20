@@ -4,10 +4,10 @@ import com.ouieat.responses.ResponseData;
 
 public class ErrorResponseData extends ResponseData {
 
-    public final String message;
+    public final String errorMessage;
 
     private ErrorResponseData(String message) {
-        this.message = message;
+        this.errorMessage = message;
     }
 
     public static ErrorResponseData withMessage(String message) {

@@ -11,12 +11,11 @@
 
 # Running
 
-1. `cd` into the frontend directory
-2. Run the command `npm install` inside
-3. After it’s done installing, run the command `npx expo install`
-4. Once that’s done you’re all setup (Hopefully without any errors)
-5. You can use the command `npm run start` to start the expo session
-6. The session should show up on your Expo Go app, if not, scan the QR code in the terminal
+1. `cd` into the this (the frontend) directory.
+2. Run the command `npm install` inside.
+3. Create a file `env.ts` in the root of the this directory or rename `env.ts.template` to `env.ts`.
+4. Set the exported constant to the URL that should be used as the target Oui-Eat server. If hosting the server locally, the network IP of the server should appear in the console.
+5. Run `npx expo start` or `npm start`.
 
 # Contributing
 
