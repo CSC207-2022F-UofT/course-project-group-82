@@ -9,6 +9,7 @@
         "user-agents": "^1.0.1205"
     },
     "scripts": {
-        "start": "npx ts-node src/main.ts"
+        "start": "npx ts-node src/main.ts",
+        "export-categories": "npx ts-node src/export_categories.ts"
     }
 }

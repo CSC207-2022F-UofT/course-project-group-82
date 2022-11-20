@@ -1,4 +1,5 @@
 import { Category, CategoryDatabase } from "./category";
+import fs from "fs";
 
 export const Categories = new CategoryDatabase()
     // Cuisines
@@ -189,7 +190,18 @@ export const Categories = new CategoryDatabase()
         )
     )
     // Dietary
-    .addCategory(new Category("vegetarian", "Vegetarian Options", ["vegetarian"]))
-    .addCategory(new Category("vegan", "Vegan Options", ["vegan"], ["vegetarian"]))
+    .addCategory(
+        new Category("vegetarian", "Vegetarian Options", ["vegetarian"])
+    )
+    .addCategory(
+        new Category("vegan", "Vegan Options", ["vegan"], ["vegetarian"])
+    )
     .addCategory(new Category("halal", "Halal Options", ["halal"]))
     .addCategory(new Category("kosher", "Kosher Options", ["kosher"]));
+
+export function exportCategoryData(): void {
+    fs.writeFileSync(
+        "tmp/categories.json",
+        JSON.stringify(Categories.getAllCategories())
+    );
+}

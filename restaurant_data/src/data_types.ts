@@ -2,8 +2,8 @@ export interface Restaurant {
     name: string;
     phoneNumber: string;
     yelpURL: string;
-    lat: number;
-    long: number;
+    lat: string;
+    long: string;
     website: string;
 
     address: Address;
