@@ -1,7 +1,7 @@
 package com.ouieat.repository;
 
-import com.ouieat.models.Filter;
-import com.ouieat.models.User;
+import ch.qos.logback.core.filter.Filter;
+import org.apache.catalina.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
