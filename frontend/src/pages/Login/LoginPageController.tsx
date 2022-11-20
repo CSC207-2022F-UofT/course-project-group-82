@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import LoginService from "../../services/User/Login";
+import loginService from "../../services/User/Login";
 import { LoginPageView } from "./LoginPageView";
 
 export function LoginPageController(props: {
@@ -38,7 +38,7 @@ export function LoginPageController(props: {
     }
 
     async function connectLoginToBackend() {
-        let response = await LoginService(props.username, props.password);
+        let response = await loginService(props.username, props.password);
         props.setErrorVisible(!!response);
         props.setErrors(response ? "" : "Invalid username or password");
 

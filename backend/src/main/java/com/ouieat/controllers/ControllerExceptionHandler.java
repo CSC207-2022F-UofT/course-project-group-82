@@ -42,8 +42,11 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler({ Exception.class })
-    public String unknownException() {
-        OuiLogger.log(Level.ERROR, "Unknown exception has occured");
+    public String unknownException(Exception e) {
+        OuiLogger.log(
+            Level.ERROR,
+            "Unknown exception has occurred: " + e.getMessage()
+        );
         return ExceptionResponses.UnknownExceptionResponse().getJsonString();
     }
 }
