@@ -2,6 +2,7 @@ import axios from "axios";
 import csvParser from "csv-parser";
 import fs from "fs";
 import jsdom from "jsdom";
+import UserAgent from "user-agents";
 import { CategoryDatabase, CategoryID } from "./category";
 import { parseAddress, Restaurant } from "./data_types";
 
@@ -17,9 +18,13 @@ export class RestaurantDataAggregator {
     async getCanonicalYelpURL(yelpURL: string): Promise<string> {
         // detect redirects
         if (yelpURL.includes("adredir?")) {
-            return ((await axios.get(yelpURL)).data as string).match(
-                /(?<=location\.replace\(").+(?="\))/g
-            )![0];
+            return (
+                (
+                    await axios.get(yelpURL, {
+                        headers: { "User-Agent": new UserAgent().toString() },
+                    })
+                ).data as string
+            ).match(/(?<=location\.replace\(").+(?="\))/g)![0];
         }
 
         return yelpURL;
@@ -29,7 +34,9 @@ export class RestaurantDataAggregator {
         yelpURL: string,
         minMatches: number
     ): Promise<{ categories: CategoryID[]; photos: string[] }> {
-        let response = await axios.get(yelpURL);
+        let response = await axios.get(yelpURL, {
+            headers: { "User-Agent": new UserAgent().toString() },
+        });
         let data = response.data as string;
 
         let dom = new jsdom.JSDOM(data);
@@ -81,13 +88,46 @@ export class RestaurantDataAggregator {
         }
         // fs.writeFileSync("tmp/out.html", data);
         // Scrape image data
-        let images = document.querySelectorAll<HTMLImageElement>(`img[class*="photo-header-media-image"]`);
-
+        let images = document.querySelectorAll<HTMLImageElement>(
+            `img[class*="photo-header-media-image"]`
+        );
 
         return {
             categories: Array.from(categories),
             photos: Array.from(images).map((image) => image.src),
         };
+    }
+
+    async augmentRestaurantData(restaurant: Restaurant): Promise<void> {
+        try {
+            // canonicalize yelp URL
+            restaurant.yelpURL = await this.getCanonicalYelpURL(
+                restaurant.yelpURL
+            );
+
+            let yelpData = await this.scrapeCategoryAndImageData(
+                restaurant.yelpURL,
+                4
+            );
+            restaurant.categories = yelpData.categories;
+            restaurant.photos = yelpData.photos;
+        } catch (e: any) {
+            if (axios.isAxiosError(e)) {
+                console.log(
+                    `Error when fetching data for "${restaurant.name}": ` +
+                        e.message
+                );
+            } else {
+                console.log(
+                    `Error when processing data for "${restaurant.name}": ` +
+                        e.toString()
+                );
+            }
+        }
+    }
+
+    async augmentRestaurantBatch(batch: Restaurant[]): Promise<void> {
+        await Promise.all(batch.map((r) => this.augmentRestaurantData(r)));
     }
 
     async aggregate(): Promise<Restaurant[]> {
@@ -115,6 +155,7 @@ export class RestaurantDataAggregator {
                             yelpURL: yelpURL,
                             lat: row["Restaurant Latitude"],
                             long: row["Restaurant Longitude"],
+                            website: row["Restaurant Website"],
                             categories: [],
                             photos: [],
                         });
@@ -164,25 +205,36 @@ export class RestaurantDataAggregator {
 
         // add category data to aggregated restaurants
 
-        for (let restaurant of aggregatedRestaurants) {
-            // canonicalize yelp URL
-            restaurant.yelpURL = await this.getCanonicalYelpURL(
-                restaurant.yelpURL
+        let i = 1;
+        let currentBatch: Restaurant[] = [];
+
+        for (let restaurant of aggregatedRestaurants.slice(3265)) {
+            console.log(
+                `Fetching Yelp data from "${restaurant.name}"... (${i}/${aggregatedRestaurants.length})`
             );
 
-            console.log(`Fetching Yelp data from "${restaurant.name}"...`);
-            let yelpData = await this.scrapeCategoryAndImageData(
-                restaurant.yelpURL,
-                4
-            );
-            restaurant.categories = yelpData.categories;
-            restaurant.photos = yelpData.photos;
+            currentBatch.push(restaurant);
 
-            fs.writeFileSync(
-                "tmp/restaurants.json",
-                JSON.stringify(aggregatedRestaurants, null, 4)
-            );
+            if (currentBatch.length === 3) {
+                await this.augmentRestaurantBatch(currentBatch);
+                currentBatch = [];
+                fs.writeFileSync(
+                    "tmp/restaurants.json",
+                    JSON.stringify(aggregatedRestaurants, null, 4)
+                );
+            }
+
+            i += 1;
         }
+
+        if (currentBatch.length) {
+            await this.augmentRestaurantBatch(currentBatch);
+        }
+
+        fs.writeFileSync(
+            "tmp/restaurants.json",
+            JSON.stringify(aggregatedRestaurants, null, 4)
+        );
 
         return aggregatedRestaurants;
     }

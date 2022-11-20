@@ -4,12 +4,13 @@ export interface Restaurant {
     yelpURL: string;
     lat: number;
     long: number;
+    website: string;
 
     address: Address;
 
     /** Stores categories by ID */
     categories: string[];
-    
+
     photos: string[];
 }
 
