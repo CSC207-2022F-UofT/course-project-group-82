@@ -30,7 +30,4 @@ export function RecommendRestaurantPageView(props: {
     errorVisible: boolean;
     setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
-}) {
-
-
-}
+}) {}

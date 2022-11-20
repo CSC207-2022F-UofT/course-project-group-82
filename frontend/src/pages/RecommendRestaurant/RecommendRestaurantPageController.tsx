@@ -1,6 +1,6 @@
-import React, {useContext, useState} from "react";
-import { UserContext} from "../../context/UserContext";
-import {RecommendRestaurantPageView} from "./RecommendRestaurantPageView";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext";
+import { RecommendRestaurantPageView } from "./RecommendRestaurantPageView";
 import RegisterService from "../../services/User/Register";
 
 export function RecommendRestaurantPageController(props: {
@@ -20,16 +20,15 @@ export function RecommendRestaurantPageController(props: {
     // errors: restaurant, opinion not selected
     // DESIGN CHOICE: tags not required (no minimum tags needed)
     // DESIGN CHOICE: opinion is to recommend restaurant by default. ideally, type Boolean with init value of null, but caused errors
-
 }) {
-    function restaurantNameChange(text: string){
+    function restaurantNameChange(text: string) {
         props.setRestaurantName(text);
     }
-    function opinionChange(input: boolean){
+    function opinionChange(input: boolean) {
         props.setOpinion(input);
     }
 
-    function tagsChange(input: Array<string>){
+    function tagsChange(input: Array<string>) {
         props.setTags(input);
         // CHECK not sure if this works, given it's an array
     }
@@ -37,11 +36,13 @@ export function RecommendRestaurantPageController(props: {
     function validateFormResponse(): boolean {
         let response = true;
         if (!props.restaurantName) {
-            props.setErrors("Please select a restaurant")
+            props.setErrors("Please select a restaurant");
             response = false;
         }
         if (!props.opinion) {
-            props.setErrors("Please indicate whether or not you recommend this restaurant")
+            props.setErrors(
+                "Please indicate whether or not you recommend this restaurant"
+            );
             response = false;
         }
         props.setErrorVisible(!response);
@@ -53,7 +54,7 @@ export function RecommendRestaurantPageController(props: {
         let response = await RecommendService(
             props.restaurantName,
             props.opinion,
-            props.tags,
+            props.tags
         );
         props.setErrorVisible(!!response);
         props.setErrors(response ? "" : "Could not create recommendation");
@@ -77,5 +78,5 @@ export function RecommendRestaurantPageController(props: {
         doRecommend,
     };
 
-    return <RecommendRestaurantPageView {...props} {...viewProps}/>;
+    return <RecommendRestaurantPageView {...props} {...viewProps} />;
 }

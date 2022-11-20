@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RecommendationPostingImplementation {
+
     public static Response saveNewRestaurantRecommendation(
-            RecommendationPostingRepository recommendationPostingRepository,
-            RestaurantRecommendation newRestaurantRecommendation
+        RecommendationPostingRepository recommendationPostingRepository,
+        RestaurantRecommendation newRestaurantRecommendation
     ) {
         /*
          * Saving a restaurant recommendation
@@ -23,25 +24,25 @@ public class RecommendationPostingImplementation {
         try {
             recommendationPostingRepository.save(newRestaurantRecommendation);
             OuiLogger.log(
-                    Level.INFO,
-                    "Successfully saved the new recommendation for: " + newRestaurantRecommendation.getRestaurant().getName()
+                Level.INFO,
+                "Successfully saved the new recommendation for: " +
+                newRestaurantRecommendation.getRestaurantId()
             );
             return UserResponses.RegistrationResponse(
-                    "success",
-                    newRestaurantRecommendation.getRestaurant().getName()
+                "success",
+                newRestaurantRecommendation.getRestaurantId()
             );
         } catch (Exception e) {
             OuiLogger.log(
-                    Level.ERROR,
-
-                    "Failed to save the new recommendation for: " + newRestaurantRecommendation.getRestaurant().getName()
+                Level.ERROR,
+                "Failed to save the new recommendation for: " +
+                newRestaurantRecommendation.getRestaurantId()
             );
             OuiLogger.log(Level.ERROR, e.getMessage());
             return RecommendationPostingResponses.SavePostResponse(
-                    "failure",
-                    "Error while saving the recommendation"
+                "failure",
+                "Error while saving the recommendation"
             );
         }
     }
-
 }
