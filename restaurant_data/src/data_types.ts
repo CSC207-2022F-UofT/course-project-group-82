@@ -12,6 +12,13 @@ export interface Restaurant {
     categories: string[];
 
     photos: string[];
+
+    priceLevel: number | null;
+}
+
+export interface PriceRange {
+    min: number;
+    max: number;
 }
 
 export interface Address {
@@ -44,7 +51,6 @@ export function parseAddress(addressString: string): Address | null {
         let address = addressCityParts.slice(0, -1).join(" ");
         let city = addressCityParts[addressCityParts.length - 1];
 
-
         provinceZip = provinceZip.trim();
         let provinceZipParts = provinceZip.split(" ");
         assert(provinceZipParts.length >= 2);
@@ -56,6 +62,51 @@ export function parseAddress(addressString: string): Address | null {
             city: city,
             province: province,
             zipCode: zipParts.join(" "),
+        };
+    } catch (e) {
+        if (e === "assertionError") return null;
+        throw e;
+    }
+}
+
+/**
+ * Return `null` if the price range could not be parsed for whatever reason
+ */
+export function parsePriceRange(rangeString: string): PriceRange | null {
+    const assert = (condition: boolean) => {
+        if (!condition) throw "assertionError";
+    };
+
+    try {
+        if (rangeString.startsWith("Under ")) {
+            let match = rangeString.match(/\d+/g);
+            assert(match !== null);
+            let max = Number.parseInt(match![0]);
+
+            assert(!Number.isNaN(max));
+
+            return {
+                min: 0,
+                max: max,
+            };
+        }
+
+        assert(rangeString.startsWith("$"));
+        rangeString = rangeString.slice(1);
+
+        let parts = rangeString.split("-");
+        assert(parts.length == 2);
+
+        let [minString, maxString] = parts;
+
+        let min = Number.parseInt(minString);
+        let max = Number.parseInt(maxString);
+
+        assert(!Number.isNaN(min) && !Number.isNaN(max));
+
+        return {
+            min: min,
+            max: max,
         };
     } catch (e) {
         if (e === "assertionError") return null;

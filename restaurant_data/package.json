@@ -10,6 +10,7 @@
     },
     "scripts": {
         "start": "npx ts-node src/main.ts",
-        "export-categories": "npx ts-node src/export_categories.ts"
+        "export-categories": "npx ts-node src/export_categories.ts",
+        "insert-price-data": "npx ts-node src/insert_price_data.ts"
     }
 }
