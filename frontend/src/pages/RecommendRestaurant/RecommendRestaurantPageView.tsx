@@ -7,16 +7,11 @@ import {
     Text,
 } from "react-native";
 import React, { useState } from "react";
-import ErrorDisplay from "./components/ErrorDisplay";
-import classNames from "classnames";
-import UsernameInput from "./components/UsernameInput";
-import PasswordInput from "./components/PasswordInput";
+import RestaurantNameInput from "./components/RestaurantNameInput";
+import OpinionButton from "./components/OpinionButton";
+// import TagsMultiselect from "./components/TagsMultiselect";
 import { KeyboardAwareScrollView, Modal } from "react-native-ui-lib";
-import EmailInput from "./components/EmailInput";
-import FirstNameInput from "./components/FirstNameInput";
-import LastNameInput from "./components/LastNameInput";
-import FormCompletionInput from "./components/FormCompletionInput";
-import LogoHeader from "../Login/components/LogoHeader";
+
 
 export function RecommendRestaurantPageView(props: {
     restaurantName: string;
@@ -30,4 +25,22 @@ export function RecommendRestaurantPageView(props: {
     errorVisible: boolean;
     setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
-}) {}
+
+}) {
+
+    function formView() {
+        return (
+            <View>
+                <RestaurantNameInput
+                    restaurantName={props.restaurantName}
+                    restaurantNameChange={props.restaurantNameChange}
+                />
+
+                <OpinionButton
+                    opinion={props.opinion}
+                    opinionChange={props.opinionChange}/>
+
+            </View>
+        )
+    }
+}
