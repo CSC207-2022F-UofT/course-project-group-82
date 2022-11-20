@@ -4,7 +4,7 @@ import com.ouieat.models.User;
 import com.ouieat.responses.models.DashboardResponseData;
 import com.ouieat.responses.models.LoginResponseData;
 import com.ouieat.responses.models.NullResponseData;
-import com.ouieat.responses.models.UserInfo;
+import com.ouieat.responses.models.UserDetailResponseData;
 
 public class UserResponses {
 
@@ -35,6 +35,24 @@ public class UserResponses {
             new DashboardResponseData(user),
             "dashboard",
             "client"
+        );
+    }
+    public static Response UserDetailsResponse(User user) {
+        return new Response(
+                "success",
+                new UserDetailResponseData(user),
+                "userdetails",
+                "client"
+        );
+    }
+
+
+    public static Response UpdateUserDetailsResponse(User user){
+        return new Response(
+                "success",
+                new UserDetailResponseData(user),
+                "updateuserdetails",
+                "client"
         );
     }
 }
