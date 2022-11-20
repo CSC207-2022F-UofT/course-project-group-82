@@ -1,8 +1,10 @@
 package com.ouieat.requests;
 
 import com.ouieat.implementation.UserImplementation;
+import com.ouieat.models.RestaurantRecommendation;
 import com.ouieat.models.User;
 import com.ouieat.models.UserLogin;
+import com.ouieat.repository.RecommendationPostingRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;

@@ -9,16 +9,20 @@ public class Restaurant {
     private Address address;
     private String cuisine;
 
+    private String name;
+
     public Restaurant(
         LocalDateTime openTime,
         LocalDateTime closeTime,
         Address address,
-        String cuisine
+        String cuisine,
+        String name
     ) {
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.address = address;
         this.cuisine = cuisine;
+        this.name = name;
     }
 
     public LocalDateTime getOpenTime() {
@@ -52,4 +56,12 @@ public class Restaurant {
     public void setCuisine(String cuisine) {
         this.cuisine = cuisine;
     }
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
