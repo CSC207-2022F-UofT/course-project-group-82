@@ -37,22 +37,22 @@ public class UserResponses {
             "client"
         );
     }
+
     public static Response UserDetailsResponse(User user) {
         return new Response(
-                "success",
-                new UserDetailResponseData(user),
-                "userdetails",
-                "client"
+            "success",
+            new UserDetailResponseData(user),
+            "userdetails",
+            "client"
         );
     }
 
-
-    public static Response UpdateUserDetailsResponse(User user){
+    public static Response UpdateUserDetailsResponse(User user) {
         return new Response(
-                "success",
-                new UserDetailResponseData(user),
-                "updateuserdetails",
-                "client"
+            "success",
+            new UserDetailResponseData(user),
+            "updateuserdetails",
+            "client"
         );
     }
 }

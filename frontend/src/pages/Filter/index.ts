@@ -1,3 +1,3 @@
-import { FilterPage} from "./Filter";
+import { FilterPage } from "./Filter";
 
 export default FilterPage;
