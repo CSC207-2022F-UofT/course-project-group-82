@@ -20,10 +20,5 @@ public class FilterImplementation {
      * to find the restaurant that matches the input filterRepository
      *  objects
      */
-    public static Response filter(FilterRepository filterRepository, Filter filter){
-        if(){
-
-        }
-    }
 
 }

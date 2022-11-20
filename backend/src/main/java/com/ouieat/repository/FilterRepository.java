@@ -1,10 +1,12 @@
 package com.ouieat.repository;
 
+
 import ch.qos.logback.core.filter.Filter;
 import org.apache.catalina.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public abstract class FilterRepository implements MongoRepository<User, String> {
@@ -16,27 +18,10 @@ public abstract class FilterRepository implements MongoRepository<User, String> 
     ArrayList<Filter> findRestaurantByCuisine(String cuisine) {
         return null;
     }
-    @Query("{status:  '?0'}")
-    ArrayList<Filter> findRestaurantByStatus(String status) {
+    @Query("{priceRange:  '?0'}")
+    ArrayList<Filter> findRestaurantByPriceRange(Array[] PriceRange) {
         return null;
     }
-    @Query("{waiting:  '?0'}")
-    ArrayList<Filter> findRestaurantByWaiting(String waiting) {
-        return null;
-    }
-    @Query("{ratings:  '?0'}")
-    ArrayList<Filter> findRestaurantByRatings(float ratings) {
-        return null;
-    }
-    @Query("{alcohol:  '?0'}")
-    ArrayList<Filter> findRestaurantByAlcohol(String alcohol) {
-        return null;
-    }
-    @Query("{serviceOption:  '?0'}")
-    ArrayList<Filter> findRestaurantByServiceOption(String serviceOption) {
-        return null;
-    }
-
 
 
 }
