@@ -20,11 +20,16 @@ export function DashboardPageController(props: {
         props.navigation.push("Notifications");
     }
 
+    function findRestaurants(){
+        props.navigation.push("FindRestaurants");
+    }
+
     const viewProps = {
         userID: props.userID,
         doLogout,
         showNotificationsPage,
         recommendations: props.restaurantRecommendations,
+        findRestaurants,
     };
 
     return <DashboardPageView {...viewProps} />;
