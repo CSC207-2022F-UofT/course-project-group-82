@@ -10,6 +10,7 @@ export function DashboardPageView(props: {
     doLogout: () => void;
     showNotificationsPage: () => void;
     recommendations: OuiRecommendations[];
+    findRestaurants: () => void;
 }) {
     function RecommendationMapping() {
         if (!props.recommendations || props.recommendations.length === 0) {
@@ -51,6 +52,7 @@ export function DashboardPageView(props: {
 
                 <View className={"flex flex-col p-2"}>
                     <Button
+                        onPress={props.findRestaurants}
                         iconOnRight={false}
                         borderRadius={10}
                         label={"Find a Restaurant"}
