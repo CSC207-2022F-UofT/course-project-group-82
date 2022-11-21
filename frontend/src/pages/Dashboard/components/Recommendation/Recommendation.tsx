@@ -1,8 +1,9 @@
-import { OuiRecommendations } from "../../types/OuiRecommendations";
 import { ImageBackground, Text, View } from "react-native";
 import { Avatar, Divider } from "react-native-paper";
+import { getCategoryByID } from "../../../../categories";
+import { OuiRecommendations, Category } from "../../../../data_types";
 
-export function Recommendation(props: { recommendation: OuiRecommendations }) {
+export function Recommendation(props: { recommendation: OuiRecommendations, categories: Category[] }) {
     return (
         <>
             {/* Single Recommendation */}
@@ -20,7 +21,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                             size={30}
                             source={{
                                 uri: props.recommendation
-                                    .recommendedByProfilePictureLink,
+                                    .recommendedByProfilePictureLink!,
                             }}
                         />
                     </View>
@@ -115,13 +116,13 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                     }
                 >
                     {/*Single tag*/}
-                    {props.recommendation.restaurantForTags.map((tag) => (
+                    {props.recommendation.restaurantForTags.map((category) => (
                         <View
                             className={
                                 "w-auto bg-[#ffb700] px-3 py-1 rounded-xl"
                             }
                         >
-                            <Text className={"text-xs text-white"}>{tag}</Text>
+                            <Text className={"text-xs text-white"}>{getCategoryByID(category).displayName}</Text>
                         </View>
                     ))}
                 </View>

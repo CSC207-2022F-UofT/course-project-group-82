@@ -11,8 +11,11 @@ import NotificationsPage from "./src/pages/Notifications";
 import FindRestaurantsPage from "./src/pages/FindRestaurants";
 import RecommendRestaurantPage from "./src/pages/RecommendRestaurant";
 import UserProfilePage from "./src/pages/UserProfile";
+import { LogBox } from "react-native";
 
 export default function App() {
+    LogBox.ignoreAllLogs(); // REMOVE THIS LATER
+
     const Stack = createNativeStackNavigator();
     const [userID, setUserID] = useState<string | null>("");
     const userValue = { userID, setUserID };
