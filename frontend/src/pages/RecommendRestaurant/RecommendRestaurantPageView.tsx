@@ -6,29 +6,22 @@ import {
     View,
     Text,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import RestaurantNameInput from "./components/RestaurantNameInput";
 import OpinionButton from "./components/OpinionButton";
-// import TagsMultiselect from "./components/TagsMultiselect";
-import { KeyboardAwareScrollView, Modal } from "react-native-ui-lib";
 import FormCompletionInput from "../RecommendRestaurant/components/FormCompletionInput";
-
 
 export function RecommendRestaurantPageView(props: {
     restaurantName: string;
     restaurantNameChange: (text: string) => void;
     opinion: boolean;
     opinionChange: (input: boolean) => void;
-    tags: Array<string>;
-    tagsChange: (input: boolean) => void;
     doRecommend: () => void;
     errors: string;
     errorVisible: boolean;
     setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
-
 }) {
-
     function formView() {
         return (
             <View>
@@ -39,9 +32,12 @@ export function RecommendRestaurantPageView(props: {
 
                 <OpinionButton
                     opinion={props.opinion}
-                    opinionChange={props.opinionChange}/>
+                    opinionChange={props.opinionChange}
+                />
                 <FormCompletionInput doRecommend={props.doRecommend} />
             </View>
-        )
+        );
     }
+
+    return <SafeAreaView>{formView()}</SafeAreaView>;
 }

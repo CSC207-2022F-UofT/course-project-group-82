@@ -14,18 +14,7 @@ export function RestaurantNameInput(props: {
     })
 
     return (
-        <Picker>
-            value={this.state.value}
-            placeholder={'Select a restaurant'}
-            onChange={props.restaurantNameChange}
-            searchPlaceholder={"Search restaurants..."}
-            showSearch={true}
-            mode=SINGLE
-
-            {_.map(items, item => (
-                return this.renderItem(item, index);
-                ))}
-            migrate
-        </Picker>
+        <>
+        </>
     )
 }

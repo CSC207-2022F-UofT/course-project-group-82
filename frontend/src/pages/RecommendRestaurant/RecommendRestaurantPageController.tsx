@@ -3,21 +3,17 @@ import { RecommendRestaurantPageView } from "./RecommendRestaurantPageView";
 import RecommendService from "../../services/User/Recommend";
 
 export function RecommendRestaurantPageController(props: {
+    navigation: any;
     restaurantName: string;
     setRestaurantName: React.Dispatch<React.SetStateAction<string>>;
     opinion: boolean;
     setOpinion: React.Dispatch<React.SetStateAction<boolean>>;
-    // tags: Array<string>;
-    // setTags: React.Dispatch<React.SetStateAction<Array<string>>>;
     errors: string;
     setErrors: React.Dispatch<React.SetStateAction<string>>;
     errorVisible: boolean;
     setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-
-    // DESIGN CHOICE: tags not required (no minimum tags needed)
-    // DESIGN CHOICE: opinion is to recommend restaurant by default. ideally, type Boolean with init value of null, but caused errors
 }) {
     function restaurantNameChange(text: string) {
         props.setRestaurantName(text);
@@ -50,7 +46,7 @@ export function RecommendRestaurantPageController(props: {
     async function connectRecommendToBackend() {
         let response = await RecommendService(
             props.restaurantName,
-            props.opinion,
+            props.opinion
             // props.tags
         );
         props.setErrorVisible(!!response);
@@ -69,11 +65,11 @@ export function RecommendRestaurantPageController(props: {
     }
 
     const viewProps = {
+        ...props,
         restaurantNameChange,
         opinionChange,
-        // tagsChange,
         doRecommend,
     };
 
-    return <RecommendRestaurantPageView {...props} {...viewProps} />;
+    return <RecommendRestaurantPageView {...viewProps} />;
 }

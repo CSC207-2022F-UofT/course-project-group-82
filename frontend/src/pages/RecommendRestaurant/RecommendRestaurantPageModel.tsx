@@ -21,11 +21,8 @@ export function RecommendRestaurantPageModel(props: { navigation: any }) {
         setErrors,
         loading,
         setLoading,
+        navigation: props.navigation,
     };
 
-    return (
-        <RecommendRestaurantPageController
-            {...controllerProps}
-        ></RecommendRestaurantPageController>
-    );
+    return <RecommendRestaurantPageController {...controllerProps} />;
 }

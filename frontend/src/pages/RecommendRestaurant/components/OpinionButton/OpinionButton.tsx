@@ -5,14 +5,12 @@ export function OpinionButton(props: {
     opinion: boolean;
     opinionChange: (input: boolean) => void;
 }) {
-    const styles = StyleSheet.create({
-
-    })
+    const styles = StyleSheet.create({});
 
     return (
         <RadioGroup
             // consider making disabled when no restaurant name selected
-            initialValue = {true} // take out later to make null by default
+            initialValue={true} // take out later to make null by default
             onValueChange={props.opinionChange} // need to be added to RadioButtons?
             migrate
         >
@@ -31,6 +29,5 @@ export function OpinionButton(props: {
                 migrate
             />
         </RadioGroup>
-
-    )
+    );
 }
