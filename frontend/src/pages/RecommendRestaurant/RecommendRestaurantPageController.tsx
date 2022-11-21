@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "../../context/UserContext";
+import React from "react";
 import { RecommendRestaurantPageView } from "./RecommendRestaurantPageView";
-import RegisterService from "../../services/User/Register";
+import RecommendService from "../../services/User/Recommend";
 
 export function RecommendRestaurantPageController(props: {
     restaurantName: string;
     setRestaurantName: React.Dispatch<React.SetStateAction<string>>;
     opinion: boolean;
     setOpinion: React.Dispatch<React.SetStateAction<boolean>>;
-    tags: Array<string>;
-    setTags: React.Dispatch<React.SetStateAction<Array<string>>>;
+    // tags: Array<string>;
+    // setTags: React.Dispatch<React.SetStateAction<Array<string>>>;
     errors: string;
     setErrors: React.Dispatch<React.SetStateAction<string>>;
     errorVisible: boolean;
@@ -17,7 +16,6 @@ export function RecommendRestaurantPageController(props: {
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 
-    // errors: restaurant, opinion not selected
     // DESIGN CHOICE: tags not required (no minimum tags needed)
     // DESIGN CHOICE: opinion is to recommend restaurant by default. ideally, type Boolean with init value of null, but caused errors
 }) {
@@ -27,10 +25,9 @@ export function RecommendRestaurantPageController(props: {
     function opinionChange(input: boolean) {
         props.setOpinion(input);
     }
-    /* commented out for simplicity
+    /*
     function tagsChange(input: Array<string>) {
         props.setTags(input);
-        // CHECK not sure if this works, given it's an array
     }*/
 
     function validateFormResponse(): boolean {
@@ -74,7 +71,7 @@ export function RecommendRestaurantPageController(props: {
     const viewProps = {
         restaurantNameChange,
         opinionChange,
-        tagsChange,
+        // tagsChange,
         doRecommend,
     };
 

@@ -21,7 +21,7 @@ export function RestaurantNameInput(props: {
             searchPlaceholder={"Search restaurants..."}
             showSearch={true}
             mode=SINGLE
-            {/*mode SINGLE disables multiselect*/}
+
             {_.map(items, item => (
                 return this.renderItem(item, index);
                 ))}

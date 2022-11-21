@@ -22,6 +22,8 @@ export class OuiClient {
     }
 
     static async post<T>(endpoint: string, data: any): Promise<APIResponse<T>> {
+        console.log(API_BASE);
+
         try {
             let response = await axios({
                 method: "POST",

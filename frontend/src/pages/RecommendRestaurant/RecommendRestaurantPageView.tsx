@@ -11,6 +11,7 @@ import RestaurantNameInput from "./components/RestaurantNameInput";
 import OpinionButton from "./components/OpinionButton";
 // import TagsMultiselect from "./components/TagsMultiselect";
 import { KeyboardAwareScrollView, Modal } from "react-native-ui-lib";
+import FormCompletionInput from "../RecommendRestaurant/components/FormCompletionInput";
 
 
 export function RecommendRestaurantPageView(props: {
@@ -39,7 +40,7 @@ export function RecommendRestaurantPageView(props: {
                 <OpinionButton
                     opinion={props.opinion}
                     opinionChange={props.opinionChange}/>
-
+                <FormCompletionInput doRecommend={props.doRecommend} />
             </View>
         )
     }
