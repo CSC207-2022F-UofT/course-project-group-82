@@ -41,8 +41,27 @@ public class UserController {
     }
 
     @GetMapping(
-        path = "/dashboard",
+        path = "/userdetails",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getUserDetails(@RequestParam String userId) {
+        return UserRequests.getUserDetails(
+            this.userRepository,
+            UserCredentials.fromUserID(userId)
+        );
+    }
+
+    @PostMapping(
+        path = "/updateuserdetails",
         consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String updateUserDetails(@RequestBody User updatedUser) {
+        return UserRequests.updateUserDetails(this.userRepository, updatedUser);
+    }
+
+    @GetMapping(
+        path = "/dashboard",
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String getDashboard(@RequestParam String userID) {

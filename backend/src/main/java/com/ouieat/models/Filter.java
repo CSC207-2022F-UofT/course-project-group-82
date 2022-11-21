@@ -1,43 +1,38 @@
 package com.ouieat.models;
 
+import java.lang.reflect.Array;
+
 public class Filter {
 
     // distance of restaurant from current location
     private float distance;
 
-    // type of food (ex - sushi, ramen, curry, pizza etc.)
-    private String cuisine;
+    private float userLatitude;
 
-    // restaurant open/closed
-    private String status;
+    private float userLongitude;
 
-    // yes or no
-    private String waiting;
+    // type of food (ex - Indian, Chinese, Italian etc.)
+    private String[] cuisine;
 
-    private float ratings;
+    // contains 2 values- $min and $max
+    private int priceRangeMin;
 
-    // yes-if alcohol is served, no- if not
-    private String alcohol;
-
-    // dine-in, takeout
-    private String serviceOption;
+    private int priceRangeMax;
 
     public Filter(
         float distance,
-        String cuisine,
-        String status,
-        String waiting,
-        float ratings,
-        String alcohol,
-        String serviceOption
+        float userLatitude,
+        float userLongitude,
+        String[] cuisine,
+        int priceRangeMin,
+        int priceRangeMax
     ) {
         this.distance = distance;
+        this.userLatitude = userLatitude;
+        this.userLongitude = userLatitude;
         this.cuisine = cuisine;
-        this.status = status;
-        this.waiting = waiting;
-        this.ratings = ratings;
-        this.alcohol = alcohol;
-        this.serviceOption = serviceOption;
+        this.priceRangeMin = priceRangeMin;
+        this.priceRangeMax = priceRangeMax;
     }
 
     public void setDistance(float distance) {
@@ -48,51 +43,43 @@ public class Filter {
         return distance;
     }
 
-    public void setCuisine(String cuisine) {
+    public void setCuisine(String[] cuisine) {
         this.cuisine = cuisine;
     }
 
-    public String getCuisine() {
+    public String[] getCuisine() {
         return cuisine;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setUserLatitude(int userLatitude) {
+        this.userLatitude = userLatitude;
     }
 
-    public String getStatus() {
-        return status;
+    public float getUserLatitude() {
+        return userLatitude;
     }
 
-    public void setWaiting(String waiting) {
-        this.waiting = waiting;
+    public void setUserLongitude(int userLongitude) {
+        this.userLongitude = userLongitude;
     }
 
-    public String getWaiting() {
-        return waiting;
+    public float getUserLongitude() {
+        return userLongitude;
     }
 
-    public void setRatings(float ratings) {
-        this.ratings = ratings;
+    public void setPriceRangeMin(int priceRangeMin) {
+        this.priceRangeMin = priceRangeMin;
     }
 
-    public float getRatings() {
-        return ratings;
+    public int getPriceRangeMin() {
+        return priceRangeMin;
     }
 
-    public void setAlcohol(String alcohol) {
-        this.alcohol = alcohol;
+    public void setPriceRangeMax(int priceRangeMax) {
+        this.priceRangeMax = priceRangeMax;
     }
 
-    public String getAlcohol() {
-        return alcohol;
-    }
-
-    public void setServiceOption(String serviceOption) {
-        this.serviceOption = serviceOption;
-    }
-
-    public String getServiceOption(String serviceOption) {
-        return serviceOption;
+    public int getPriceRangeMax() {
+        return priceRangeMax;
     }
 }

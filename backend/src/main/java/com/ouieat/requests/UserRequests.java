@@ -103,4 +103,46 @@ public class UserRequests {
             }
         );
     }
+
+    public static String getUserDetails(
+        UserRepository userRepository,
+        UserCredentials credentials
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            credentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return UserResponses.UserDetailsResponse(user);
+                }
+            }
+        );
+    }
+
+    public static String updateUserDetails(
+        UserRepository userRepository,
+        User updatedUser
+    ) {
+        if (updatedUser == null) return ExceptionResponses
+            .MissingRequestParametersResponse()
+            .getJsonString();
+
+        // Ensure no values are empty when being sent
+        if (
+            updatedUser.getUsername().length() == 0 ||
+            updatedUser.getPassword().length() == 0 ||
+            updatedUser.getFirstName().length() == 0 ||
+            updatedUser.getLastName().length() == 0 ||
+            updatedUser.getEmail().length() == 0
+        ) return ExceptionResponses
+            .MissingRequestParametersResponse()
+            .getJsonString();
+
+        Response response = UserImplementation.updateUserDetails(
+            userRepository,
+            updatedUser
+        );
+        return response.getJsonString();
+    }
 }
