@@ -3,7 +3,7 @@ package com.ouieat.models;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("recommendations")
-public class RestaurantRecommendation {
+public class Recommendation {
 
     private String userId;
     private int rating;
@@ -13,7 +13,7 @@ public class RestaurantRecommendation {
 
     private boolean recommends;
 
-    public RestaurantRecommendation(
+    public Recommendation(
         String userId,
         String postDate,
         int rating,

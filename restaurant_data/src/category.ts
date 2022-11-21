@@ -67,9 +67,7 @@ export class CategoryDatabase {
         let cat = this._canonicalizeCategory(category);
 
         let out = new Set(
-            this.getAllCategories().filter((n) =>
-                n.implicates.includes(cat.id)
-            )
+            this.getAllCategories().filter((n) => n.implicates.includes(cat.id))
         );
 
         for (let subCategory of out) {

@@ -16,8 +16,6 @@ export function FindRestaurantsView(props: {
     selectedCuisines: any[];
     changeOfCuisinesSelected: any;
 }) {
-    //hk07172003
-
     function filterItemsManually(searchTerm: string) {
         let temp: any[] = [];
         searchTerm = searchTerm.toLowerCase();
