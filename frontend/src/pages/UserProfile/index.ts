@@ -1,3 +1,3 @@
-import { UserProfilePage } from "./UserProfile";
+import { UserProfilePageModel } from "./UserProfilePageModel";
 
-export default UserProfilePage;
+export default UserProfilePageModel;

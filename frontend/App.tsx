@@ -4,11 +4,13 @@ import LoginPage from "./src/pages/Login";
 import { Logs } from "expo";
 import { useEffect, useState } from "react";
 import { UserContext } from "./src/context/UserContext";
+
 import DashboardPage from "./src/pages/Dashboard";
 import RegisterPage from "./src/pages/Register";
 import NotificationsPage from "./src/pages/Notifications";
 import FindRestaurantsPage from "./src/pages/FindRestaurants";
 import RecommendRestaurantPage from "./src/pages/RecommendRestaurant";
+import UserProfilePage from "./src/pages/UserProfile";
 
 export default function App() {
     const Stack = createNativeStackNavigator();
@@ -56,6 +58,11 @@ export default function App() {
                             <Stack.Screen
                                 name={"MakePost"}
                                 component={RecommendRestaurantPage}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name={"UserProfile"}
+                                component={UserProfilePage}
                                 options={{ headerShown: false }}
                             />
                         </Stack.Group>

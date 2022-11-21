@@ -1,12 +1,28 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import SimpleIcon from "../../assets/SimpleIcon.png";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, IconButton } from "react-native-paper";
-import UserIcon from "../../assets/UserIcon.png";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+import { setItemAsync } from "expo-secure-store";
 
-export function Navbar(props: {
-    showNotificationsPage: () => void;
-    doLogout: () => void;
-}) {
+import UserIcon from "./assets/UserIcon.png";
+import SimpleIcon from "./assets/SimpleIcon.png";
+
+export function Navbar(props: { navigation: any }) {
+    const { setUserID } = useContext(UserContext);
+
+    async function doLogout() {
+        setUserID(null);
+        await setItemAsync("userToken", "");
+    }
+
+    function showNotificationsPage() {
+        props.navigation.push("Notifications");
+    }
+
+    function showUserProfilePage() {
+        props.navigation.push("UserProfile");
+    }
+
     const styles = StyleSheet.create({
         withUnderline: {
             display: "flex",
@@ -59,24 +75,26 @@ export function Navbar(props: {
                         }
                     >
                         <IconButton
-                            onPress={props.showNotificationsPage}
+                            onPress={showNotificationsPage}
                             style={styles.withIcon}
                             size={18}
                             icon="bell-outline"
                         />
                         <IconButton
-                            onPress={props.doLogout}
+                            onPress={doLogout}
                             style={styles.withIcon}
                             size={18}
                             icon="logout"
                         />
-                        <View className={"p-1 border rounded-full"}>
-                            <Avatar.Image
-                                style={styles.withUserIcon}
-                                size={20}
-                                source={UserIcon}
-                            />
-                        </View>
+                        <TouchableOpacity onPress={showUserProfilePage}>
+                            <View className={"p-1 border rounded-full"}>
+                                <Avatar.Image
+                                    style={styles.withUserIcon}
+                                    size={20}
+                                    source={UserIcon}
+                                />
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

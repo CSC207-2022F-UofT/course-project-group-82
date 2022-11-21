@@ -23,15 +23,6 @@ export function DashboardPageController(props: {
         onRefresh();
     }, []);
 
-    async function doLogout() {
-        props.setUserID(null);
-        await setItemAsync("userToken", "");
-    }
-
-    function showNotificationsPage() {
-        props.navigation.push("Notifications");
-    }
-
     function findRestaurants() {
         props.navigation.push("FindRestaurants");
     }
@@ -87,9 +78,8 @@ export function DashboardPageController(props: {
     }, []);
 
     const viewProps = {
+        navigation: props.navigation,
         userID: props.userID,
-        doLogout,
-        showNotificationsPage,
         recommendations: props.restaurantRecommendations,
         findRestaurants,
         makePosts,
