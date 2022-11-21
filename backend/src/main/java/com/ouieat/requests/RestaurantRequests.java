@@ -20,4 +20,19 @@ public class RestaurantRequests {
                 .getJsonString();
         }
     }
+
+    public static String getRestaurantsById(
+        RestaurantRepository restaurantRepository,
+        String id
+    ) {
+        if (id != null) {
+            return RestaurantImplementation
+                .getRestaurantsByIdImplementation(restaurantRepository, id)
+                .getJsonString();
+        } else {
+            return ExceptionResponses
+                .MissingRequestParametersResponse()
+                .getJsonString();
+        }
+    }
 }

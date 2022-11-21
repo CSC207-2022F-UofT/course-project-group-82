@@ -1,5 +1,5 @@
 import { OuiClient } from "../../../networking/OuiClient";
-import { RecommendationInterface } from "./RecommendationInterface";
+import { RecommendationInterface } from "../RecommendationInterface";
 
 export async function doPostRecommendationService(
     recommendation: RecommendationInterface

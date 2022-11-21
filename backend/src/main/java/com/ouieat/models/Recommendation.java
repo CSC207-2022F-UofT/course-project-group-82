@@ -56,4 +56,28 @@ public class Recommendation {
     public String getDate() {
         return this.postDate;
     }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
+
+    public boolean isRecommends() {
+        return recommends;
+    }
+
+    public void setRecommends(boolean recommends) {
+        this.recommends = recommends;
+    }
 }

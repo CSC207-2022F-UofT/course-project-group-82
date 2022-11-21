@@ -24,4 +24,9 @@ public class RestaurantController {
             name
         );
     }
+
+    @GetMapping(path = "/getRestaurantsById", produces = "application/json")
+    public String getRestaurantsById(@RequestParam String id) {
+        return RestaurantRequests.getRestaurantsById(restaurantRepository, id);
+    }
 }

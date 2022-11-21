@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import Navbar from "./components/Navbar";
 import { Button } from "react-native-ui-lib";
 import { OuiRecommendations } from "./types/OuiRecommendations";
@@ -12,6 +12,8 @@ export function DashboardPageView(props: {
     recommendations: OuiRecommendations[];
     findRestaurants: () => void;
     makePosts: () => void;
+    onRefresh: () => void;
+    refreshing: boolean;
 }) {
     function RecommendationMapping() {
         if (!props.recommendations || props.recommendations.length === 0) {
@@ -36,6 +38,15 @@ export function DashboardPageView(props: {
         }
     }
 
+    function dashboardRefreshControl() {
+        return (
+            <RefreshControl
+                refreshing={props.refreshing}
+                onRefresh={props.onRefresh}
+            />
+        );
+    }
+
     return (
         <SafeAreaView className={"bg-[#ffffff]"}>
             <View className={"h-full w-full flex flex-col"}>
@@ -46,7 +57,7 @@ export function DashboardPageView(props: {
 
                 {/* All Recommendations */}
                 <View className={"w-full flex flex-1 flex-col p-3 mt-5"}>
-                    <ScrollView>
+                    <ScrollView refreshControl={dashboardRefreshControl()}>
                         <RecommendationMapping />
                     </ScrollView>
                 </View>
