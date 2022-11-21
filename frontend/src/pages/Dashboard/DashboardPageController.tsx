@@ -1,12 +1,12 @@
 import { setItemAsync } from "expo-secure-store";
 import { DashboardPageView } from "./DashboardPageView";
-import { OuiRecommendations } from "./types/OuiRecommendations";
 import { useCallback, useEffect } from "react";
 import getAllRecommendationsService from "../../services/Recommendation/Get";
 import getRestaurantByIdService from "../../services/Restaurants/GetById";
 import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 import { RecommendationInterface } from "../../services/Recommendation/RecommendationInterface";
 import { RestaurantInterface } from "../../services/Restaurants/RestaurantInterface";
+import { OuiRecommendations } from "../../data_types";
 
 export function DashboardPageController(props: {
     userID: string | null;

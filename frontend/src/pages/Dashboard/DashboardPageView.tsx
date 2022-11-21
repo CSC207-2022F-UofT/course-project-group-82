@@ -1,9 +1,9 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { Button } from "react-native-ui-lib";
-import { OuiRecommendations } from "./types/OuiRecommendations";
 import Recommendation from "./components/Recommendation";
 import Navbar from "../../components/Navbar";
+import { OuiRecommendations } from "../../data_types";
 
 export function DashboardPageView(props: {
     navigation: any;

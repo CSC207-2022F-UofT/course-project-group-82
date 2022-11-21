@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+import { OuiRecommendations } from "../../data_types";
 import { DashboardPageController } from "./DashboardPageController";
-import { OuiRecommendations } from "./types/OuiRecommendations";
 
 export function DashboardPageModel(props: { navigation: any }) {
     const { userID, setUserID } = useContext(UserContext);
