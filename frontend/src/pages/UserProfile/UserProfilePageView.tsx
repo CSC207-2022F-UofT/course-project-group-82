@@ -1,7 +1,9 @@
 import { NavigationState } from "@react-navigation/native";
 import { SafeAreaView, Text } from "react-native";
+import Navbar from "../../components/Navbar";
 
 export function UserProfilePageView(props: {
+    navigation: any;
     username: string;
     firstName: string;
     lastName: string;
@@ -14,8 +16,8 @@ export function UserProfilePageView(props: {
     updatePassword: (password: string) => void;
 }) {
     return (
-        <SafeAreaView className={"bg-[#fff]"}>
-            <Text>User profile page</Text>
+        <SafeAreaView className={"bg-[#fff] h-full w-full"}>
+            <Navbar navigation={props.navigation} />
         </SafeAreaView>
     );
 }

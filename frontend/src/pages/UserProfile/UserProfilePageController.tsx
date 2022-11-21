@@ -2,7 +2,7 @@ import { UserProfilePageView } from "./UserProfilePageView";
 import { NavigationState } from "@react-navigation/native";
 
 export function UserProfilePageController(props: {
-    navigation: NavigationState;
+    navigation: any;
     username: string;
     setUsername: (username: string) => void;
     firstName: string;
@@ -35,6 +35,7 @@ export function UserProfilePageController(props: {
     }
 
     const viewProps = {
+        navigation: props.navigation,
         username: props.username,
         firstName: props.firstName,
         lastName: props.lastName,

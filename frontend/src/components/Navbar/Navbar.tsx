@@ -15,12 +15,16 @@ export function Navbar(props: { navigation: any }) {
         await setItemAsync("userToken", "");
     }
 
+    function showDashboardPage() {
+        props.navigation.navigate("Dashboard");
+    }
+
     function showNotificationsPage() {
-        props.navigation.push("Notifications");
+        props.navigation.navigate("Notifications");
     }
 
     function showUserProfilePage() {
-        props.navigation.push("UserProfile");
+        props.navigation.navigate("UserProfile");
     }
 
     const styles = StyleSheet.create({
@@ -60,15 +64,16 @@ export function Navbar(props: { navigation: any }) {
                         "flex flex-row items-center gap-2 w-full justify-between"
                     }
                 >
-                    <View className={"flex flex-row items-center"}>
-                        <Image
-                            source={SimpleIcon}
-                            resizeMode={"center"}
-                            className={"h-10 w-10"}
-                        />
-                        <Text className={"text-2xl font-bold"}>Oui-eat</Text>
-                    </View>
-
+                    <TouchableOpacity onPress={showDashboardPage}>
+                        <View className={"flex flex-row items-center"}>
+                            <Image
+                                source={SimpleIcon}
+                                resizeMode={"center"}
+                                className={"h-10 w-10"}
+                            />
+                            <Text className={"text-2xl font-bold"}>Oui-eat</Text>
+                        </View>
+                    </TouchableOpacity>
                     <View
                         className={
                             "flex flex-row justify-end gap-x-2 items-center"
