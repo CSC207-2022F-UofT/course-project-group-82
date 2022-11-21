@@ -12,9 +12,9 @@ function restaurantGeoHash(lat: string, long: string): GeoHash {
     return lat + long;
 }
 
-async function aggregatePriceRangesFromCSV(csvPath: string): Promise<
-    Map<GeoHash, PriceRange | null>
-> {
+async function aggregatePriceRangesFromCSV(
+    csvPath: string
+): Promise<Map<GeoHash, PriceRange | null>> {
     let out = new Map<GeoHash, PriceRange | null>();
 
     await new Promise<void>((resolve) => {
@@ -42,7 +42,7 @@ async function main(): Promise<void> {
     );
 
     let priceRanges = await aggregatePriceRangesFromCSV(DATASET_PATH);
-    
+
     for (let restaurant of restaurants) {
         let hash = restaurantGeoHash(restaurant.lat, restaurant.long);
         let priceRange = priceRanges.get(hash);

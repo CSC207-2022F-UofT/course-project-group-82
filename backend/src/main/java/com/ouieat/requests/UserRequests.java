@@ -1,20 +1,14 @@
 package com.ouieat.requests;
 
-import com.ouieat.OuiLogger;
 import com.ouieat.implementation.UserImplementation;
-import com.ouieat.models.RestaurantRecommendation;
 import com.ouieat.models.User;
 import com.ouieat.models.UserCredentials;
 import com.ouieat.models.UserLogin;
-import com.ouieat.repository.RecommendationPostingRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
 import com.ouieat.responses.UserResponses;
-import java.util.List;
 import java.util.Optional;
-import org.apache.logging.log4j.Level;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 interface UserActionHandler {
     Response onUserValidated(User user);

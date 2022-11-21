@@ -158,7 +158,7 @@ export class RestaurantDataAggregator {
                             website: row["Restaurant Website"],
                             categories: [],
                             photos: [],
-                            priceLevel: null
+                            priceLevel: null,
                         });
                     })
                     .on("close", () => {
