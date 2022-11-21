@@ -1,8 +1,8 @@
 import { View, SafeAreaView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import Navbar from "../Dashboard/components/Navbar";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 import { Button } from "react-native-ui-lib";
+import Navbar from "../../components/Navbar";
 
 export function FindRestaurantsView(props: {
     navigation: any;
@@ -34,10 +34,7 @@ export function FindRestaurantsView(props: {
     return (
         <SafeAreaView className={"bg-[#ffffff]"}>
             <View className={"h-full w-full flex flex-col"}>
-                <Navbar
-                    showNotificationsPage={props.showNotificationsPage}
-                    doLogout={props.doLogout}
-                />
+                <Navbar navigation={props.navigation} />
 
                 <View className={"h-full w-full flex-1"}>
                     <SectionedMultiSelect

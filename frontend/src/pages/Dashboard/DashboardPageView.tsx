@@ -1,14 +1,12 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, RefreshControl } from "react-native";
-import Navbar from "./components/Navbar";
 import { Button } from "react-native-ui-lib";
 import { OuiRecommendations } from "./types/OuiRecommendations";
 import Recommendation from "./components/Recommendation";
+import Navbar from "../../components/Navbar";
 
 export function DashboardPageView(props: {
-    userID: string | null;
-    doLogout: () => void;
-    showNotificationsPage: () => void;
+    navigation: any;
     recommendations: OuiRecommendations[];
     findRestaurants: () => void;
     makePosts: () => void;
@@ -50,10 +48,7 @@ export function DashboardPageView(props: {
     return (
         <SafeAreaView className={"bg-[#ffffff]"}>
             <View className={"h-full w-full flex flex-col"}>
-                <Navbar
-                    showNotificationsPage={props.showNotificationsPage}
-                    doLogout={props.doLogout}
-                />
+                <Navbar navigation={props.navigation} />
 
                 {/* All Recommendations */}
                 <View className={"w-full flex flex-1 flex-col p-3 mt-5"}>

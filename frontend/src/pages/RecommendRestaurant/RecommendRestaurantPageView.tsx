@@ -1,12 +1,13 @@
 import React from "react";
 import { SafeAreaView, Text, View } from "react-native";
-import Navbar from "../Dashboard/components/Navbar";
 import { Button as RNButton } from "react-native-ui-lib";
 import SelectedRestaurantPreview from "./components/SelectedRestaurantPreview";
 import RestaurantNameFinder from "./components/RestaurantNameFinder";
 import OpinionToggle from "./components/OpinionToggle";
+import Navbar from "../../components/Navbar";
 
 export function RecommendRestaurantPageView(props: {
+    navigation: any;
     restaurantName: string;
     restaurantNameChange: (text: string) => void;
     opinion: boolean;
@@ -30,10 +31,7 @@ export function RecommendRestaurantPageView(props: {
     return (
         <SafeAreaView className={"bg-[#ffffff] h-full w-full"}>
             <View className={"flex flex-1 flex-col"}>
-                <Navbar
-                    showNotificationsPage={props.showNotificationsPage}
-                    doLogout={props.doLogout}
-                />
+                <Navbar navigation={props.navigation} />
                 {/* Share heading */}
                 <View className={"flex flex-col p-5"}>
                     <Text className={"text-lg font-semibold"}>
