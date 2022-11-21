@@ -1,6 +1,7 @@
 package com.ouieat.requests;
 
 import com.ouieat.implementation.UserImplementation;
+import com.ouieat.models.UpdateUser;
 import com.ouieat.models.User;
 import com.ouieat.models.UserCredentials;
 import com.ouieat.models.UserLogin;
@@ -116,27 +117,22 @@ public class UserRequests {
 
     public static String updateUserDetails(
         UserRepository userRepository,
-        User updatedUser
+        UserCredentials userCredentials,
+        UpdateUser updateUser
     ) {
-        if (updatedUser == null) return ExceptionResponses
-            .MissingRequestParametersResponse()
-            .getJsonString();
-
-        // Ensure no values are empty when being sent
-        if (
-            updatedUser.getUsername().length() == 0 ||
-            updatedUser.getPassword().length() == 0 ||
-            updatedUser.getFirstName().length() == 0 ||
-            updatedUser.getLastName().length() == 0 ||
-            updatedUser.getEmail().length() == 0
-        ) return ExceptionResponses
-            .MissingRequestParametersResponse()
-            .getJsonString();
-
-        Response response = UserImplementation.updateUserDetails(
+        return UserRequests.doUserAction(
             userRepository,
-            updatedUser
+            userCredentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return UserImplementation.updateUserDetails(
+                        userRepository,
+                        user,
+                        updateUser
+                    );
+                }
+            }
         );
-        return response.getJsonString();
     }
 }

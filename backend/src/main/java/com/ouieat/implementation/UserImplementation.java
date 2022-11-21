@@ -1,6 +1,7 @@
 package com.ouieat.implementation;
 
 import com.ouieat.OuiLogger;
+import com.ouieat.models.UpdateUser;
 import com.ouieat.models.User;
 import com.ouieat.models.UserCredentials;
 import com.ouieat.repository.UserRepository;
@@ -132,19 +133,47 @@ public class UserImplementation {
 
     public static Response updateUserDetails(
         UserRepository userRepository,
-        User updatedUser
+        User currentUser,
+        UpdateUser updateUser
     ) {
         try {
-            userRepository.save(updatedUser);
+            if (updateUser.email != null && updateUser.email.length() > 0) {
+                currentUser.setEmail(updateUser.email);
+            }
+            if (
+                updateUser.firstName != null &&
+                updateUser.firstName.length() > 0
+            ) {
+                currentUser.setFirstName(updateUser.firstName);
+            }
+            if (
+                updateUser.lastName != null && updateUser.lastName.length() > 0
+            ) {
+                currentUser.setLastName(updateUser.lastName);
+            }
+            if (
+                updateUser.username != null && updateUser.username.length() > 0
+            ) {
+                currentUser.setUsername(updateUser.username);
+            }
+            if (
+                updateUser.profilePictureLink != null &&
+                updateUser.profilePictureLink.length() > 0
+            ) {
+                currentUser.setProfilePictureLink(
+                    updateUser.profilePictureLink
+                );
+            }
+            userRepository.save(currentUser);
             OuiLogger.log(
                 Level.INFO,
-                "Successfully updated the user: " + updatedUser.getUsername()
+                "Successfully updated the user: " + updateUser.getUsername()
             );
-            return UserResponses.UpdateUserDetailsResponse(updatedUser);
+            return UserResponses.UpdateUserDetailsResponse(currentUser);
         } catch (Exception e) {
             OuiLogger.log(
                 Level.ERROR,
-                "Failed to update the user: " + updatedUser.getUsername()
+                "Failed to update the user: " + updateUser.getUsername()
             );
             OuiLogger.log(Level.ERROR, e.getMessage());
             return UserResponses.RegistrationResponse(

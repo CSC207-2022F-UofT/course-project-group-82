@@ -1,14 +1,28 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, IconButton } from "react-native-paper";
-import { useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { setItemAsync } from "expo-secure-store";
 
 import UserIcon from "./assets/UserIcon.png";
 import SimpleIcon from "./assets/SimpleIcon.png";
+import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 
 export function Navbar(props: { navigation: any }) {
-    const { setUserID } = useContext(UserContext);
+    const { userID, setUserID } = useContext(UserContext);
+    const [profilePictureLink, setProfilePictureLink] = useState<string>("");
+
+    useEffect(() => {
+        grabDashboardData();
+    }, []);
+
+    const grabDashboardData = useCallback(async () => {
+        if (userID) {
+            let userData = await getUserDataFromIdService(userID);
+            let user = (userData as any)["currentUserInfo"] as any;
+            setProfilePictureLink(user.profilePictureLink);
+        }
+    }, [props.navigation]);
 
     async function doLogout() {
         setUserID(null);
@@ -71,7 +85,9 @@ export function Navbar(props: { navigation: any }) {
                                 resizeMode={"center"}
                                 className={"h-10 w-10"}
                             />
-                            <Text className={"text-2xl font-bold"}>Oui-eat</Text>
+                            <Text className={"text-2xl font-bold"}>
+                                Oui-eat
+                            </Text>
                         </View>
                     </TouchableOpacity>
                     <View
@@ -92,11 +108,11 @@ export function Navbar(props: { navigation: any }) {
                             icon="logout"
                         />
                         <TouchableOpacity onPress={showUserProfilePage}>
-                            <View className={"p-1 border rounded-full"}>
+                            <View className={"shadow-lg rounded-full"}>
                                 <Avatar.Image
                                     style={styles.withUserIcon}
-                                    size={20}
-                                    source={UserIcon}
+                                    size={32}
+                                    source={{ uri: profilePictureLink }}
                                 />
                             </View>
                         </TouchableOpacity>
