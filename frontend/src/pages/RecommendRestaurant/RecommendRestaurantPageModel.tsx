@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { RecommendRestaurantPageController } from "./RecommendRestaurantPageController";
+import { UserContext } from "../../context/UserContext";
 export function RecommendRestaurantPageModel(props: { navigation: any }) {
     const [restaurantName, setRestaurantName] = useState<string>("");
     const [opinion, setOpinion] = useState<boolean>(true);
@@ -7,6 +8,12 @@ export function RecommendRestaurantPageModel(props: { navigation: any }) {
     const [errorVisible, setErrorVisible] = useState<boolean>(false);
     const [errors, setErrors] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
+    const { userID, setUserID } = useContext(UserContext);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [restaurants, setRestaurants] = useState<Array<any>>([]);
+    const [selectedRestaurant, setSelectedRestaurant] = useState<Array<any>>(
+        []
+    );
 
     const controllerProps = {
         restaurantName,
@@ -21,11 +28,16 @@ export function RecommendRestaurantPageModel(props: { navigation: any }) {
         setErrors,
         loading,
         setLoading,
+        userID,
+        setUserID,
+        navigation: props.navigation,
+        restaurants,
+        setRestaurants,
+        selectedRestaurant,
+        setSelectedRestaurant,
+        modalVisible,
+        setModalVisible,
     };
 
-    return (
-        <RecommendRestaurantPageController
-            {...controllerProps}
-        ></RecommendRestaurantPageController>
-    );
+    return <RecommendRestaurantPageController {...controllerProps} />;
 }

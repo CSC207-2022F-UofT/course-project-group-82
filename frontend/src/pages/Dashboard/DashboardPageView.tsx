@@ -11,6 +11,7 @@ export function DashboardPageView(props: {
     showNotificationsPage: () => void;
     recommendations: OuiRecommendations[];
     findRestaurants: () => void;
+    makePosts: () => void;
 }) {
     function RecommendationMapping() {
         if (!props.recommendations || props.recommendations.length === 0) {
@@ -51,14 +52,24 @@ export function DashboardPageView(props: {
                 </View>
 
                 <View className={"flex flex-col p-2"}>
-                    <Button
-                        onPress={props.findRestaurants}
-                        iconOnRight={false}
-                        borderRadius={10}
-                        label={"Find a Restaurant"}
-                        size={Button.sizes.large}
-                        backgroundColor={"#FFB700"}
-                    />
+                    <View className={"flex flex-row justify-center gap-x-3"}>
+                        <Button
+                            onPress={props.findRestaurants}
+                            iconOnRight={false}
+                            borderRadius={10}
+                            label={"Find a Restaurant"}
+                            size={Button.sizes.large}
+                            backgroundColor={"#FFB700"}
+                        />
+                        <Button
+                            onPress={props.makePosts}
+                            iconOnRight={false}
+                            borderRadius={10}
+                            label={"Make a post"}
+                            size={Button.sizes.large}
+                            backgroundColor={"#FFB700"}
+                        />
+                    </View>
                 </View>
             </View>
         </SafeAreaView>

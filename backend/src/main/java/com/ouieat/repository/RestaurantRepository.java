@@ -1,8 +1,6 @@
 package com.ouieat.repository;
 
-import ch.qos.logback.core.filter.Filter;
 import com.ouieat.models.Restaurant;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

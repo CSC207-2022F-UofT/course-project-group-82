@@ -1,25 +1,29 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "../../context/UserContext";
+import React from "react";
 import { RecommendRestaurantPageView } from "./RecommendRestaurantPageView";
-import RegisterService from "../../services/User/Register";
+import { setItemAsync } from "expo-secure-store";
+import getByNameService from "../../services/Restaurants/GetByName";
+import doPostRecommendationService from "../../services/Recommendation/Post";
 
 export function RecommendRestaurantPageController(props: {
+    navigation: any;
     restaurantName: string;
     setRestaurantName: React.Dispatch<React.SetStateAction<string>>;
     opinion: boolean;
     setOpinion: React.Dispatch<React.SetStateAction<boolean>>;
-    tags: Array<string>;
-    setTags: React.Dispatch<React.SetStateAction<Array<string>>>;
     errors: string;
     setErrors: React.Dispatch<React.SetStateAction<string>>;
     errorVisible: boolean;
     setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-
-    // errors: restaurant, opinion not selected
-    // DESIGN CHOICE: tags not required (no minimum tags needed)
-    // DESIGN CHOICE: opinion is to recommend restaurant by default. ideally, type Boolean with init value of null, but caused errors
+    userID: string | null;
+    setUserID: (userID: string | null) => void;
+    restaurants: Array<any>;
+    setRestaurants: React.Dispatch<React.SetStateAction<Array<any>>>;
+    selectedRestaurant: any[];
+    setSelectedRestaurant: React.Dispatch<React.SetStateAction<any[]>>;
+    modalVisible: boolean;
+    setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     function restaurantNameChange(text: string) {
         props.setRestaurantName(text);
@@ -28,9 +32,13 @@ export function RecommendRestaurantPageController(props: {
         props.setOpinion(input);
     }
 
-    function tagsChange(input: Array<string>) {
-        props.setTags(input);
-        // CHECK not sure if this works, given it's an array
+    async function doLogout() {
+        props.setUserID(null);
+        await setItemAsync("userToken", "");
+    }
+
+    function showNotificationsPage() {
+        props.navigation.push("Notifications");
     }
 
     function validateFormResponse(): boolean {
@@ -49,34 +57,76 @@ export function RecommendRestaurantPageController(props: {
         return response;
     }
 
-    // CHECK: not sure if this is correctly linked to backend
-    async function connectRecommendToBackend() {
-        let response = await RecommendService(
-            props.restaurantName,
-            props.opinion,
-            props.tags
-        );
-        props.setErrorVisible(!!response);
-        props.setErrors(response ? "" : "Could not create recommendation");
-
-        if (response) {
-            console.log("Recommendation created: " + response);
-            props.navigation.navigate("Home");
-        }
+    function changeRestaurantSelected(restaurant: any[]) {
+        props.setSelectedRestaurant(restaurant);
     }
-    async function doRecommend() {
-        if (!validateFormResponse()) return;
+
+    function openModal() {
+        props.setModalVisible(true);
+    }
+
+    function closeModal() {
+        props.setModalVisible(false);
+    }
+
+    async function updateSearchField(text: string) {
+        props.setRestaurantName(text);
+    }
+
+    async function searchRestaurant() {
+        console.log("searchRestaurant");
         props.setLoading(true);
-        await connectRecommendToBackend();
+        if (props.restaurantName.length === 0) {
+            props.setRestaurants([]);
+            props.setLoading(false);
+            return;
+        }
+        let restaurants = await getByNameService(props.restaurantName);
+        if (!restaurants) props.setRestaurants([]);
+        else {
+            restaurants = restaurants as any[];
+            if (restaurants.length > 100) {
+                restaurants = restaurants.slice(0, 100);
+            }
+            props.setRestaurants(restaurants as any[]);
+        }
         props.setLoading(false);
     }
 
+    async function recommendRestaurant() {
+        const response = await doPostRecommendationService({
+            userId: props.userID || "",
+            restaurantId: (props.selectedRestaurant as any).id,
+            recommends: props.opinion,
+            postDate: new Date().toLocaleString(),
+            rating: 0,
+            review: "Empty review",
+        });
+
+        if (response) {
+            props.navigation.navigate("Dashboard");
+        } else {
+            props.setErrors("Error recommending restaurant");
+            props.setErrorVisible(true);
+        }
+    }
+
     const viewProps = {
+        ...props,
         restaurantNameChange,
         opinionChange,
-        tagsChange,
-        doRecommend,
+        doLogout,
+        showNotificationsPage,
+        restaurants: props.restaurants,
+        selectedRestaurant: props.selectedRestaurant,
+        changeRestaurantSelected,
+        modalVisible: props.modalVisible,
+        openModal,
+        closeModal,
+        updateSearchField,
+        searchRestaurant,
+        recommendRestaurant,
     };
 
-    return <RecommendRestaurantPageView {...props} {...viewProps} />;
+    return <RecommendRestaurantPageView {...viewProps} />;
 }

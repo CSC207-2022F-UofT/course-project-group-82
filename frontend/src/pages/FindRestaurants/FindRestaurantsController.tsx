@@ -1,20 +1,19 @@
-import {FindRestaurantsView} from "./FindRestaurantsView";
-import {setItemAsync} from "expo-secure-store";
+import { FindRestaurantsView } from "./FindRestaurantsView";
+import { setItemAsync } from "expo-secure-store";
 
 export function FindRestaurantsController(props: {
-    navigation: any,
-    userID: string | null,
+    navigation: any;
+    userID: string | null;
     setUserID: (text: string | null) => void;
-    restaurantInput: string,
-    setRestaurantInput: (text: string) => void,
-    expanded: boolean,
+    restaurantInput: string;
+    setRestaurantInput: (text: string) => void;
+    expanded: boolean;
     setExpanded: (state: boolean) => void;
     searchItems: any;
     selectedCuisines: any[];
     setSelectedCuisines: any;
-}){
-
-    function updateRestaurantInput(input: string){
+}) {
+    function updateRestaurantInput(input: string) {
         props.setRestaurantInput(input);
     }
 
@@ -27,7 +26,7 @@ export function FindRestaurantsController(props: {
         props.navigation.push("Notifications");
     }
 
-    function changeOfCuisinesSelected(selectedCuisines: any[]){
+    function changeOfCuisinesSelected(selectedCuisines: any[]) {
         props.setSelectedCuisines(selectedCuisines);
     }
 
@@ -44,8 +43,7 @@ export function FindRestaurantsController(props: {
         searchItems: props.searchItems,
         selectedCuisines: props.selectedCuisines,
         changeOfCuisinesSelected,
-    }
+    };
 
-
-    return <FindRestaurantsView {...viewProps} />
+    return <FindRestaurantsView {...viewProps} />;
 }

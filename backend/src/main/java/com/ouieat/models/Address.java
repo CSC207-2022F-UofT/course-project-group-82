@@ -1,52 +1,23 @@
 package com.ouieat.models;
 
-import java.time.LocalDateTime;
-
 public class Address {
 
-    private String streetName;
-    private int address;
+    private String streetAddress;
     private String city;
     private String province;
-    private String zipcode;
-    private String country;
-    private float latitude;
-    private float longitude;
+
+    private String zipCode;
 
     public Address(
-        String streetName,
-        int address,
+        String streetAddress,
         String city,
         String province,
-        String zipcode,
-        String country,
-        float latitude,
-        float longitude
+        String zipCode
     ) {
-        this.streetName = streetName;
-        this.address = address;
         this.city = city;
         this.province = province;
-        this.zipcode = zipcode;
-        this.country = country;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public String getStreetName() {
-        return this.streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public int getAddress() {
-        return this.address;
-    }
-
-    public void setAddress(int address) {
-        this.address = address;
+        this.zipCode = zipCode;
+        this.streetAddress = streetAddress;
     }
 
     public String getCity() {
@@ -65,35 +36,19 @@ public class Address {
         this.province = province;
     }
 
-    public String getZipcode() {
-        return this.zipcode;
+    public String getStreetAddress() {
+        return streetAddress;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
     }
 
-    public String getCountry() {
-        return this.country;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public float getLatitude() {
-        return this.latitude;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public float getLongitude() {
-        return this.longitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }
