@@ -1,5 +1,7 @@
 ![Logo](https://raw.githubusercontent.com/CSC207-2022F-UofT/course-project-group-82/main/images/oui_logo.png)
 # Oui-Eat
+![Stars](https://img.shields.io/github/stars/CSC207-2022F-UofT/course-project-group-82?style=social)
+
 
 *The answer to the age-old question: "Where do you want to eat?"*
 
