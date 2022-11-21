@@ -1,16 +1,342 @@
-import {FindRestaurantsController} from "./FindRestaurantsController";
-import React, {useContext, useState} from "react";
-import {UserContext} from "../../context/UserContext";
+import { FindRestaurantsController } from "./FindRestaurantsController";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 
-export function FindRestaurantsModel(props: {navigation: any}){
-
+export function FindRestaurantsModel(props: { navigation: any }) {
     const { userID, setUserID } = useContext(UserContext);
     const [restaurantInput, setRestaurantInput] = useState<string>("");
     const [expanded, setExpanded] = React.useState<boolean>(true);
 
     const [selectedCuisines, setSelectedCuisines] = React.useState<any[]>([]);
 
-    const searchItemsNew = [{"id":"asian","displayName":"Asian","searchKeywords":[],"implicates":[]},{"id":"chinese","displayName":"Chinese","searchKeywords":["chinese"],"implicates":["asian"]},{"id":"japanese","displayName":"Japanese","searchKeywords":["japanese"],"implicates":["asian"]},{"id":"korean","displayName":"Korean","searchKeywords":["korean"],"implicates":["asian"]},{"id":"indian","displayName":"Indian","searchKeywords":["indian","tandoori","masala"],"implicates":["asian"]},{"id":"pakistani","displayName":"Pakistani","searchKeywords":["pakistani"],"implicates":["asian"]},{"id":"thai","displayName":"Thai","searchKeywords":["thai"],"implicates":["asian"]},{"id":"vietnamese","displayName":"Vietnamese","searchKeywords":["vietnamese","viet","pho"],"implicates":["asian"]},{"id":"african","displayName":"African","searchKeywords":["african","ethiopian","egyptian","nigerian","kenya","kenyan","morocco","moroccan","ghana","ghanaian","sudan","sudanese"],"implicates":[]},{"id":"east_european","displayName":"EasternEuropean","searchKeywords":["russia","russian","poland","polish","romania","romanian","hungary","hungarian","bulgaria","bulgarian","belarus","lithuania","lithuanian","czech"],"implicates":[]},{"id":"italian","displayName":"Italian","searchKeywords":["italian","italy"],"implicates":[]},{"id":"french","displayName":"French","searchKeywords":["french","france"],"implicates":[]},{"id":"spanish","displayName":"Spanish","searchKeywords":["spain","spanish"],"implicates":[]},{"id":"latin_american","displayName":"LatinAmerican","searchKeywords":["mexican","mexico","taco","burrito","argentina","argentinian","bolivia","bolivian","brazil","brazilian","chile","chilean","colombia","colombian","costarica","costarican","cuba","cuban","dominican","ecuador","peru","peruvian","venezuela","venezuelan"],"implicates":[]},{"id":"afghan","displayName":"Afghan","searchKeywords":["afghan"],"implicates":[]},{"id":"lebanese","displayName":"Lebanese","searchKeywords":["lebanon"],"implicates":[]},{"id":"caribbean","displayName":"Caribbean","searchKeywords":["caribbean","jamaica","jamaican"],"implicates":[]},{"id":"greek","displayName":"Greek","searchKeywords":["greek","gyro","greece"],"implicates":[]},{"id":"turkish","displayName":"Turkish","searchKeywords":["turkish"],"implicates":[]},{"id":"ramen","displayName":"Ramen","searchKeywords":["ramen"],"implicates":["japanese","noodles"]},{"id":"noodles","displayName":"Noodles","searchKeywords":["noodle","mein"],"implicates":[]},{"id":"burgers","displayName":"Burgers","searchKeywords":["burger","hamburger","cheeseburger"],"implicates":["grill"]},{"id":"burritos","displayName":"Burritos","searchKeywords":["burrito"],"implicates":["latin_american"]},{"id":"pizza","displayName":"Pizza","searchKeywords":["pizza"],"implicates":[]},{"id":"ice_cream","displayName":"IceCream","searchKeywords":["icecream"],"implicates":[]},{"id":"fast_food","displayName":"FastFood","searchKeywords":["fastfood","mcdonalds","burgerking"],"implicates":[]},{"id":"poutine","displayName":"Poutine","searchKeywords":["poutine"],"implicates":[]},{"id":"sushi","displayName":"Sushi","searchKeywords":["sushi","sashimi"],"implicates":["japanese"]},{"id":"steak","displayName":"Steak","searchKeywords":["steak","steakhouse","wagyu"],"implicates":[]},{"id":"shawarma","displayName":"Shawarma","searchKeywords":["shawarma"],"implicates":[]},{"id":"fried_chicken","displayName":"FriedChicken","searchKeywords":["friedchicken","popeyes","chickentenders"],"implicates":[]},{"id":"grill","displayName":"Grill","searchKeywords":[],"implicates":[]},{"id":"fusion","displayName":"Fusion","searchKeywords":["fusion"],"implicates":[]},{"id":"cafe","displayName":"Café","searchKeywords":["cafe"],"implicates":["coffee"]},{"id":"bakery","displayName":"Bakery","searchKeywords":["pastry","pastries","bakery"],"implicates":[]},{"id":"seafood","displayName":"Seafood","searchKeywords":["seafood","lobster","clam","oyster"],"implicates":[]},{"id":"drinks","displayName":"Drinks","searchKeywords":[],"implicates":[]},{"id":"boba","displayName":"BubbleTea","searchKeywords":["boba","bubbletea"],"implicates":["asian","drinks"]},{"id":"coffee","displayName":"Coffee","searchKeywords":["coffee","cafe"],"implicates":["drinks"]},{"id":"alcohol","displayName":"ServesAlcohol","searchKeywords":["wine","beer","soju","llbo","liquor","vodka","tequila","cocktail"],"implicates":["drinks"]},{"id":"vegetarian","displayName":"VegetarianOptions","searchKeywords":["vegetarian"],"implicates":[]},{"id":"vegan","displayName":"VeganOptions","searchKeywords":["vegan"],"implicates":["vegetarian"]},{"id":"halal","displayName":"HalalOptions","searchKeywords":["halal"],"implicates":[]},{"id":"kosher","displayName":"KosherOptions","searchKeywords":["kosher"],"implicates":[]}]
+    const searchItemsNew = [
+        {
+            id: "asian",
+            displayName: "Asian",
+            searchKeywords: [],
+            implicates: [],
+        },
+        {
+            id: "chinese",
+            displayName: "Chinese",
+            searchKeywords: ["chinese"],
+            implicates: ["asian"],
+        },
+        {
+            id: "japanese",
+            displayName: "Japanese",
+            searchKeywords: ["japanese"],
+            implicates: ["asian"],
+        },
+        {
+            id: "korean",
+            displayName: "Korean",
+            searchKeywords: ["korean"],
+            implicates: ["asian"],
+        },
+        {
+            id: "indian",
+            displayName: "Indian",
+            searchKeywords: ["indian", "tandoori", "masala"],
+            implicates: ["asian"],
+        },
+        {
+            id: "pakistani",
+            displayName: "Pakistani",
+            searchKeywords: ["pakistani"],
+            implicates: ["asian"],
+        },
+        {
+            id: "thai",
+            displayName: "Thai",
+            searchKeywords: ["thai"],
+            implicates: ["asian"],
+        },
+        {
+            id: "vietnamese",
+            displayName: "Vietnamese",
+            searchKeywords: ["vietnamese", "viet", "pho"],
+            implicates: ["asian"],
+        },
+        {
+            id: "african",
+            displayName: "African",
+            searchKeywords: [
+                "african",
+                "ethiopian",
+                "egyptian",
+                "nigerian",
+                "kenya",
+                "kenyan",
+                "morocco",
+                "moroccan",
+                "ghana",
+                "ghanaian",
+                "sudan",
+                "sudanese",
+            ],
+            implicates: [],
+        },
+        {
+            id: "east_european",
+            displayName: "EasternEuropean",
+            searchKeywords: [
+                "russia",
+                "russian",
+                "poland",
+                "polish",
+                "romania",
+                "romanian",
+                "hungary",
+                "hungarian",
+                "bulgaria",
+                "bulgarian",
+                "belarus",
+                "lithuania",
+                "lithuanian",
+                "czech",
+            ],
+            implicates: [],
+        },
+        {
+            id: "italian",
+            displayName: "Italian",
+            searchKeywords: ["italian", "italy"],
+            implicates: [],
+        },
+        {
+            id: "french",
+            displayName: "French",
+            searchKeywords: ["french", "france"],
+            implicates: [],
+        },
+        {
+            id: "spanish",
+            displayName: "Spanish",
+            searchKeywords: ["spain", "spanish"],
+            implicates: [],
+        },
+        {
+            id: "latin_american",
+            displayName: "LatinAmerican",
+            searchKeywords: [
+                "mexican",
+                "mexico",
+                "taco",
+                "burrito",
+                "argentina",
+                "argentinian",
+                "bolivia",
+                "bolivian",
+                "brazil",
+                "brazilian",
+                "chile",
+                "chilean",
+                "colombia",
+                "colombian",
+                "costarica",
+                "costarican",
+                "cuba",
+                "cuban",
+                "dominican",
+                "ecuador",
+                "peru",
+                "peruvian",
+                "venezuela",
+                "venezuelan",
+            ],
+            implicates: [],
+        },
+        {
+            id: "afghan",
+            displayName: "Afghan",
+            searchKeywords: ["afghan"],
+            implicates: [],
+        },
+        {
+            id: "lebanese",
+            displayName: "Lebanese",
+            searchKeywords: ["lebanon"],
+            implicates: [],
+        },
+        {
+            id: "caribbean",
+            displayName: "Caribbean",
+            searchKeywords: ["caribbean", "jamaica", "jamaican"],
+            implicates: [],
+        },
+        {
+            id: "greek",
+            displayName: "Greek",
+            searchKeywords: ["greek", "gyro", "greece"],
+            implicates: [],
+        },
+        {
+            id: "turkish",
+            displayName: "Turkish",
+            searchKeywords: ["turkish"],
+            implicates: [],
+        },
+        {
+            id: "ramen",
+            displayName: "Ramen",
+            searchKeywords: ["ramen"],
+            implicates: ["japanese", "noodles"],
+        },
+        {
+            id: "noodles",
+            displayName: "Noodles",
+            searchKeywords: ["noodle", "mein"],
+            implicates: [],
+        },
+        {
+            id: "burgers",
+            displayName: "Burgers",
+            searchKeywords: ["burger", "hamburger", "cheeseburger"],
+            implicates: ["grill"],
+        },
+        {
+            id: "burritos",
+            displayName: "Burritos",
+            searchKeywords: ["burrito"],
+            implicates: ["latin_american"],
+        },
+        {
+            id: "pizza",
+            displayName: "Pizza",
+            searchKeywords: ["pizza"],
+            implicates: [],
+        },
+        {
+            id: "ice_cream",
+            displayName: "IceCream",
+            searchKeywords: ["icecream"],
+            implicates: [],
+        },
+        {
+            id: "fast_food",
+            displayName: "FastFood",
+            searchKeywords: ["fastfood", "mcdonalds", "burgerking"],
+            implicates: [],
+        },
+        {
+            id: "poutine",
+            displayName: "Poutine",
+            searchKeywords: ["poutine"],
+            implicates: [],
+        },
+        {
+            id: "sushi",
+            displayName: "Sushi",
+            searchKeywords: ["sushi", "sashimi"],
+            implicates: ["japanese"],
+        },
+        {
+            id: "steak",
+            displayName: "Steak",
+            searchKeywords: ["steak", "steakhouse", "wagyu"],
+            implicates: [],
+        },
+        {
+            id: "shawarma",
+            displayName: "Shawarma",
+            searchKeywords: ["shawarma"],
+            implicates: [],
+        },
+        {
+            id: "fried_chicken",
+            displayName: "FriedChicken",
+            searchKeywords: ["friedchicken", "popeyes", "chickentenders"],
+            implicates: [],
+        },
+        {
+            id: "grill",
+            displayName: "Grill",
+            searchKeywords: [],
+            implicates: [],
+        },
+        {
+            id: "fusion",
+            displayName: "Fusion",
+            searchKeywords: ["fusion"],
+            implicates: [],
+        },
+        {
+            id: "cafe",
+            displayName: "Café",
+            searchKeywords: ["cafe"],
+            implicates: ["coffee"],
+        },
+        {
+            id: "bakery",
+            displayName: "Bakery",
+            searchKeywords: ["pastry", "pastries", "bakery"],
+            implicates: [],
+        },
+        {
+            id: "seafood",
+            displayName: "Seafood",
+            searchKeywords: ["seafood", "lobster", "clam", "oyster"],
+            implicates: [],
+        },
+        {
+            id: "drinks",
+            displayName: "Drinks",
+            searchKeywords: [],
+            implicates: [],
+        },
+        {
+            id: "boba",
+            displayName: "BubbleTea",
+            searchKeywords: ["boba", "bubbletea"],
+            implicates: ["asian", "drinks"],
+        },
+        {
+            id: "coffee",
+            displayName: "Coffee",
+            searchKeywords: ["coffee", "cafe"],
+            implicates: ["drinks"],
+        },
+        {
+            id: "alcohol",
+            displayName: "ServesAlcohol",
+            searchKeywords: [
+                "wine",
+                "beer",
+                "soju",
+                "llbo",
+                "liquor",
+                "vodka",
+                "tequila",
+                "cocktail",
+            ],
+            implicates: ["drinks"],
+        },
+        {
+            id: "vegetarian",
+            displayName: "VegetarianOptions",
+            searchKeywords: ["vegetarian"],
+            implicates: [],
+        },
+        {
+            id: "vegan",
+            displayName: "VeganOptions",
+            searchKeywords: ["vegan"],
+            implicates: ["vegetarian"],
+        },
+        {
+            id: "halal",
+            displayName: "HalalOptions",
+            searchKeywords: ["halal"],
+            implicates: [],
+        },
+        {
+            id: "kosher",
+            displayName: "KosherOptions",
+            searchKeywords: ["kosher"],
+            implicates: [],
+        },
+    ];
 
     const controllerProps = {
         ...props,
@@ -23,7 +349,7 @@ export function FindRestaurantsModel(props: {navigation: any}){
         searchItems: searchItemsNew,
         selectedCuisines,
         setSelectedCuisines,
-    }
+    };
 
-    return <FindRestaurantsController {...controllerProps} />
+    return <FindRestaurantsController {...controllerProps} />;
 }

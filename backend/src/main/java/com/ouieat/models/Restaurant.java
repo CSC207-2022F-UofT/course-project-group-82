@@ -1,9 +1,13 @@
 package com.ouieat.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "restaurant")
 public class Restaurant {
+
+    @Id
+    private String id;
 
     private String name;
 
@@ -23,6 +27,7 @@ public class Restaurant {
     private String[] photos;
 
     public Restaurant(
+        String id,
         String name,
         String phoneNumber,
         Address address,
@@ -34,6 +39,7 @@ public class Restaurant {
         String[] categories,
         String[] photos
     ) {
+        this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -44,6 +50,14 @@ public class Restaurant {
         this.website = website;
         this.categories = categories;
         this.photos = photos;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getLatitude() {

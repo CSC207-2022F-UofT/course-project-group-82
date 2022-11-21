@@ -1,6 +1,8 @@
 import React from "react";
 import { RecommendRestaurantPageView } from "./RecommendRestaurantPageView";
-import RecommendService from "../../services/User/Recommend";
+import { setItemAsync } from "expo-secure-store";
+import getByNameService from "../../services/Restaurants/GetByName";
+import doPostRecommendationService from "../../services/Recommendation/Post";
 
 export function RecommendRestaurantPageController(props: {
     navigation: any;
@@ -14,6 +16,14 @@ export function RecommendRestaurantPageController(props: {
     setErrorVisible: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    userID: string | null;
+    setUserID: (userID: string | null) => void;
+    restaurants: Array<any>;
+    setRestaurants: React.Dispatch<React.SetStateAction<Array<any>>>;
+    selectedRestaurant: any[];
+    setSelectedRestaurant: React.Dispatch<React.SetStateAction<any[]>>;
+    modalVisible: boolean;
+    setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     function restaurantNameChange(text: string) {
         props.setRestaurantName(text);
@@ -21,10 +31,15 @@ export function RecommendRestaurantPageController(props: {
     function opinionChange(input: boolean) {
         props.setOpinion(input);
     }
-    /*
-    function tagsChange(input: Array<string>) {
-        props.setTags(input);
-    }*/
+
+    async function doLogout() {
+        props.setUserID(null);
+        await setItemAsync("userToken", "");
+    }
+
+    function showNotificationsPage() {
+        props.navigation.push("Notifications");
+    }
 
     function validateFormResponse(): boolean {
         let response = true;
@@ -42,33 +57,75 @@ export function RecommendRestaurantPageController(props: {
         return response;
     }
 
-    // CHECK: not sure if this is correctly linked to backend
-    async function connectRecommendToBackend() {
-        let response = await RecommendService(
-            props.restaurantName,
-            props.opinion
-            // props.tags
-        );
-        props.setErrorVisible(!!response);
-        props.setErrors(response ? "" : "Could not create recommendation");
+    function changeRestaurantSelected(restaurant: any[]) {
+        props.setSelectedRestaurant(restaurant);
+    }
+
+    function openModal() {
+        props.setModalVisible(true);
+    }
+
+    function closeModal() {
+        props.setModalVisible(false);
+    }
+
+    async function updateSearchField(text: string) {
+        props.setRestaurantName(text);
+    }
+
+    async function searchRestaurant() {
+        console.log("searchRestaurant");
+        props.setLoading(true);
+        if (props.restaurantName.length === 0) {
+            props.setRestaurants([]);
+            props.setLoading(false);
+            return;
+        }
+        let restaurants = await getByNameService(props.restaurantName);
+        if (!restaurants) props.setRestaurants([]);
+        else {
+            restaurants = restaurants as any[];
+            if (restaurants.length > 100) {
+                restaurants = restaurants.slice(0, 100);
+            }
+            props.setRestaurants(restaurants as any[]);
+        }
+        props.setLoading(false);
+    }
+
+    async function recommendRestaurant() {
+        const response = await doPostRecommendationService({
+            userId: props.userID || "",
+            restaurantId: (props.selectedRestaurant as any).id,
+            recommends: props.opinion,
+            postDate: new Date().toLocaleString(),
+            rating: 0,
+            review: "Empty review",
+        });
 
         if (response) {
-            console.log("Recommendation created: " + response);
-            props.navigation.navigate("Home");
+            props.navigation.navigate("Dashboard");
+        } else {
+            props.setErrors("Error recommending restaurant");
+            props.setErrorVisible(true);
         }
-    }
-    async function doRecommend() {
-        if (!validateFormResponse()) return;
-        props.setLoading(true);
-        await connectRecommendToBackend();
-        props.setLoading(false);
     }
 
     const viewProps = {
         ...props,
         restaurantNameChange,
         opinionChange,
-        doRecommend,
+        doLogout,
+        showNotificationsPage,
+        restaurants: props.restaurants,
+        selectedRestaurant: props.selectedRestaurant,
+        changeRestaurantSelected,
+        modalVisible: props.modalVisible,
+        openModal,
+        closeModal,
+        updateSearchField,
+        searchRestaurant,
+        recommendRestaurant,
     };
 
     return <RecommendRestaurantPageView {...viewProps} />;

@@ -8,6 +8,7 @@ import DashboardPage from "./src/pages/Dashboard";
 import RegisterPage from "./src/pages/Register";
 import NotificationsPage from "./src/pages/Notifications";
 import FindRestaurantsPage from "./src/pages/FindRestaurants";
+import RecommendRestaurantPage from "./src/pages/RecommendRestaurant";
 
 export default function App() {
     const Stack = createNativeStackNavigator();
@@ -47,9 +48,16 @@ export default function App() {
                                 component={NotificationsPage}
                                 options={{ headerShown: false }}
                             />
-                            <Stack.Screen name={"FindRestaurants"}
-                                          component={FindRestaurantsPage}
-                                          options={{headerShown: false}} />
+                            <Stack.Screen
+                                name={"FindRestaurants"}
+                                component={FindRestaurantsPage}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name={"MakePost"}
+                                component={RecommendRestaurantPage}
+                                options={{ headerShown: false }}
+                            />
                         </Stack.Group>
                     )}
                 </Stack.Navigator>

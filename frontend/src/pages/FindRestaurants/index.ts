@@ -1,3 +1,3 @@
-import {FindRestaurantsModel} from "./FindRestaurantsModel";
+import { FindRestaurantsModel } from "./FindRestaurantsModel";
 
 export default FindRestaurantsModel;

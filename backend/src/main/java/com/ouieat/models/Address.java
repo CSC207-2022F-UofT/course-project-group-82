@@ -2,14 +2,14 @@ package com.ouieat.models;
 
 public class Address {
 
-    private String streetName;
+    private String streetAddress;
     private String city;
     private String province;
 
     private String zipCode;
 
     public Address(
-        String streetName,
+        String streetAddress,
         String city,
         String province,
         String zipCode
@@ -17,7 +17,7 @@ public class Address {
         this.city = city;
         this.province = province;
         this.zipCode = zipCode;
-        this.streetName = streetName;
+        this.streetAddress = streetAddress;
     }
 
     public String getCity() {
@@ -36,12 +36,12 @@ public class Address {
         this.province = province;
     }
 
-    public String getStreetName() {
-        return streetName;
+    public String getStreetAddress() {
+        return streetAddress;
     }
 
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
     }
 
     public String getZipCode() {
