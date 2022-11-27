@@ -8,7 +8,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
             {/* Single Recommendation */}
             <View
                 className={
-                    "w-full flex flex-col my-5 p-3 gap-y-2 border border-gray-100 rounded-lg"
+                    "w-full flex flex-col my-5 p-3 gap-y-2 border border-gray-300 rounded-lg"
                 }
             >
                 {/*Recommender Row*/}
@@ -19,8 +19,10 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                         <Avatar.Image
                             size={30}
                             source={{
-                                uri: props.recommendation
-                                    .recommendedByProfilePictureLink!,
+                                uri:
+                                    props.recommendation
+                                        .recommendedByProfilePictureLink ||
+                                    "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
                             }}
                         />
                     </View>

@@ -35,8 +35,8 @@ export function RestaurantNameFinder(props: {
             transparent={true}
             visible={props.modalVisible}
         >
-            <SafeAreaView className={"bg-[#ffffff] h-full w-full"}>
-                <View className={"flex flex-1 px-5"}>
+            <SafeAreaView className={"h-full w-full"}>
+                <View className={"bg-[#ffffff] flex flex-1 px-5 pt-2"}>
                     <View className={"flex flex-row gap-2"}>
                         <View className={"flex flex-col flex-1"}>
                             <TextField
@@ -116,6 +116,8 @@ export function RestaurantNameFinder(props: {
                             </Text>
                         </View>
                     )}
+                </View>
+                <View className={"flex flex-col"}>
                     <RNButton
                         backgroundColor={"#FFB700"}
                         borderRadius={10}
