@@ -29,8 +29,8 @@ export function RecommendRestaurantPageView(props: {
     recommendRestaurant: () => void;
 }) {
     return (
-        <SafeAreaView className={"bg-[#ffffff] h-full w-full"}>
-            <View className={"flex flex-1 flex-col"}>
+        <SafeAreaView className={"h-full w-full"}>
+            <View className={"bg-[#ffffff] flex flex-1 flex-col"}>
                 <Navbar navigation={props.navigation} />
                 {/* Share heading */}
                 <View className={"flex flex-col p-5"}>

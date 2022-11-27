@@ -32,8 +32,8 @@ export function FindRestaurantsView(props: {
     }
 
     return (
-        <SafeAreaView className={"bg-[#ffffff]"}>
-            <View className={"h-full w-full flex flex-col"}>
+        <SafeAreaView>
+            <View className={"bg-[#ffffff] h-full w-full flex flex-col pb-1"}>
                 <Navbar navigation={props.navigation} />
 
                 <View className={"h-full w-full flex-1"}>

@@ -36,20 +36,12 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                             </Text>
                         </View>
                     </View>
-
-                    <View className={"flex items-end flex-row"}>
-                        <View className={"flex flex-col"}>
-                            <Text className={"text-xs text-gray-500"}>
-                                {props.recommendation.timestamp}
-                            </Text>
-                        </View>
-                    </View>
                 </View>
 
                 {/*Review posting*/}
                 <View>
                     <Text className={"text-xs text-gray-500"}>
-                        posted a review
+                        {props.recommendation.timestamp}
                     </Text>
                 </View>
 
@@ -87,7 +79,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                 </View>
 
                 {/* Restaurant Image */}
-                <View className={"h-40 rounded-lg shadow-sm bg-red-100"}>
+                <View className={"h-40 rounded-lg shadow-lg bg-red-100"}>
                     {/*Sample uri: https://mabugeneration.com/wp-content/uploads/2020/10/20201004-mabu-generation-taiwanese-sausage-rice.jpg*/}
                     <ImageBackground
                         source={{

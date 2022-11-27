@@ -27,18 +27,19 @@ export default function App() {
     return (
         <UserContext.Provider value={userValue}>
             <NavigationContainer>
-                <Stack.Navigator>
+                <Stack.Navigator
+                    screenOptions={{
+                        statusBarColor: "#ffb700",
+                        contentStyle: { backgroundColor: "#ffb700" },
+                        headerShown: false,
+                    }}
+                >
                     {!userID ? (
                         <Stack.Group>
-                            <Stack.Screen
-                                name="Home"
-                                component={LoginPage}
-                                options={{ headerShown: false }}
-                            />
+                            <Stack.Screen name="Home" component={LoginPage} />
                             <Stack.Screen
                                 name={"Register"}
                                 component={RegisterPage}
-                                options={{ headerShown: false }}
                             />
                         </Stack.Group>
                     ) : (
@@ -46,27 +47,22 @@ export default function App() {
                             <Stack.Screen
                                 name={"Dashboard"}
                                 component={DashboardPage}
-                                options={{ headerShown: false }}
                             />
                             <Stack.Screen
                                 name={"Notifications"}
                                 component={NotificationsPage}
-                                options={{ headerShown: false }}
                             />
                             <Stack.Screen
                                 name={"FindRestaurants"}
                                 component={FindRestaurantsPage}
-                                options={{ headerShown: false }}
                             />
                             <Stack.Screen
                                 name={"MakePost"}
                                 component={RecommendRestaurantPage}
-                                options={{ headerShown: false }}
                             />
                             <Stack.Screen
                                 name={"UserProfile"}
                                 component={UserProfilePage}
-                                options={{ headerShown: false }}
                             />
                         </Stack.Group>
                     )}
