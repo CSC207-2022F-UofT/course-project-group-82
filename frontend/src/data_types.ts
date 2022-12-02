@@ -17,6 +17,7 @@ export interface OuiRecommendations {
     restaurantName: string;
     restaurantAddress: string;
     restaurantImageLink: string;
+    restaurantWebsiteLink: string;
     restaurantForTags: string[];
 }
 

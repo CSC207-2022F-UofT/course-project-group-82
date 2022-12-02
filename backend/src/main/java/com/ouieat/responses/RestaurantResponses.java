@@ -1,6 +1,6 @@
 package com.ouieat.responses;
 
-import com.ouieat.models.Restaurant;
+import com.ouieat.models.restaurant.Restaurant;
 import com.ouieat.responses.models.RestaurantByIdResponseData;
 import com.ouieat.responses.models.RestaurantByNameResponseData;
 import java.util.ArrayList;

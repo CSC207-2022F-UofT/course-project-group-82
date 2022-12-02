@@ -4,7 +4,6 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { setItemAsync } from "expo-secure-store";
 
-import UserIcon from "./assets/UserIcon.png";
 import SimpleIcon from "./assets/SimpleIcon.png";
 import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 
@@ -33,8 +32,8 @@ export function Navbar(props: { navigation: any }) {
         props.navigation.navigate("Dashboard");
     }
 
-    function showNotificationsPage() {
-        props.navigation.navigate("Notifications");
+    function showFinderPage() {
+        props.navigation.navigate("FindRestaurants");
     }
 
     function showUserProfilePage() {
@@ -71,7 +70,7 @@ export function Navbar(props: { navigation: any }) {
     });
 
     return (
-        <View className={"bg-[#ffb700] h-16 shadow-md"}>
+        <View className={"bg-[#ffb700] h-16"}>
             <View className={"h-full w-full justify-center px-3"}>
                 <View
                     className={
@@ -96,10 +95,10 @@ export function Navbar(props: { navigation: any }) {
                         }
                     >
                         <IconButton
-                            onPress={showNotificationsPage}
+                            onPress={showFinderPage}
                             style={styles.withIcon}
                             size={18}
-                            icon="bell-outline"
+                            icon="magnify"
                         />
                         <IconButton
                             onPress={doLogout}
@@ -112,7 +111,11 @@ export function Navbar(props: { navigation: any }) {
                                 <Avatar.Image
                                     style={styles.withUserIcon}
                                     size={32}
-                                    source={{ uri: profilePictureLink }}
+                                    source={{
+                                        uri:
+                                            profilePictureLink ||
+                                            "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+                                    }}
                                 />
                             </View>
                         </TouchableOpacity>

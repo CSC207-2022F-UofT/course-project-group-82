@@ -1,9 +1,10 @@
 ![Logo](https://raw.githubusercontent.com/CSC207-2022F-UofT/course-project-group-82/main/images/oui_logo.png)
+
 # Oui-Eat
+
 ![Stars](https://img.shields.io/github/stars/CSC207-2022F-UofT/course-project-group-82?style=social)
 
-
-*The answer to the age-old question: "Where do you want to eat?"*
+_The answer to the age-old question: "Where do you want to eat?"_
 
 A social media app designed to help friends find restaurants.
 
@@ -14,7 +15,8 @@ A social media app designed to help friends find restaurants.
 ### [Oui-Eat Backend](https://github.com/CSC207-2022F-UofT/course-project-group-82/tree/main/backend)
 
 ### Stack
- - React Native
- - Microsoft Azure
- - Java Spring Boot
- - MongoDB
+
+-   React Native
+-   Microsoft Azure
+-   Java Spring Boot
+-   MongoDB

@@ -10,16 +10,17 @@ import {
     View,
 } from "react-native";
 import React from "react";
+import { RestaurantInterface } from "../../../../services/Restaurants/RestaurantInterface";
 
 export function RestaurantNameFinder(props: {
     modalVisible: boolean;
     loading: boolean;
     closeModal: () => void;
-    restaurants: Array<any>;
+    restaurants: Array<RestaurantInterface>;
     restaurantName: string;
     updateSearchField: (text: string) => void;
     searchRestaurant: () => void;
-    changeRestaurantSelected: (item: any[]) => void;
+    changeRestaurantSelected: (item: RestaurantInterface) => void;
 }) {
     const styles = StyleSheet.create({
         withUnderline: {
@@ -35,8 +36,8 @@ export function RestaurantNameFinder(props: {
             transparent={true}
             visible={props.modalVisible}
         >
-            <SafeAreaView className={"bg-[#ffffff] h-full w-full"}>
-                <View className={"flex flex-1 px-5"}>
+            <SafeAreaView className={"h-full w-full"}>
+                <View className={"bg-[#ffffff] flex flex-1 px-5 pt-2"}>
                     <View className={"flex flex-row gap-2"}>
                         <View className={"flex flex-col flex-1"}>
                             <TextField
@@ -77,9 +78,9 @@ export function RestaurantNameFinder(props: {
                                         <Text
                                             className={"text-md text-gray-500"}
                                         >
-                                            {restaurant.address.streetAddress +
-                                                ", " +
-                                                restaurant.address.zipCode}
+                                            {restaurant.location.display_address
+                                                .join(", ")
+                                                .replaceAll(", Canada", "")}
                                         </Text>
                                     </View>
                                     <View
@@ -89,7 +90,7 @@ export function RestaurantNameFinder(props: {
                                     >
                                         <ImageBackground
                                             source={{
-                                                uri: restaurant.photos[0],
+                                                uri: restaurant.image_url,
                                             }}
                                             style={{
                                                 width: "100%",
@@ -116,6 +117,8 @@ export function RestaurantNameFinder(props: {
                             </Text>
                         </View>
                     )}
+                </View>
+                <View className={"flex flex-col"}>
                     <RNButton
                         backgroundColor={"#FFB700"}
                         borderRadius={10}

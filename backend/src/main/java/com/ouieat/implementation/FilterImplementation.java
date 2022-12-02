@@ -1,7 +1,7 @@
 package com.ouieat.implementation;
 
 import com.ouieat.models.Filter;
-import com.ouieat.models.Restaurant;
+import com.ouieat.models.restaurant.Restaurant;
 import com.ouieat.repository.RestaurantRepository;
 import com.ouieat.responses.FilterResponse;
 import java.util.ArrayList;

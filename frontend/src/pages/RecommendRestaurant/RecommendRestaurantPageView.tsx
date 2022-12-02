@@ -5,6 +5,7 @@ import SelectedRestaurantPreview from "./components/SelectedRestaurantPreview";
 import RestaurantNameFinder from "./components/RestaurantNameFinder";
 import OpinionToggle from "./components/OpinionToggle";
 import Navbar from "../../components/Navbar";
+import { RestaurantInterface } from "../../services/Restaurants/RestaurantInterface";
 
 export function RecommendRestaurantPageView(props: {
     navigation: any;
@@ -19,8 +20,8 @@ export function RecommendRestaurantPageView(props: {
     showNotificationsPage: () => void;
     doLogout: () => void;
     restaurants: Array<any>;
-    selectedRestaurant: any;
-    changeRestaurantSelected: (item: any[]) => void;
+    selectedRestaurant: RestaurantInterface | null;
+    changeRestaurantSelected: (item: RestaurantInterface) => void;
     modalVisible: boolean;
     openModal: () => void;
     closeModal: () => void;
@@ -29,8 +30,8 @@ export function RecommendRestaurantPageView(props: {
     recommendRestaurant: () => void;
 }) {
     return (
-        <SafeAreaView className={"bg-[#ffffff] h-full w-full"}>
-            <View className={"flex flex-1 flex-col"}>
+        <SafeAreaView className={"h-full w-full"}>
+            <View className={"bg-[#ffffff] flex flex-1 flex-col"}>
                 <Navbar navigation={props.navigation} />
                 {/* Share heading */}
                 <View className={"flex flex-col p-5"}>

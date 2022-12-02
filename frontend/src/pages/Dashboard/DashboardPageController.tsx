@@ -52,7 +52,11 @@ export function DashboardPageController(props: {
                 recommendation.userId
             );
             let user = (userData as any)["currentUserInfo"] as any;
-
+            let address = "Undefined";
+            if (restaurant.location) {
+                address = restaurant.location.display_address.join(", ");
+                address = address.replaceAll(", Canada", "");
+            }
             ouiRecommendations.push({
                 id: i,
                 recommendedByName: user.firstName + " " + user.lastName,
@@ -60,17 +64,11 @@ export function DashboardPageController(props: {
                 recommendedByProfilePictureLink: user.profilePictureLink,
                 timestamp: recommendation.postDate,
                 recommends: recommendation.recommends,
-                restaurantName: restaurant.name,
-                restaurantAddress:
-                    restaurant.address.streetAddress +
-                    ", " +
-                    restaurant.address.city +
-                    ", " +
-                    restaurant.address.province +
-                    " " +
-                    restaurant.address.zipCode,
-                restaurantImageLink: restaurant.photos[0],
-                restaurantForTags: restaurant.categories,
+                restaurantName: restaurant?.name || "Undefined",
+                restaurantAddress: address,
+                restaurantImageLink: restaurant.image_url,
+                restaurantWebsiteLink: restaurant.url,
+                restaurantForTags: restaurant.categories.map((m) => m.title),
             });
         }
         props.setRestaurantRecommendations(ouiRecommendations);

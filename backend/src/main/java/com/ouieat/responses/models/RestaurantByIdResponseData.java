@@ -1,6 +1,6 @@
 package com.ouieat.responses.models;
 
-import com.ouieat.models.Restaurant;
+import com.ouieat.models.restaurant.Restaurant;
 import com.ouieat.responses.ResponseData;
 
 public class RestaurantByIdResponseData extends ResponseData {
