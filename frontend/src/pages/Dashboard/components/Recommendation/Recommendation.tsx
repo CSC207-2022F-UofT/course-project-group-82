@@ -1,4 +1,4 @@
-import { ImageBackground, Text, View } from "react-native";
+import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Divider } from "react-native-paper";
 import { OuiRecommendations } from "../../../../data_types";
 
@@ -8,60 +8,79 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
             {/* Single Recommendation */}
             <View
                 className={
-                    "w-full flex flex-col my-5 p-3 gap-y-2 border border-gray-300 rounded-lg"
+                    "w-full flex flex-col my-5 gap-y-2 p-3 border border-gray-300 rounded-lg"
                 }
             >
                 {/*Recommender Row*/}
-                <View className={"flex flex-row w-full gap-3"}>
+                <View className={"flex flex-row w-full"}>
                     {/*Recommender Avatar*/}
-                    <View className={"flex flex-row items-center"}>
+                    <View className={"flex flex-row items-center mr-2"}>
                         {/* Sample profile uri: https://gravatar.com/avatar/35cc0f86ca226c87e0d75b711d0601f7?s=400&d=robohash&r=x*/}
-                        <Avatar.Image
-                            size={30}
-                            source={{
-                                uri:
-                                    props.recommendation
-                                        .recommendedByProfilePictureLink ||
-                                    "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-                            }}
-                        />
+                        <TouchableOpacity>
+                            <View className={"h-12 w-12"}>
+                                <ImageBackground
+                                    imageStyle={{
+                                        borderRadius: 999,
+                                        shadowRadius: 999,
+                                    }}
+                                    className={"w-full h-full shadow-lg"}
+                                    source={{
+                                        uri:
+                                            props.recommendation
+                                                .recommendedByProfilePictureLink ||
+                                            "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+                                    }}
+                                />
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
                     {/*Recommender Name*/}
-                    <View className={"flex flex-row justify-start flex-1"}>
-                        <View className={"flex flex-col justify-start"}>
-                            <Text className={"text-xl font-bold"}>
+                    <View
+                        className={
+                            "flex flex-1 flex-row items-baseline justify-between"
+                        }
+                    >
+                        <View className={"flex flex-col gap-y-[-3]"}>
+                            <Text className={"text-xl font-semibold"}>
                                 {props.recommendation.recommendedByName}
                             </Text>
-                            <Text className={"text-md text-gray-500"}>
+                            <Text
+                                className={
+                                    "text-sm text-gray-400 font-semibold"
+                                }
+                            >
                                 @{props.recommendation.recommendedByUsername}
+                            </Text>
+                        </View>
+                        <View className={"flex flex-col"}>
+                            <Text className={"text-xs text-gray-400"}>
+                                {props.recommendation.timestamp}
                             </Text>
                         </View>
                     </View>
                 </View>
 
-                {/*Review posting*/}
+                {/* Recommendation Posted */}
                 <View>
-                    <Text className={"text-xs text-gray-500"}>
-                        {props.recommendation.timestamp}
+                    <Text className={"text-sm text-gray-400"}>
+                        posted a review
                     </Text>
-                </View>
-
-                {/*Divider*/}
-                <View>
-                    <Divider />
                 </View>
 
                 {/*Recommendation Title*/}
                 <View className={"flex flex-row items-end gap-x-1"}>
+                    <Text className={"text-lg font-semibold"}>
+                        {props.recommendation.recommendedByName.split(" ")[0]}
+                    </Text>
                     {props.recommendation.recommends && (
                         <Text className={"text-lg text-green-600 font-bold"}>
-                            Recommends
+                            recommends
                         </Text>
                     )}
                     {!props.recommendation.recommends && (
                         <Text className={"text-lg text-red-600 font-bold"}>
-                            Does not recommend
+                            does not recommend
                         </Text>
                     )}
                 </View>
@@ -75,7 +94,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
 
                 {/* Restaurant Address */}
                 <View className={"flex flex-row items-start"}>
-                    <Text className={"text-md text-gray-500"}>
+                    <Text className={"text-md text-gray-400"}>
                         {props.recommendation.restaurantAddress}
                     </Text>
                 </View>
@@ -94,12 +113,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
 
                 {/* for tag */}
                 <View className={"flex flex-row justify-center"}>
-                    <Text className={"text-lg font-bold"}>for</Text>
-                </View>
-
-                {/*Divider*/}
-                <View>
-                    <Divider />
+                    <Text className={"text-lg"}>for</Text>
                 </View>
 
                 {/*Wrapper for tags*/}

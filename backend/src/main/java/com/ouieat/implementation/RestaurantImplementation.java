@@ -1,7 +1,7 @@
 package com.ouieat.implementation;
 
 import com.ouieat.OuiLogger;
-import com.ouieat.models.Restaurant;
+import com.ouieat.models.restaurant.Restaurant;
 import com.ouieat.repository.RestaurantRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
