@@ -1,6 +1,6 @@
 import axios from "axios";
-import { assert, sleep } from "./util";
-import { Business, BusinessSearchResponse, Coordinates } from "./yelp_dtypes";
+import {sleep} from "./util";
+import {Business, BusinessSearchResponse, Coordinates} from "./yelp_dtypes";
 
 export const YELP_API_URL_BASE = "https://api.yelp.com/v3";
 
@@ -30,7 +30,7 @@ export interface BusinessSearchOptions {
     /**
      * A comma separated string of numbers
      */
-    priceQuery: string;
+    priceQuery?: string;
 }
 
 export class YelpResponse<T> {
@@ -166,7 +166,6 @@ export class Yelp {
                 await this._rateLimitProtectedGet("/businesses/search", {
                     latitude: search.center.latitude,
                     longitude: search.center.longitude,
-                    price: search.priceQuery,
                     radius: search.radius,
                     limit: args.pageSize,
                     offset: offset,
@@ -187,5 +186,20 @@ export class Yelp {
                 return allBusinesses;
             }
         }
+    }
+
+    async getRestaurantsInRadiusFromCenter(args: {
+        radius: number,
+        center: Coordinates,
+    }) {
+        return await this.getAllBusinesses({
+            search: {
+                center: args.center,
+                radius: args.radius,
+            },
+            pageSize: 50,
+            verbose: true,
+            limit: 1000,
+        });
     }
 }

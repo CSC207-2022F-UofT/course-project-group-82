@@ -43,10 +43,10 @@ async function main(): Promise<void> {
     while (restaurants.restaurants.length < 5000 && i <= 50) {
         console.log(`iteration ${i}`);
         restaurants.addRestaurants(
-            (await get_restaurants_from_center()).restaurants
+            (await getRestaurantsAtRadius({radius: 500})).restaurants
         );
         console.log("Total DB: " + restaurants.restaurants.length);
-        get_new_position(-3000, 3000);
+        get_new_position(-500, 500);
         i++;
     }
 
@@ -56,7 +56,7 @@ async function main(): Promise<void> {
     );
 }
 
-async function get_restaurants_from_center(): Promise<RestaurantsDB> {
+async function getRestaurantsAtRadius(args: {radius: number}): Promise<RestaurantsDB> {
     let apiKey = process.env.API_KEY;
     assert(Boolean(apiKey), "API key not provided");
 
@@ -64,57 +64,11 @@ async function get_restaurants_from_center(): Promise<RestaurantsDB> {
     let restaurants = new RestaurantsDB();
 
     restaurants.addRestaurants(
-        await yelp.getAllBusinesses({
-            search: {
-                center: TORONTO,
-                radius: 3000,
-                priceQuery: "1",
-            },
-            pageSize: 50,
-            verbose: true,
-            limit: 1000,
+        await yelp.getRestaurantsInRadiusFromCenter({
+            radius: args.radius,
+            center: TORONTO,
         })
-    );
-
-    restaurants.addRestaurants(
-        await yelp.getAllBusinesses({
-            search: {
-                center: TORONTO,
-                radius: 3000,
-                priceQuery: "2",
-            },
-            pageSize: 50,
-            verbose: true,
-            limit: 1000,
-        })
-    );
-
-    restaurants.addRestaurants(
-        await yelp.getAllBusinesses({
-            search: {
-                center: TORONTO,
-                radius: 3000,
-                priceQuery: "3",
-            },
-            pageSize: 50,
-            verbose: true,
-            limit: 1000,
-        })
-    );
-
-    restaurants.addRestaurants(
-        await yelp.getAllBusinesses({
-            search: {
-                center: TORONTO,
-                radius: 3000,
-                priceQuery: "4",
-            },
-            pageSize: 50,
-            verbose: true,
-            limit: 1000,
-        })
-    );
-
+    )
     return restaurants;
 }
 
