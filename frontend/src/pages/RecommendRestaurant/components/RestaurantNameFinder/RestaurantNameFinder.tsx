@@ -10,16 +10,17 @@ import {
     View,
 } from "react-native";
 import React from "react";
+import { RestaurantInterface } from "../../../../services/Restaurants/RestaurantInterface";
 
 export function RestaurantNameFinder(props: {
     modalVisible: boolean;
     loading: boolean;
     closeModal: () => void;
-    restaurants: Array<any>;
+    restaurants: Array<RestaurantInterface>;
     restaurantName: string;
     updateSearchField: (text: string) => void;
     searchRestaurant: () => void;
-    changeRestaurantSelected: (item: any[]) => void;
+    changeRestaurantSelected: (item: RestaurantInterface) => void;
 }) {
     const styles = StyleSheet.create({
         withUnderline: {
@@ -77,9 +78,9 @@ export function RestaurantNameFinder(props: {
                                         <Text
                                             className={"text-md text-gray-500"}
                                         >
-                                            {restaurant.address.streetAddress +
-                                                ", " +
-                                                restaurant.address.zipCode}
+                                            {restaurant.location.display_address
+                                                .join(", ")
+                                                .replaceAll(", Canada", "")}
                                         </Text>
                                     </View>
                                     <View
@@ -89,7 +90,7 @@ export function RestaurantNameFinder(props: {
                                     >
                                         <ImageBackground
                                             source={{
-                                                uri: restaurant.photos[0],
+                                                uri: restaurant.image_url,
                                             }}
                                             style={{
                                                 width: "100%",

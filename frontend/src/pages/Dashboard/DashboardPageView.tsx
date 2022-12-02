@@ -3,6 +3,7 @@ import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { Button } from "react-native-ui-lib";
 import Recommendation from "./components/Recommendation";
 import Navbar from "../../components/Navbar";
+import IonIcon from "react-native-vector-icons/Ionicons";
 import { OuiRecommendations } from "../../data_types";
 
 export function DashboardPageView(props: {
@@ -63,27 +64,23 @@ export function DashboardPageView(props: {
                     </ScrollView>
                 </View>
 
-                <View className={"flex flex-col p-2"}>
-                    <View className={"flex flex-row justify-around gap-x-3"}>
-                        <View className={"flex flex-1"}>
-                            <Button
-                                onPress={props.findRestaurants}
-                                iconOnRight={false}
-                                borderRadius={10}
-                                label={"Find a Restaurant"}
-                                size={Button.sizes.large}
-                                backgroundColor={"#FFB700"}
-                            />
-                        </View>
+                <View className={"flex flex-col"}>
+                    <View className={"flex flex-row justify-around"}>
                         <View className={"flex flex-1"}>
                             <Button
                                 onPress={props.makePosts}
                                 iconOnRight={false}
-                                borderRadius={10}
-                                label={"Make a post"}
+                                fullWidth
+                                label={" Make a post "}
                                 size={Button.sizes.large}
                                 backgroundColor={"#FFB700"}
-                            />
+                            >
+                                <IonIcon
+                                    name={"create-outline"}
+                                    color={"white"}
+                                    size={20}
+                                />
+                            </Button>
                         </View>
                     </View>
                 </View>

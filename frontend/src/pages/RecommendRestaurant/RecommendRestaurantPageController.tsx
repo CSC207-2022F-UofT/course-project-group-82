@@ -3,6 +3,7 @@ import { RecommendRestaurantPageView } from "./RecommendRestaurantPageView";
 import { setItemAsync } from "expo-secure-store";
 import getByNameService from "../../services/Restaurants/GetByName";
 import doPostRecommendationService from "../../services/Recommendation/Post";
+import { RestaurantInterface } from "../../services/Restaurants/RestaurantInterface";
 
 export function RecommendRestaurantPageController(props: {
     navigation: any;
@@ -20,8 +21,10 @@ export function RecommendRestaurantPageController(props: {
     setUserID: (userID: string | null) => void;
     restaurants: Array<any>;
     setRestaurants: React.Dispatch<React.SetStateAction<Array<any>>>;
-    selectedRestaurant: any[];
-    setSelectedRestaurant: React.Dispatch<React.SetStateAction<any[]>>;
+    selectedRestaurant: RestaurantInterface | null;
+    setSelectedRestaurant: React.Dispatch<
+        React.SetStateAction<RestaurantInterface | null>
+    >;
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -57,7 +60,7 @@ export function RecommendRestaurantPageController(props: {
         return response;
     }
 
-    function changeRestaurantSelected(restaurant: any[]) {
+    function changeRestaurantSelected(restaurant: RestaurantInterface) {
         props.setSelectedRestaurant(restaurant);
     }
 
@@ -98,7 +101,7 @@ export function RecommendRestaurantPageController(props: {
             userId: props.userID || "",
             restaurantId: (props.selectedRestaurant as any).id,
             recommends: props.opinion,
-            postDate: new Date().toLocaleString(),
+            postDate: new Date().toDateString(),
             rating: 0,
             review: "Empty review",
         });

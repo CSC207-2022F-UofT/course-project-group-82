@@ -32,8 +32,8 @@ export function Navbar(props: { navigation: any }) {
         props.navigation.navigate("Dashboard");
     }
 
-    function showNotificationsPage() {
-        props.navigation.navigate("Notifications");
+    function showFinderPage() {
+        props.navigation.navigate("FindRestaurants");
     }
 
     function showUserProfilePage() {
@@ -95,10 +95,10 @@ export function Navbar(props: { navigation: any }) {
                         }
                     >
                         <IconButton
-                            onPress={showNotificationsPage}
+                            onPress={showFinderPage}
                             style={styles.withIcon}
                             size={18}
-                            icon="bell-outline"
+                            icon="magnify"
                         />
                         <IconButton
                             onPress={doLogout}
