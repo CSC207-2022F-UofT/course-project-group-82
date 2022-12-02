@@ -171,12 +171,13 @@ export class Yelp {
                     limit: args.pageSize,
                     offset: offset,
                 });
-            
 
             let businesses = response.data.businesses;
 
             allBusinesses.push(...businesses);
-            console.log(`aggreggated ${allBusinesses.length} businesses (total: ${response.data.total})`)
+            console.log(
+                `aggreggated ${allBusinesses.length} businesses (total: ${response.data.total})`
+            );
             offset += businesses.length;
 
             if (

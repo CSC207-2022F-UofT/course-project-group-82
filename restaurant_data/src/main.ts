@@ -6,7 +6,7 @@ import fs from "fs";
 
 dotenv.config();
 
-const TORONTO: Coordinates = {
+let TORONTO: Coordinates = {
     latitude: 43.665040511677184,
     longitude: -79.38466903783511,
 };
@@ -26,10 +26,37 @@ class RestaurantsDB {
             this.restaurants.push(r);
             this._seenIDs.add(r.id);
         }
+        this.removeDuplicates();
+    }
+
+    removeDuplicates(): void {
+        this.restaurants = this.restaurants.filter((r, i, arr) => {
+            return arr.findIndex((r2) => r2.id === r.id) === i;
+        });
     }
 }
 
 async function main(): Promise<void> {
+    let restaurants = new RestaurantsDB();
+
+    let i = 1;
+    while (restaurants.restaurants.length < 5000 && i <= 50) {
+        console.log(`iteration ${i}`);
+        restaurants.addRestaurants(
+            (await get_restaurants_from_center()).restaurants
+        );
+        console.log("Total DB: " + restaurants.restaurants.length);
+        get_new_position(-3000, 3000);
+        i++;
+    }
+
+    fs.writeFileSync(
+        "data/restaurants.json",
+        JSON.stringify(restaurants.restaurants)
+    );
+}
+
+async function get_restaurants_from_center(): Promise<RestaurantsDB> {
     let apiKey = process.env.API_KEY;
     assert(Boolean(apiKey), "API key not provided");
 
@@ -40,7 +67,7 @@ async function main(): Promise<void> {
         await yelp.getAllBusinesses({
             search: {
                 center: TORONTO,
-                radius: 4000,
+                radius: 3000,
                 priceQuery: "1",
             },
             pageSize: 50,
@@ -53,7 +80,7 @@ async function main(): Promise<void> {
         await yelp.getAllBusinesses({
             search: {
                 center: TORONTO,
-                radius: 4000,
+                radius: 3000,
                 priceQuery: "2",
             },
             pageSize: 50,
@@ -66,7 +93,7 @@ async function main(): Promise<void> {
         await yelp.getAllBusinesses({
             search: {
                 center: TORONTO,
-                radius: 4000,
+                radius: 3000,
                 priceQuery: "3",
             },
             pageSize: 50,
@@ -79,7 +106,7 @@ async function main(): Promise<void> {
         await yelp.getAllBusinesses({
             search: {
                 center: TORONTO,
-                radius: 4000,
+                radius: 3000,
                 priceQuery: "4",
             },
             pageSize: 50,
@@ -88,10 +115,20 @@ async function main(): Promise<void> {
         })
     );
 
-    fs.writeFileSync(
-        "data/restaurants.json",
-        JSON.stringify(restaurants.restaurants)
-    );
+    return restaurants;
+}
+
+// dx, dy are changes in meters
+function get_new_position(dx: number, dy: number) {
+    const r_earth = 6378100; // meters
+    let new_lat = TORONTO.latitude + (dx / r_earth) * (180 / Math.PI);
+    let new_long =
+        TORONTO.longitude +
+        ((dx / r_earth) * (180 / Math.PI)) /
+            Math.cos((TORONTO.latitude * Math.PI) / 180);
+
+    TORONTO.latitude = new_lat;
+    TORONTO.longitude = new_long;
 }
 
 main();
