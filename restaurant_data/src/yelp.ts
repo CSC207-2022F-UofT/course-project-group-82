@@ -1,8 +1,59 @@
 import axios from "axios";
-import {sleep} from "./util";
-import {Business, BusinessSearchResponse, Coordinates} from "./yelp_dtypes";
+import { sleep } from "./util";
+import { Business, BusinessSearchResponse, Coordinates } from "./yelp_dtypes";
 
 export const YELP_API_URL_BASE = "https://api.yelp.com/v3";
+
+const LAT_METERS_UNIT = 111320;
+
+function getMetersPerDegLatitude(): number {
+    return LAT_METERS_UNIT;
+}
+
+function getMetersPerDegLongitude(latitude: number): number {
+    return 111320 * Math.cos(latitude);
+}
+
+function getDegLatitiduePerMeter(): number {
+    return 1 / LAT_METERS_UNIT;
+}
+
+function getDegLongitudePerMeter(latitude: number): number {
+    return 1 / getMetersPerDegLongitude(latitude);
+}
+
+export class BusinessAggregator {
+    private _businesses: Business[];
+    private _seenIDs: Set<string>;
+
+    constructor() {
+        this._businesses = [];
+        this._seenIDs = new Set();
+    }
+
+    addBusinesses(restaurants: Business[]): void {
+        for (let r of restaurants) {
+            if (this._seenIDs.has(r.id)) continue;
+            this._businesses.push(r);
+            this._seenIDs.add(r.id);
+        }
+        this.removeDuplicates();
+    }
+
+    getBusinesses(): Business[] {
+        return [...this._businesses];
+    }
+
+    count(): number {
+        return this._businesses.length;
+    }
+
+    removeDuplicates(): void {
+        this._businesses = this._businesses.filter((r, i, arr) => {
+            return arr.findIndex((r2) => r2.id === r.id) === i;
+        });
+    }
+}
 
 export enum ResponseStatus {
     Ok,
@@ -150,56 +201,146 @@ export class Yelp {
         }
     }
 
-    async getAllBusinesses(args: {
-        search: BusinessSearchOptions;
+    async getNumberOfBusinessesInRadius(args: {
+        center: Coordinates;
+        radius: number;
+    }): Promise<number> {
+        let response: YelpResponse<BusinessSearchResponse> =
+            await this._rateLimitProtectedGet("/businesses/search", {
+                latitude: args.center.latitude,
+                longitude: args.center.longitude,
+                radius: args.radius,
+            });
+
+        return response.data.total;
+    }
+
+    /**
+     * width, height, safeRadius in meters
+     */
+    async getAllRestaurantsInRectangle(args: {
+        center: Coordinates;
+        width: number;
+        height: number;
+        safeRadius: number;
         pageSize: number;
         limit?: number;
         verbose?: boolean;
     }): Promise<Business[]> {
+        let aggregator = new BusinessAggregator();
+
+        let squareWidth = Math.sqrt(2 * args.safeRadius * args.safeRadius);
+
+        let latMin =
+            args.center.latitude - (getDegLatitiduePerMeter() * args.width) / 2;
+        let latMax =
+            args.center.latitude + (getDegLatitiduePerMeter() * args.width) / 2;
+
+        let i = 0;
+
+        for (
+            let lat = latMin;
+            lat + (squareWidth * getDegLatitiduePerMeter()) / 2 < latMax;
+            lat += getDegLatitiduePerMeter() * squareWidth
+        ) {
+            let longMin =
+                args.center.longitude -
+                (getDegLongitudePerMeter(lat) * args.height) / 2;
+            let longMax =
+                args.center.longitude +
+                (getDegLongitudePerMeter(lat) * args.height) / 2;
+            for (
+                let long = longMin;
+                long + (squareWidth * getDegLongitudePerMeter(lat)) / 2 <
+                longMax;
+                long += getDegLongitudePerMeter(lat) * squareWidth
+            ) {
+                if (args.verbose) {
+                    console.log(
+                        `Finding restaurants within ${args.safeRadius}m centered at ${lat},${long}`
+                    );
+                }
+                let numBefore = aggregator.count();
+                let newBusinesses = await this.getAllBusinessesInRadius({
+                    center: {
+                        latitude: lat,
+                        longitude: long,
+                    },
+                    radius: args.safeRadius,
+                    pageSize: args.pageSize,
+                    limit: args.limit,
+                    verbose: args.verbose,
+                    throwOnTotalExceedsLimit: true,
+                });
+
+                aggregator.addBusinesses(newBusinesses);
+
+                let numAdded = aggregator.count() - numBefore;
+
+                if (args.verbose) {
+                    console.log(
+                        `Added ${numAdded} businesses; ${
+                            newBusinesses.length - numAdded
+                        } were duplicates/overlapping; total: ${aggregator.count()}`
+                    );
+                }
+
+                i += 1;
+            }
+        }
+        return aggregator.getBusinesses();
+    }
+
+    /**
+     * radius in meters
+     */
+    async getAllBusinessesInRadius(args: {
+        center: Coordinates;
+        radius: number;
+        pageSize: number;
+        limit?: number;
+        verbose?: boolean;
+        throwOnTotalExceedsLimit?: boolean;
+    }): Promise<Business[]> {
         let allBusinesses: Business[] = [];
-        let search = args.search;
+        let limit = args.limit ?? 1000;
 
         let offset = 0;
 
         while (true) {
             let response: YelpResponse<BusinessSearchResponse> =
                 await this._rateLimitProtectedGet("/businesses/search", {
-                    latitude: search.center.latitude,
-                    longitude: search.center.longitude,
-                    radius: search.radius,
+                    latitude: args.center.latitude,
+                    longitude: args.center.longitude,
+                    radius: args.radius,
                     limit: args.pageSize,
                     offset: offset,
                 });
 
+            if (response.data.total > limit && args.throwOnTotalExceedsLimit) {
+                throw new Error(
+                    `Provided search returned more than ${limit} businesses (got ${response.data.total})`
+                );
+            }
+
             let businesses = response.data.businesses;
 
             allBusinesses.push(...businesses);
-            console.log(
-                `aggreggated ${allBusinesses.length} businesses (total: ${response.data.total})`
-            );
+
+            if (args.verbose) {
+                console.log(
+                    `aggreggated ${allBusinesses.length} businesses (total: ${response.data.total})`
+                );
+            }
+
             offset += businesses.length;
 
             if (
                 businesses.length < args.pageSize ||
-                allBusinesses.length >= (args.limit ?? Infinity)
+                allBusinesses.length >= limit
             ) {
                 return allBusinesses;
             }
         }
-    }
-
-    async getRestaurantsInRadiusFromCenter(args: {
-        radius: number,
-        center: Coordinates,
-    }) {
-        return await this.getAllBusinesses({
-            search: {
-                center: args.center,
-                radius: args.radius,
-            },
-            pageSize: 50,
-            verbose: true,
-            limit: 1000,
-        });
     }
 }
