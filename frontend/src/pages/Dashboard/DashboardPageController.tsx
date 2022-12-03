@@ -68,7 +68,7 @@ export function DashboardPageController(props: {
                 restaurantAddress: address,
                 restaurantImageLink: restaurant.image_url,
                 restaurantWebsiteLink: restaurant.url,
-                restaurantForTags: restaurant.categories.map((m) => m.title),
+                restaurantForTags: recommendation.recommendationTags,
             });
         }
         props.setRestaurantRecommendations(ouiRecommendations);

@@ -11,6 +11,8 @@ export function RecommendRestaurantPageController(props: {
     setRestaurantName: React.Dispatch<React.SetStateAction<string>>;
     opinion: boolean;
     setOpinion: React.Dispatch<React.SetStateAction<boolean>>;
+    opinionText: string;
+    setOpinionText: React.Dispatch<React.SetStateAction<string>>;
     errors: string;
     setErrors: React.Dispatch<React.SetStateAction<string>>;
     errorVisible: boolean;
@@ -25,6 +27,8 @@ export function RecommendRestaurantPageController(props: {
     setSelectedRestaurant: React.Dispatch<
         React.SetStateAction<RestaurantInterface | null>
     >;
+    selectedOpinions: Array<number>;
+    setSelectedOpinions: React.Dispatch<React.SetStateAction<Array<number>>>;
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -33,6 +37,10 @@ export function RecommendRestaurantPageController(props: {
     }
     function opinionChange(input: boolean) {
         props.setOpinion(input);
+    }
+
+    function opinionTextChange(text: string) {
+        props.setOpinionText(text);
     }
 
     async function doLogout() {
@@ -97,13 +105,30 @@ export function RecommendRestaurantPageController(props: {
     }
 
     async function recommendRestaurant() {
+        let recommendationTags = [] as Array<string>;
+        if (props.opinionText) {
+            let tempTags = props.opinionText.split(",");
+            tempTags.forEach((tag) => {
+                if (tag.trim()) recommendationTags.push(tag.trim());
+            });
+        }
+        if (props.selectedOpinions.length > 0) {
+            props.selectedOpinions.forEach((opinion) => {
+                if (!props.selectedRestaurant) {
+                    console.log("Error: selectedRestaurant is null");
+                    return;
+                }
+                recommendationTags.push(
+                    props.selectedRestaurant.categories[opinion].title
+                );
+            });
+        }
         const response = await doPostRecommendationService({
             userId: props.userID || "",
             restaurantId: (props.selectedRestaurant as any).id,
             recommends: props.opinion,
+            recommendationTags: recommendationTags,
             postDate: new Date().toDateString(),
-            rating: 0,
-            review: "Empty review",
         });
 
         if (response) {
@@ -118,6 +143,8 @@ export function RecommendRestaurantPageController(props: {
         ...props,
         restaurantNameChange,
         opinionChange,
+        opinionTextChange,
+        opinionText: props.opinionText,
         doLogout,
         showNotificationsPage,
         restaurants: props.restaurants,
@@ -129,6 +156,8 @@ export function RecommendRestaurantPageController(props: {
         updateSearchField,
         searchRestaurant,
         recommendRestaurant,
+        selectedOpinions: props.selectedOpinions,
+        setSelectedOpinions: props.setSelectedOpinions,
     };
 
     return <RecommendRestaurantPageView {...viewProps} />;

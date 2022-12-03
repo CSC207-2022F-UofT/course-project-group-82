@@ -26,7 +26,11 @@ export function OpinionToggle(props: {
                     className={recommendClassNames}
                 >
                     <View>
-                        <Text>I recommend this restaurant</Text>
+                        <Text
+                            className={!props.opinion ? "text-[#9E9E9E]" : ""}
+                        >
+                            I recommend this restaurant
+                        </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -34,7 +38,9 @@ export function OpinionToggle(props: {
                     className={notRecommendClassNames}
                 >
                     <View>
-                        <Text>I don't recommend this restaurant</Text>
+                        <Text className={props.opinion ? "text-[#9E9E9E]" : ""}>
+                            I don't recommend this restaurant
+                        </Text>
                     </View>
                 </TouchableOpacity>
             </View>

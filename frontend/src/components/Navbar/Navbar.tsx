@@ -5,6 +5,9 @@ import { UserContext } from "../../context/UserContext";
 import { setItemAsync } from "expo-secure-store";
 
 import SimpleIcon from "./assets/SimpleIcon.png";
+import LogoIcon from "./assets/LogoIcon.png";
+import OuieatIcon from "./assets/Ouieat.png";
+
 import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 
 export function Navbar(props: { navigation: any }) {
@@ -82,11 +85,13 @@ export function Navbar(props: { navigation: any }) {
                             <Image
                                 source={SimpleIcon}
                                 resizeMode={"center"}
-                                className={"h-10 w-10"}
+                                className={"h-12 w-12"}
                             />
-                            <Text className={"text-2xl font-bold"}>
-                                Oui-eat
-                            </Text>
+                            <Image
+                                source={OuieatIcon}
+                                resizeMode={"contain"}
+                                className={"h-auto w-24"}
+                            />
                         </View>
                     </TouchableOpacity>
                     <View

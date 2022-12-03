@@ -59,7 +59,7 @@ async function main(): Promise<void> {
         height: 6000,
         safeRadius: safeRadius,
         pageSize: 50,
-        verbose: true
+        verbose: true,
     });
 
     fs.writeFileSync("data/restaurants.json", JSON.stringify(restaurants));
