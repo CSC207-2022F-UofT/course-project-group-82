@@ -192,7 +192,9 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
 
                 {/*Wrapper for tags*/}
                 <View
-                    className={"flex flex-row gap-x-3 justify-start flex-wrap"}
+                    className={
+                        "flex flex-row gap-x-3 justify-start flex-wrap gap-y-1"
+                    }
                 >
                     {/*Single tag*/}
                     {props.recommendation.restaurantForTags.map((tag) => (
