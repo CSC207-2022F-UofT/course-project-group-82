@@ -2,6 +2,7 @@ import {
     ImageBackground,
     Linking,
     Text,
+    TouchableHighlight,
     TouchableOpacity,
     View,
 } from "react-native";
@@ -119,15 +120,30 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                 </View>
 
                 {/* Restaurant Address */}
-                <View className={"flex flex-row items-start"}>
-                    <Text className={"text-md text-gray-400"}>
+                <TouchableOpacity
+                    onPress={() => {
+                        const googleLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                            props.recommendation.restaurantName +
+                                ", " +
+                                props.recommendation.restaurantAddress
+                        )}`;
+                        Linking.openURL(googleLink);
+                    }}
+                    className={"flex flex-row items-start"}
+                >
+                    <Text className={"text-xs text-gray-400"}>
                         <IonIcon name={"location-outline"} size={16} />
                         {" " + props.recommendation.restaurantAddress}
                     </Text>
-                </View>
+                </TouchableOpacity>
 
                 {/* Restaurant Image */}
-                <View
+                <TouchableOpacity
+                    onPress={() =>
+                        Linking.openURL(
+                            props.recommendation.restaurantWebsiteLink
+                        )
+                    }
                     className={
                         "h-40 rounded-lg overflow-hidden shadow-2xl p-0.5"
                     }
@@ -155,15 +171,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                                 }}
                             >
                                 <BlurView className={"w-full"} intensity={10}>
-                                    <Text
-                                        onPress={() =>
-                                            Linking.openURL(
-                                                props.recommendation
-                                                    .restaurantWebsiteLink
-                                            )
-                                        }
-                                        className={"text-white mx-2 p-0.5"}
-                                    >
+                                    <Text className={"text-white mx-2 p-0.5"}>
                                         {props.recommendation.restaurantName +
                                             " "}
                                         <FeatherIcon
@@ -175,7 +183,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                             </View>
                         </ImageBackground>
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 {/* for tag */}
                 <View className={"flex flex-row justify-center"}>

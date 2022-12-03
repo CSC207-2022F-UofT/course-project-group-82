@@ -64,6 +64,10 @@ export function DashboardPageController(props: {
                 recommendedByProfilePictureLink: user.profilePictureLink,
                 timestamp: recommendation.postDate,
                 recommends: recommendation.recommends,
+                restaurantCoordinates:
+                    restaurant.coordinates.latitude +
+                    "," +
+                    restaurant.coordinates.longitude,
                 restaurantName: restaurant?.name || "Undefined",
                 restaurantAddress: address,
                 restaurantImageLink: restaurant.image_url,

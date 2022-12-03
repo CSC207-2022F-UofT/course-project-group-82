@@ -9,7 +9,6 @@ import {
 import Navbar from "../../components/Navbar";
 import React from "react";
 import { Button, TextField } from "react-native-ui-lib";
-import * as ImagePicker from "expo-image-picker";
 
 export function UserProfilePageView(props: {
     navigation: any;

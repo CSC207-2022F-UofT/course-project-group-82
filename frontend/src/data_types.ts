@@ -14,6 +14,7 @@ export interface OuiRecommendations {
     recommendedByProfilePictureLink: string | null;
     timestamp: string;
     recommends: boolean;
+    restaurantCoordinates: string;
     restaurantName: string;
     restaurantAddress: string;
     restaurantImageLink: string;
