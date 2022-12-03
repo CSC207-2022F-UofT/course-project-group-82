@@ -20,10 +20,7 @@ public class RecommendationRequests {
 
         // Ensure no values are empty when being sent
         if (
-            newRecommendation.getRestaurantId() == null ||
-            Objects.equals(newRecommendation.getReview(), "") ||
-            newRecommendation.getRating() < 0 ||
-            newRecommendation.getRating() > 10
+            newRecommendation.getRestaurantId() == null
         ) return ExceptionResponses
             .MissingRequestParametersResponse()
             .getJsonString();

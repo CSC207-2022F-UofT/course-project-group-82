@@ -3,6 +3,9 @@ import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { UpdateProfileInterface } from "../../services/User/UpdateProfileInterface";
 import { doUpdateUserProfile } from "../../services/User/Update/UpdateUserProfile";
+import { useEffect } from "react";
+import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
+import { UserInterface } from "../../services/User/UserInterface";
 
 export function UserProfilePageController(props: {
     navigation: any;
@@ -21,6 +24,19 @@ export function UserProfilePageController(props: {
     userID: string | null;
     setUserID: (userID: string | null) => void;
 }) {
+    useEffect(() => {
+        // Get the user's initial data
+        if (!props.userID) return;
+        getUserDataFromIdService(props.userID).then((data) => {
+            let user = (data as any)["currentUserInfo"] as UserInterface;
+            props.setUsername(user.username);
+            props.setFirstName(user.firstName);
+            props.setLastName(user.lastName);
+            props.setEmail(user.email);
+            props.setProfilePictureLink(user.profilePictureLink);
+        });
+    }, []);
+
     function updateUsername(username: string) {
         props.setUsername(username);
     }

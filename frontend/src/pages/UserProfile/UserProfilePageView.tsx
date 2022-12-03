@@ -110,7 +110,7 @@ export function UserProfilePageView(props: {
                             onChangeText={props.updateEmail}
                             fieldStyle={styles.withUnderline}
                             enableErrors
-                            maxLength={16}
+                            maxLength={32}
                             migrate
                         />
                     </View>

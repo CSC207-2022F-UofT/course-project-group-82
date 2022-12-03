@@ -1,5 +1,4 @@
 import { OuiClient } from "../../../networking/OuiClient";
-import { UserInterface } from "../UserInterface";
 
 export async function getUserDataFromIdService(id: string) {
     let response = await OuiClient.get("/dashboard", { userID: id });

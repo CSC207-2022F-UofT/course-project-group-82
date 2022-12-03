@@ -14,9 +14,7 @@ public class Recommendation {
     public Recommendation(
         String userId,
         String postDate,
-        int rating,
         String restaurantId,
-        String review,
         String[] recommendationTags,
         boolean recommends
     ) {
