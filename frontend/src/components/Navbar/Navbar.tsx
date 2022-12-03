@@ -1,12 +1,17 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Avatar, IconButton } from "react-native-paper";
+import {
+    Image,
+    ImageBackground,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { setItemAsync } from "expo-secure-store";
 
 import SimpleIcon from "./assets/SimpleIcon.png";
-import LogoIcon from "./assets/LogoIcon.png";
 import OuieatIcon from "./assets/Ouieat.png";
+import EntIcon from "react-native-vector-icons/Entypo";
 
 import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 
@@ -70,6 +75,15 @@ export function Navbar(props: { navigation: any }) {
         withUserIcon: {
             backgroundColor: "transparent",
         },
+        withShadow: {
+            shadowColor: "#000",
+            shadowOpacity: 0.2,
+            shadowRadius: 3,
+            shadowOffset: {
+                height: 5,
+                width: 0,
+            },
+        },
     });
 
     return (
@@ -96,26 +110,35 @@ export function Navbar(props: { navigation: any }) {
                     </TouchableOpacity>
                     <View
                         className={
-                            "flex flex-row justify-end gap-x-2 items-center"
+                            "flex flex-row justify-end gap-x-1 items-center"
                         }
                     >
-                        <IconButton
+                        <TouchableOpacity
+                            style={styles.withShadow}
                             onPress={showFinderPage}
-                            style={styles.withIcon}
-                            size={18}
-                            icon="magnify"
-                        />
-                        <IconButton
-                            onPress={doLogout}
-                            style={styles.withIcon}
-                            size={18}
-                            icon="logout"
-                        />
-                        <TouchableOpacity onPress={showUserProfilePage}>
-                            <View className={"shadow-lg rounded-full"}>
-                                <Avatar.Image
-                                    style={styles.withUserIcon}
-                                    size={32}
+                            className={"rounded-full px-2 py-1"}
+                        >
+                            <View className={"flex flex-row items-center"}>
+                                <View className={"shadow-lg rounded-full"}>
+                                    <EntIcon
+                                        name={"magnifying-glass"}
+                                        size={32}
+                                    />
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.withShadow}
+                            onPress={showUserProfilePage}
+                        >
+                            <View
+                                className={
+                                    "h-8 w-8 rounded-full overflow-hidden"
+                                }
+                            >
+                                <ImageBackground
+                                    className={"w-full h-full"}
                                     source={{
                                         uri:
                                             profilePictureLink ||
