@@ -6,6 +6,7 @@ import { doUpdateUserProfile } from "../../services/User/Update/UpdateUserProfil
 import { useEffect } from "react";
 import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 import { UserInterface } from "../../services/User/UserInterface";
+import { setItemAsync } from "expo-secure-store";
 
 export function UserProfilePageController(props: {
     navigation: any;
@@ -57,6 +58,11 @@ export function UserProfilePageController(props: {
         props.setPassword(password);
     }
 
+    async function doLogout() {
+        props.setUserID(null);
+        await setItemAsync("userToken", "");
+    }
+
     async function pickImage() {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -105,6 +111,7 @@ export function UserProfilePageController(props: {
         updatePassword,
         pickImage,
         updateUserProfile,
+        doLogout,
     };
 
     return <UserProfilePageView {...viewProps} />;
