@@ -12,6 +12,7 @@ import { setItemAsync } from "expo-secure-store";
 import SimpleIcon from "./assets/SimpleIcon.png";
 import OuieatIcon from "./assets/Ouieat.png";
 import EntIcon from "react-native-vector-icons/Entypo";
+import IonIcon from "react-native-vector-icons/Ionicons";
 
 import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 
@@ -31,11 +32,6 @@ export function Navbar(props: { navigation: any }) {
         }
     }, [props.navigation]);
 
-    async function doLogout() {
-        setUserID(null);
-        await setItemAsync("userToken", "");
-    }
-
     function showDashboardPage() {
         props.navigation.navigate("Dashboard");
     }
@@ -46,6 +42,10 @@ export function Navbar(props: { navigation: any }) {
 
     function showUserProfilePage() {
         props.navigation.navigate("UserProfile");
+    }
+
+    function showNotificationsPage() {
+        props.navigation.navigate("Notifications");
     }
 
     const styles = StyleSheet.create({
@@ -110,23 +110,40 @@ export function Navbar(props: { navigation: any }) {
                     </TouchableOpacity>
                     <View
                         className={
-                            "flex flex-row justify-end gap-x-1 items-center"
+                            "flex flex-row justify-end items-center gap-x-2"
                         }
                     >
-                        <TouchableOpacity
-                            style={styles.withShadow}
-                            onPress={showFinderPage}
-                            className={"rounded-full px-2 py-1"}
-                        >
-                            <View className={"flex flex-row items-center"}>
-                                <View className={"shadow-lg rounded-full"}>
-                                    <EntIcon
-                                        name={"magnifying-glass"}
-                                        size={32}
-                                    />
+                        <View className={"flex flex-row items-center gap-x-2"}>
+                            <TouchableOpacity
+                                style={styles.withShadow}
+                                onPress={showFinderPage}
+                                className={"rounded-full"}
+                            >
+                                <View className={"flex flex-row items-center"}>
+                                    <View className={"shadow-lg rounded-full"}>
+                                        <IonIcon
+                                            name={"search-outline"}
+                                            size={30}
+                                        />
+                                    </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.withShadow}
+                                onPress={showNotificationsPage}
+                                className={"rounded-full"}
+                            >
+                                <View className={"flex flex-row items-center"}>
+                                    <View className={"shadow-lg rounded-full"}>
+                                        <IonIcon
+                                            name={"notifications-outline"}
+                                            size={30}
+                                        />
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
 
                         <TouchableOpacity
                             style={styles.withShadow}

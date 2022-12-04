@@ -5,83 +5,60 @@ import {
     Text,
     View,
 } from "react-native";
-import BackgroundImage from "./assets/NotificationsBackgroundImage.png";
-import classNames from "classnames";
 import { OuiNotification } from "./types/OuiNotification";
+import Navbar from "../../components/Navbar";
+import React from "react";
+import { Button as RNButton } from "react-native-ui-lib";
+import EntypoIcon from "react-native-vector-icons/Entypo";
+import { UserPreviewInterface } from "../../services/User/UserInterface";
+import UserByUsernameFinder from "./components/UserByUsernameFinder";
 
 export function NotificationsPageView(props: {
     navigation: any;
     notifications: OuiNotification[];
+    closeModal: () => void;
+    openModal: () => void;
+    modalVisible: boolean;
+    loading: boolean;
+    users: Array<UserPreviewInterface>;
 }) {
-    const viewClassnames = classNames("w-full m-auto h-full self-center");
-
-    const NotificationMapping = () => {
-        return (
-            <>
-                {props.notifications.map((notification) => {
-                    return (
-                        <View
-                            key={notification.id}
-                            className={"flex flex-col justify-center px-5"}
-                        >
-                            <View
-                                className={
-                                    "bg-[#FFB700] opacity-[0.3] h-0.5 w-full"
-                                }
-                            />
-                            <Text className={"text-xl font-bold"}>
-                                {notification.title}
-                            </Text>
-                            <Text className={"text-md"}>
-                                {notification.body}
-                            </Text>
-                            <Text className={"text-sm text-gray"}>
-                                {notification.timestamp}
-                            </Text>
-                            <View
-                                className={
-                                    "bg-[#FFB700] opacity-[0.3] h-0.5 w-full"
-                                }
-                            />
-                        </View>
-                    );
-                })}
-            </>
-        );
-    };
-
-    const NotificationOutput = () => {
-        if (props.notifications.length > 0) return <NotificationMapping />;
-        else
-            return (
-                <Text className={"text-xl font-bold text-left px-5"}>
-                    No notifications :(
-                </Text>
-            );
-    };
-
     return (
-        <ImageBackground source={BackgroundImage}>
-            <SafeAreaView>
-                <View className={viewClassnames}>
-                    {/*Notifications Header */}
-                    <View className={"flex flex-row justify-center my-5"}>
-                        <Text className={"text-3xl font-bold"}>
-                            Notifications
-                        </Text>
-                    </View>
+        <SafeAreaView className={"h-full w-full"}>
+            <View className={"flex flex-col flex-1 bg-[#fff]"}>
+                <Navbar navigation={props.navigation} />
 
-                    {/*Notifications Scroll List*/}
-                    <ScrollView
-                        className={"flex flex-row"}
-                        contentContainerStyle={{
-                            flexGrow: 1,
-                        }}
-                    >
-                        <NotificationOutput />
-                    </ScrollView>
+                {/* Title */}
+                <View className={"flex flex-col py-5"}>
+                    <Text className={"text-xl px-5"}>Friend requests</Text>
+                    <View className={"w-1/2 bg-[#ffb700] h-1 mx-4"} />
                 </View>
-            </SafeAreaView>
-        </ImageBackground>
+
+                {/* User finder modal */}
+                <UserByUsernameFinder
+                    modalVisible={props.modalVisible}
+                    loading={props.loading}
+                    closeModal={props.closeModal}
+                    users={props.users}
+                />
+
+                <ScrollView className={"flex flex-col p-5"}>
+                    {/* A single request */}
+                    {/*<FriendRequestNotification />*/}
+                </ScrollView>
+            </View>
+            {/* Add friend button button*/}
+            <View className={"flex flex-col"}>
+                <View className={"flex flex-row justify-center items-center"}>
+                    <RNButton
+                        onPress={props.openModal}
+                        borderRadius={10}
+                        label={" Add a friend"}
+                        backgroundColor={"#FFB700"}
+                    >
+                        <EntypoIcon name={"plus"} size={24} color={"#fff"} />
+                    </RNButton>
+                </View>
+            </View>
+        </SafeAreaView>
     );
 }

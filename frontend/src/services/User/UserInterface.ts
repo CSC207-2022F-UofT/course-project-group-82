@@ -7,3 +7,11 @@ export interface UserInterface {
     username: string;
     friendIds: string[];
 }
+
+export interface UserPreviewInterface {
+    id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    profilePictureLink: string;
+}
