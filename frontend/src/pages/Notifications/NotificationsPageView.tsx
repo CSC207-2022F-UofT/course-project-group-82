@@ -21,6 +21,9 @@ export function NotificationsPageView(props: {
     modalVisible: boolean;
     loading: boolean;
     users: Array<UserPreviewInterface>;
+    searchUserText: string;
+    updateSearchUserText: (text: string) => void;
+    searchForUsersByUsername: () => void;
 }) {
     return (
         <SafeAreaView className={"h-full w-full"}>
@@ -39,6 +42,9 @@ export function NotificationsPageView(props: {
                     loading={props.loading}
                     closeModal={props.closeModal}
                     users={props.users}
+                    searchUserText={props.searchUserText}
+                    updateSearchUserText={props.updateSearchUserText}
+                    searchForUsersByUsername={props.searchForUsersByUsername}
                 />
 
                 <ScrollView className={"flex flex-col p-5"}>

@@ -87,6 +87,7 @@ public class UserRequests {
 
     public static String getUsersByUsername(
         UserRepository userRepository,
+        NotificationRepository notificationRepository,
         UserCredentials userCredentials,
         String username
     ) {
@@ -98,8 +99,9 @@ public class UserRequests {
                 public Response onUserValidated(User user) {
                     return UserImplementation.getUsersByUsername(
                         userRepository,
+                        notificationRepository,
                         username,
-                        user.getUsername()
+                        user.getId()
                     );
                 }
             }

@@ -11,14 +11,15 @@ import {
 import { BlurView } from "expo-blur";
 import { Button as RNButton, TextField } from "react-native-ui-lib";
 import React from "react";
-import { TouchableRipple } from "react-native-paper";
-import EntypoIcon from "react-native-vector-icons/Entypo";
 
 export function UserByUsernameFinder(props: {
     modalVisible: boolean;
     loading: boolean;
     closeModal: () => void;
     users: Array<UserPreviewInterface>;
+    searchUserText: string;
+    updateSearchUserText: (text: string) => void;
+    searchForUsersByUsername: () => void;
 }) {
     const withShadow = {
         shadowColor: "#000",
@@ -50,7 +51,7 @@ export function UserByUsernameFinder(props: {
         return (
             <View
                 className={
-                    "border border-[#dee3e7] h-16 rounded-xl flex flex-col justify-center px-5"
+                    "border border-[#dee3e7] h-16 rounded-xl flex flex-col justify-center px-5 my-3"
                 }
             >
                 <View className={"flex flex-row items-center gap-x-4"}>
@@ -73,8 +74,8 @@ export function UserByUsernameFinder(props: {
                     {/* User that sent the request name */}
                     <View className={"flex flex-1 flex-row justify-between"}>
                         <View className={"flex flex-col gap-y-[-3]"}>
-                            <Text className={"text-lg font-semibold"}>
-                                {props.user.username}
+                            <Text className={"font-semibold"}>
+                                @{props.user.username}
                             </Text>
                             <Text className={"text-xs text-gray-400"}>
                                 {props.user.firstName +
@@ -142,12 +143,17 @@ export function UserByUsernameFinder(props: {
                                 <View className={"flex flex-col flex-1"}>
                                     <TextField
                                         placeholder={"Enter a username"}
+                                        value={props.searchUserText}
+                                        onChangeText={
+                                            props.updateSearchUserText
+                                        }
                                         fieldStyle={withUnderline}
                                         maxLength={16}
                                         migrate
                                     />
                                 </View>
                                 <RNButton
+                                    onPress={props.searchForUsersByUsername}
                                     label={"Search"}
                                     borderRadius={10}
                                     backgroundColor={"#FFB700"}
@@ -155,9 +161,11 @@ export function UserByUsernameFinder(props: {
                                 />
                             </View>
 
-                            <ScrollView
-                                className={"flex flex-col p-5"}
-                            ></ScrollView>
+                            <ScrollView className={"flex flex-col p-5 gap-y-3"}>
+                                {props.users.map((user) => (
+                                    <SingleUserPreview user={user} />
+                                ))}
+                            </ScrollView>
                             {/* Add friend button button*/}
                             <View className={"flex flex-col mb-1"}>
                                 <View

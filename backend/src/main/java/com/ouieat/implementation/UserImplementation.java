@@ -1,10 +1,8 @@
 package com.ouieat.implementation;
 
 import com.ouieat.OuiLogger;
-import com.ouieat.models.UpdateUser;
-import com.ouieat.models.User;
-import com.ouieat.models.UserCredentials;
-import com.ouieat.models.UserPreview;
+import com.ouieat.models.*;
+import com.ouieat.repository.NotificationRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
@@ -186,23 +184,49 @@ public class UserImplementation {
 
     public static Response getUsersByUsername(
         UserRepository userRepository,
+        NotificationRepository notificationRepository,
         String username,
-        String except
+        String userId
     ) {
         try {
             ArrayList<User> users = new ArrayList<>(userRepository.findAll());
+            ArrayList<Notification> notifications = new ArrayList<>(
+                notificationRepository.findAll()
+            );
             ArrayList<UserPreview> filteredUsers = new ArrayList<>();
             for (User u : users) {
                 if (
-                    !u.getUsername().equals(except) &&
+                    !u.getId().equals(userId) &&
                     u
                         .getUsername()
                         .toLowerCase()
-                        .contains(username.toLowerCase())
+                        .contains(username.toLowerCase()) &&
+                    !u.getFriendIds().contains(userId)
                 ) {
                     filteredUsers.add(new UserPreview(u));
                 }
             }
+            ArrayList<UserPreview> shallowClonedUsers = new ArrayList<>(
+                filteredUsers
+            );
+            // Get rid of the users that already have friend requests sent
+            for (Notification n : notifications) {
+                if (n.getSenderId().equals(userId)) {
+                    for (UserPreview u : shallowClonedUsers) {
+                        if (u.getId().equals(n.getRecipientId())) {
+                            filteredUsers.remove(u);
+                        }
+                    }
+                }
+            }
+
+            OuiLogger.log(
+                Level.INFO,
+                "Successfully found users: " +
+                filteredUsers.size() +
+                " for username: " +
+                username
+            );
             return UserResponses.GetUsersByUsernameResponse(filteredUsers);
         } catch (Exception e) {
             OuiLogger.log(Level.ERROR, "Failed to get users by username");
