@@ -11,6 +11,7 @@ export function NotificationsPageModel(props: { navigation: any }) {
     const [loading, setLoading] = useState<boolean>(false);
     const [users, setUsers] = useState<UserPreviewInterface[]>([]);
     const [searchUserText, setSearchUserText] = useState<string>("");
+    const [refreshing, setRefreshing] = useState<boolean>(false);
 
     const controllerProps = {
         ...props,
@@ -26,6 +27,8 @@ export function NotificationsPageModel(props: { navigation: any }) {
         setUsers,
         searchUserText,
         setSearchUserText,
+        refreshing,
+        setRefreshing,
     };
 
     return <NotificationsPageController {...controllerProps} />;

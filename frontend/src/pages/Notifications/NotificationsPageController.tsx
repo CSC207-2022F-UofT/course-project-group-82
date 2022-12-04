@@ -3,6 +3,8 @@ import { OuiNotification } from "./types/OuiNotification";
 import { UserPreviewInterface } from "../../services/User/UserInterface";
 import { getUsersByUsername } from "../../services/User/GetByUsername/GetByUsername";
 import { sendFriendRequestToRecipientFromUser } from "../../services/User/Friends/SendFriendRequest";
+import { useCallback, useEffect } from "react";
+import { getUserNotifications } from "../../services/Notifications/GetUserNotifications/GetUserNotifications";
 
 export function NotificationsPageController(props: {
     navigation: any;
@@ -18,7 +20,13 @@ export function NotificationsPageController(props: {
     setUsers: (users: Array<UserPreviewInterface>) => void;
     searchUserText: string;
     setSearchUserText: (searchUserText: string) => void;
+    refreshing: boolean;
+    setRefreshing: (refreshing: boolean) => void;
 }) {
+    useEffect(() => {
+        refreshNotifications();
+    }, []);
+
     function closeModal() {
         props.setModalVisible(false);
     }
@@ -70,6 +78,19 @@ export function NotificationsPageController(props: {
         props.setLoading(false);
     }
 
+    const refreshNotifications = useCallback(async () => {
+        props.setRefreshing(true);
+        if (!props.userID) {
+            console.error("User ID is null");
+            props.setRefreshing(false);
+            return;
+        }
+        let newNotifications = [] as OuiNotification[];
+        newNotifications = await getUserNotifications(props.userID);
+        props.setNotifications(newNotifications);
+        props.setRefreshing(false);
+    }, []);
+
     const viewProps = {
         navigation: props.navigation,
         notifications: props.notifications,
@@ -82,6 +103,8 @@ export function NotificationsPageController(props: {
         updateSearchUserText: updateSearchUserText,
         searchForUsersByUsername,
         sendFriendRequest,
+        refreshing: props.refreshing,
+        refreshNotifications,
     };
 
     return <NotificationsPageView {...viewProps} />;

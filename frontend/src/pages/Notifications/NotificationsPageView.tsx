@@ -1,5 +1,6 @@
 import {
     ImageBackground,
+    RefreshControl,
     SafeAreaView,
     ScrollView,
     Text,
@@ -12,6 +13,7 @@ import { Button as RNButton } from "react-native-ui-lib";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import { UserPreviewInterface } from "../../services/User/UserInterface";
 import UserByUsernameFinder from "./components/UserByUsernameFinder";
+import FriendRequestNotification from "./components/FriendRequestNotification";
 
 export function NotificationsPageView(props: {
     navigation: any;
@@ -25,7 +27,18 @@ export function NotificationsPageView(props: {
     updateSearchUserText: (text: string) => void;
     searchForUsersByUsername: () => void;
     sendFriendRequest: (recipientId: string, recipientUsername: string) => void;
+    refreshNotifications: () => void;
+    refreshing: boolean;
 }) {
+    function friendRequestRefreshControl() {
+        return (
+            <RefreshControl
+                refreshing={props.refreshing}
+                onRefresh={props.refreshNotifications}
+            />
+        );
+    }
+
     return (
         <SafeAreaView className={"h-full w-full"}>
             <View className={"flex flex-col flex-1 bg-[#fff]"}>
@@ -49,9 +62,17 @@ export function NotificationsPageView(props: {
                     sendFriendRequest={props.sendFriendRequest}
                 />
 
-                <ScrollView className={"flex flex-col p-5"}>
-                    {/* A single request */}
-                    {/*<FriendRequestNotification />*/}
+                <ScrollView
+                    className={"flex flex-col p-5"}
+                    refreshControl={friendRequestRefreshControl()}
+                >
+                    {props.notifications.map((notification) => {
+                        return (
+                            <FriendRequestNotification
+                                notification={notification}
+                            />
+                        );
+                    })}
                 </ScrollView>
             </View>
             {/* Add friend button button*/}
