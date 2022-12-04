@@ -1,5 +1,5 @@
 export interface OuiNotification {
-    id: string;
+    id?: string;
     senderName: string;
     senderId: string;
     senderProfilePictureLink: string;

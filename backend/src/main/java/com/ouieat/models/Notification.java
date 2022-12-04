@@ -19,6 +19,8 @@ public class Notification {
 
     private String recipientName;
 
+    private String type;
+
     public Notification(
         String id,
         String senderName,
@@ -36,8 +38,6 @@ public class Notification {
         this.recipientName = recipientName;
         this.type = type;
     }
-
-    private String type;
 
     public String getId() {
         return id;

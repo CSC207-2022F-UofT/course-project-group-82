@@ -1,14 +1,13 @@
 package com.ouieat.controllers;
 
+import com.ouieat.models.Notification;
 import com.ouieat.models.UserCredentials;
 import com.ouieat.repository.NotificationRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.requests.UserRequests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class NotificationController {
@@ -34,6 +33,21 @@ public class NotificationController {
             this.userRepository,
             this.notificationRepository,
             UserCredentials.fromUserID(userId)
+        );
+    }
+
+    @PostMapping(
+        path = "/createFriendRequest",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String createFriendRequest(
+        @RequestBody Notification friendRequestNotification
+    ) {
+        return UserRequests.createFriendRequest(
+            this.userRepository,
+            this.notificationRepository,
+            UserCredentials.fromUserID(friendRequestNotification.getSenderId()),
+            friendRequestNotification
         );
     }
 }

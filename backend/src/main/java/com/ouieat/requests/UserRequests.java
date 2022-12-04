@@ -2,10 +2,7 @@ package com.ouieat.requests;
 
 import com.ouieat.implementation.NotificationImplementation;
 import com.ouieat.implementation.UserImplementation;
-import com.ouieat.models.UpdateUser;
-import com.ouieat.models.User;
-import com.ouieat.models.UserCredentials;
-import com.ouieat.models.UserLogin;
+import com.ouieat.models.*;
 import com.ouieat.repository.NotificationRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
@@ -138,6 +135,29 @@ public class UserRequests {
                     return NotificationImplementation.getNotificationsForUser(
                         user.getId(),
                         notificationRepository
+                    );
+                }
+            }
+        );
+    }
+
+    public static String createFriendRequest(
+        UserRepository userRepository,
+        NotificationRepository notificationRepository,
+        UserCredentials credentials,
+        Notification friendRequestNotification
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            credentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return NotificationImplementation.createFriendRequest(
+                        user,
+                        userRepository,
+                        notificationRepository,
+                        friendRequestNotification
                     );
                 }
             }

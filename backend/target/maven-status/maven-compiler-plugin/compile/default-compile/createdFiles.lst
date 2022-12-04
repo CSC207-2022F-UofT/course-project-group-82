@@ -3,6 +3,7 @@ com/ouieat/responses/models/NullResponseData.class
 com/ouieat/models/UserCredentials.class
 com/ouieat/models/UserDashboard.class
 com/ouieat/responses/ExceptionResponses.class
+com/ouieat/requests/UserRequests$6.class
 com/ouieat/requests/FilterRequests.class
 com/ouieat/repository/UserRepository.class
 com/ouieat/responses/models/MessageResponseData.class

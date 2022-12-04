@@ -24,6 +24,7 @@ export function NotificationsPageView(props: {
     searchUserText: string;
     updateSearchUserText: (text: string) => void;
     searchForUsersByUsername: () => void;
+    sendFriendRequest: (recipientId: string, recipientUsername: string) => void;
 }) {
     return (
         <SafeAreaView className={"h-full w-full"}>
@@ -45,6 +46,7 @@ export function NotificationsPageView(props: {
                     searchUserText={props.searchUserText}
                     updateSearchUserText={props.updateSearchUserText}
                     searchForUsersByUsername={props.searchForUsersByUsername}
+                    sendFriendRequest={props.sendFriendRequest}
                 />
 
                 <ScrollView className={"flex flex-col p-5"}>

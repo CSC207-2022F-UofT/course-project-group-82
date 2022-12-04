@@ -2,6 +2,7 @@ import { NotificationsPageView } from "./NotificationsPageView";
 import { OuiNotification } from "./types/OuiNotification";
 import { UserPreviewInterface } from "../../services/User/UserInterface";
 import { getUsersByUsername } from "../../services/User/GetByUsername/GetByUsername";
+import { sendFriendRequestToRecipientFromUser } from "../../services/User/Friends/SendFriendRequest";
 
 export function NotificationsPageController(props: {
     navigation: any;
@@ -47,6 +48,28 @@ export function NotificationsPageController(props: {
         props.setLoading(false);
     }
 
+    async function sendFriendRequest(
+        recipientId: string,
+        recipientUsername: string
+    ) {
+        if (!props.userID) {
+            console.error("User ID is null");
+            return;
+        }
+        if (!recipientId) {
+            console.error("Recipient ID is null");
+            return;
+        }
+        props.setLoading(true);
+        await sendFriendRequestToRecipientFromUser(
+            recipientId,
+            recipientUsername,
+            props.userID
+        );
+        await searchForUsersByUsername();
+        props.setLoading(false);
+    }
+
     const viewProps = {
         navigation: props.navigation,
         notifications: props.notifications,
@@ -58,6 +81,7 @@ export function NotificationsPageController(props: {
         searchUserText: props.searchUserText,
         updateSearchUserText: updateSearchUserText,
         searchForUsersByUsername,
+        sendFriendRequest,
     };
 
     return <NotificationsPageView {...viewProps} />;

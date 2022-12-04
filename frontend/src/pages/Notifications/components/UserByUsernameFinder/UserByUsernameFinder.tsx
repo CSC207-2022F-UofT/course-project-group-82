@@ -20,6 +20,7 @@ export function UserByUsernameFinder(props: {
     searchUserText: string;
     updateSearchUserText: (text: string) => void;
     searchForUsersByUsername: () => void;
+    sendFriendRequest: (recipientId: string, recipientUsername: string) => void;
 }) {
     const withShadow = {
         shadowColor: "#000",
@@ -47,7 +48,13 @@ export function UserByUsernameFinder(props: {
         padding: 10,
     };
 
-    function SingleUserPreview(props: { user: UserPreviewInterface }) {
+    function SingleUserPreview(props: {
+        user: UserPreviewInterface;
+        sendFriendRequest: (
+            recipientId: string,
+            recipientUsername: string
+        ) => void;
+    }) {
         return (
             <View
                 className={
@@ -88,6 +95,12 @@ export function UserByUsernameFinder(props: {
                     <View className={"flex flex-row"}>
                         <TouchableOpacity
                             className={"bg-[#ffb700] p-1.5 rounded-md"}
+                            onPress={() => {
+                                props.sendFriendRequest(
+                                    props.user.id,
+                                    props.user.username
+                                );
+                            }}
                         >
                             <Text
                                 className={"text-white text-sm font-semibold"}
@@ -162,9 +175,26 @@ export function UserByUsernameFinder(props: {
                             </View>
 
                             <ScrollView className={"flex flex-col p-5 gap-y-3"}>
-                                {props.users.map((user) => (
-                                    <SingleUserPreview user={user} />
-                                ))}
+                                {props.users.length == 0 || props.loading ? (
+                                    <>
+                                        {props.loading ? (
+                                            <Text>Loading...</Text>
+                                        ) : (
+                                            <Text>No users found</Text>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        {props.users.map((user) => (
+                                            <SingleUserPreview
+                                                user={user}
+                                                sendFriendRequest={
+                                                    props.sendFriendRequest
+                                                }
+                                            />
+                                        ))}
+                                    </>
+                                )}
                             </ScrollView>
                             {/* Add friend button button*/}
                             <View className={"flex flex-col mb-1"}>
