@@ -85,6 +85,27 @@ public class UserRequests {
         return response.getJsonString();
     }
 
+    public static String getUsersByUsername(
+        UserRepository userRepository,
+        UserCredentials userCredentials,
+        String username
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            userCredentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return UserImplementation.getUsersByUsername(
+                        userRepository,
+                        username,
+                        user.getUsername()
+                    );
+                }
+            }
+        );
+    }
+
     public static String getDashboard(
         UserRepository userRepository,
         UserCredentials credentials

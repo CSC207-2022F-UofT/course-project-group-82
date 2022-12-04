@@ -1,10 +1,9 @@
 package com.ouieat.responses;
 
 import com.ouieat.models.User;
-import com.ouieat.responses.models.DashboardResponseData;
-import com.ouieat.responses.models.LoginResponseData;
-import com.ouieat.responses.models.NullResponseData;
-import com.ouieat.responses.models.UserDetailResponseData;
+import com.ouieat.models.UserPreview;
+import com.ouieat.responses.models.*;
+import java.util.ArrayList;
 
 public class UserResponses {
 
@@ -52,6 +51,17 @@ public class UserResponses {
             "success",
             new UserDetailResponseData(user),
             "updateuserdetails",
+            "client"
+        );
+    }
+
+    public static Response GetUsersByUsernameResponse(
+        ArrayList<UserPreview> users
+    ) {
+        return new Response(
+            "success",
+            new UsersByUsernameResponseData(users),
+            "getUsersByUsername",
             "client"
         );
     }

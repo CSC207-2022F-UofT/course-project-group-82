@@ -4,6 +4,7 @@ import com.ouieat.OuiLogger;
 import com.ouieat.models.UpdateUser;
 import com.ouieat.models.User;
 import com.ouieat.models.UserCredentials;
+import com.ouieat.models.UserPreview;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
@@ -179,6 +180,35 @@ public class UserImplementation {
             return UserResponses.RegistrationResponse(
                 "failure",
                 "Error while updating the user"
+            );
+        }
+    }
+
+    public static Response getUsersByUsername(
+        UserRepository userRepository,
+        String username,
+        String except
+    ) {
+        try {
+            ArrayList<User> users = new ArrayList<>(userRepository.findAll());
+            ArrayList<UserPreview> filteredUsers = new ArrayList<>();
+            for (User u : users) {
+                if (
+                    !u.getUsername().equals(except) &&
+                    u
+                        .getUsername()
+                        .toLowerCase()
+                        .contains(username.toLowerCase())
+                ) {
+                    filteredUsers.add(new UserPreview(u));
+                }
+            }
+            return UserResponses.GetUsersByUsernameResponse(filteredUsers);
+        } catch (Exception e) {
+            OuiLogger.log(Level.ERROR, "Failed to get users by username");
+            OuiLogger.log(Level.ERROR, e.getMessage());
+            return ExceptionResponses.UserErrorResponse(
+                "Error while getting users by username"
             );
         }
     }

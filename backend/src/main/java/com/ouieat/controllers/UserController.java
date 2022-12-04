@@ -64,4 +64,19 @@ public class UserController {
             UserCredentials.fromUserID(userID)
         );
     }
+
+    @GetMapping(
+        path = "/getUsersByUsername",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getUsersByUsername(
+        @RequestParam String username,
+        @RequestParam String userId
+    ) {
+        return UserRequests.getUsersByUsername(
+            this.userRepository,
+            UserCredentials.fromUserID(userId),
+            username
+        );
+    }
 }
