@@ -5,7 +5,7 @@ import com.ouieat.responses.models.NullResponseData;
 import com.ouieat.responses.models.RecommendationResponseData;
 import java.util.ArrayList;
 
-public class RecommendationResponse {
+public class RecommendationResponses {
 
     public static Response SavePostResponse(String status, String name) {
         return new Response(

@@ -1,10 +1,12 @@
 package com.ouieat.requests;
 
+import com.ouieat.implementation.NotificationImplementation;
 import com.ouieat.implementation.UserImplementation;
 import com.ouieat.models.UpdateUser;
 import com.ouieat.models.User;
 import com.ouieat.models.UserCredentials;
 import com.ouieat.models.UserLogin;
+import com.ouieat.repository.NotificationRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
@@ -94,6 +96,26 @@ public class UserRequests {
                 @Override
                 public Response onUserValidated(User user) {
                     return UserResponses.DashboardResponse(user);
+                }
+            }
+        );
+    }
+
+    public static String getNotifications(
+        UserRepository userRepository,
+        NotificationRepository notificationRepository,
+        UserCredentials credentials
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            credentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return NotificationImplementation.getNotificationsForUser(
+                        user.getId(),
+                        notificationRepository
+                    );
                 }
             }
         );
