@@ -2,9 +2,10 @@ package com.ouieat.implementation;
 
 import com.ouieat.OuiLogger;
 import com.ouieat.models.Recommendation;
+import com.ouieat.models.User;
 import com.ouieat.repository.RecommendationRepository;
 import com.ouieat.responses.ExceptionResponses;
-import com.ouieat.responses.RecommendationResponse;
+import com.ouieat.responses.RecommendationResponses;
 import com.ouieat.responses.Response;
 import com.ouieat.responses.UserResponses;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class RecommendationImplementation {
                 newRecommendation.getRestaurantId()
             );
             OuiLogger.log(Level.ERROR, e.getMessage());
-            return RecommendationResponse.SavePostResponse(
+            return RecommendationResponses.SavePostResponse(
                 "failure",
                 "Error while saving the recommendation"
             );
@@ -64,13 +65,52 @@ public class RecommendationImplementation {
                 Level.INFO,
                 "Successfully retrieved all recommendations"
             );
-            return RecommendationResponse.GetAllRecommendationsResponse(
+            return RecommendationResponses.GetAllRecommendationsResponse(
                 allRecommendations
             );
         } catch (Exception e) {
             OuiLogger.log(
                 Level.ERROR,
                 "Failed to get all restaurant recommendations"
+            );
+            OuiLogger.log(Level.ERROR, e.getMessage());
+            return ExceptionResponses.ServerExceptionResponse();
+        }
+    }
+
+    public static Response getRestaurantRecommendationsFromFriends(
+        RecommendationRepository recommendationRepository,
+        User user
+    ) {
+        /*
+         * Get all restaurant recommendations from friends
+         * Return a failure response if unable to get
+         */
+
+        try {
+            ArrayList<Recommendation> allRecommendations = new ArrayList<>(
+                recommendationRepository.findAll()
+            );
+            ArrayList<Recommendation> friendRecommendations = new ArrayList<>();
+            for (Recommendation recommendation : allRecommendations) {
+                if (
+                    user.getFriendIds().contains(recommendation.getUserId()) ||
+                    user.getId().equals(recommendation.getUserId())
+                ) {
+                    friendRecommendations.add(recommendation);
+                }
+            }
+            OuiLogger.log(
+                Level.INFO,
+                "Successfully retrieved all recommendations from friends"
+            );
+            return RecommendationResponses.GetAllRecommendationsResponse(
+                friendRecommendations
+            );
+        } catch (Exception e) {
+            OuiLogger.log(
+                Level.ERROR,
+                "Failed to get all restaurant recommendations from friends"
             );
             OuiLogger.log(Level.ERROR, e.getMessage());
             return ExceptionResponses.ServerExceptionResponse();

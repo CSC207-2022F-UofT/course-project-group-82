@@ -4,7 +4,7 @@ import com.ouieat.models.restaurant.Restaurant;
 import com.ouieat.responses.models.FilteredRestaurantsResponseData;
 import java.util.ArrayList;
 
-public class FilterResponse {
+public class FilterResponses {
 
     public static Response getFilteredRestaurantsResponse(
         ArrayList<Restaurant> restaurantArrayList

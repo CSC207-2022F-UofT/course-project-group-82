@@ -6,47 +6,27 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Recommendation {
 
     private String userId;
-    private int rating;
     private String restaurantId;
-    private String review;
     private String postDate;
-
+    private String[] recommendationTags;
     private boolean recommends;
 
     public Recommendation(
         String userId,
         String postDate,
-        int rating,
         String restaurantId,
-        String review,
+        String[] recommendationTags,
         boolean recommends
     ) {
         this.userId = userId;
         this.restaurantId = restaurantId;
-        this.review = review;
-        this.rating = rating;
         this.postDate = postDate;
+        this.recommendationTags = recommendationTags;
         this.recommends = recommends;
     }
 
     public String getUserId() {
         return this.userId;
-    }
-
-    public int getRating() {
-        return this.rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public String getReview() {
-        return this.review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 
     public String getRestaurantId() {
@@ -79,5 +59,13 @@ public class Recommendation {
 
     public void setRecommends(boolean recommends) {
         this.recommends = recommends;
+    }
+
+    public String[] getRecommendationTags() {
+        return recommendationTags;
+    }
+
+    public void setRecommendationTags(String[] recommendationTags) {
+        this.recommendationTags = recommendationTags;
     }
 }

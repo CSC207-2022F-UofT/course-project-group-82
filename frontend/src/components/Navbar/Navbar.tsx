@@ -1,10 +1,19 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Avatar, IconButton } from "react-native-paper";
+import {
+    Image,
+    ImageBackground,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { setItemAsync } from "expo-secure-store";
 
 import SimpleIcon from "./assets/SimpleIcon.png";
+import OuieatIcon from "./assets/Ouieat.png";
+import EntIcon from "react-native-vector-icons/Entypo";
+import IonIcon from "react-native-vector-icons/Ionicons";
+
 import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 
 export function Navbar(props: { navigation: any }) {
@@ -23,11 +32,6 @@ export function Navbar(props: { navigation: any }) {
         }
     }, [props.navigation]);
 
-    async function doLogout() {
-        setUserID(null);
-        await setItemAsync("userToken", "");
-    }
-
     function showDashboardPage() {
         props.navigation.navigate("Dashboard");
     }
@@ -38,6 +42,10 @@ export function Navbar(props: { navigation: any }) {
 
     function showUserProfilePage() {
         props.navigation.navigate("UserProfile");
+    }
+
+    function showNotificationsPage() {
+        props.navigation.navigate("Notifications");
     }
 
     const styles = StyleSheet.create({
@@ -67,6 +75,15 @@ export function Navbar(props: { navigation: any }) {
         withUserIcon: {
             backgroundColor: "transparent",
         },
+        withShadow: {
+            shadowColor: "#000",
+            shadowOpacity: 0.2,
+            shadowRadius: 3,
+            shadowOffset: {
+                height: 5,
+                width: 0,
+            },
+        },
     });
 
     return (
@@ -82,35 +99,48 @@ export function Navbar(props: { navigation: any }) {
                             <Image
                                 source={SimpleIcon}
                                 resizeMode={"center"}
-                                className={"h-10 w-10"}
+                                className={"h-12 w-12"}
                             />
-                            <Text className={"text-2xl font-bold"}>
-                                Oui-eat
-                            </Text>
+                            <Image
+                                source={OuieatIcon}
+                                resizeMode={"contain"}
+                                className={"h-auto w-24"}
+                            />
                         </View>
                     </TouchableOpacity>
                     <View
                         className={
-                            "flex flex-row justify-end gap-x-2 items-center"
+                            "flex flex-row justify-end items-center gap-x-2"
                         }
                     >
-                        <IconButton
-                            onPress={showFinderPage}
-                            style={styles.withIcon}
-                            size={18}
-                            icon="magnify"
-                        />
-                        <IconButton
-                            onPress={doLogout}
-                            style={styles.withIcon}
-                            size={18}
-                            icon="logout"
-                        />
-                        <TouchableOpacity onPress={showUserProfilePage}>
-                            <View className={"shadow-lg rounded-full"}>
-                                <Avatar.Image
-                                    style={styles.withUserIcon}
-                                    size={32}
+                        <View className={"flex flex-row items-center gap-x-2"}>
+                            <TouchableOpacity
+                                style={styles.withShadow}
+                                onPress={showNotificationsPage}
+                                className={"rounded-full bg-[#FFDC25] p-1"}
+                            >
+                                <View className={"flex flex-row items-center"}>
+                                    <View className={"shadow-lg rounded-full"}>
+                                        <IonIcon
+                                            name={"notifications-outline"}
+                                            size={24}
+                                        />
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
+                        <TouchableOpacity
+                            style={styles.withShadow}
+                            onPress={showUserProfilePage}
+                        >
+                            <View
+                                className={
+                                    "h-8 w-8 rounded-full overflow-hidden"
+                                }
+                            >
+                                <ImageBackground
+                                    className={"w-full h-full"}
                                     source={{
                                         uri:
                                             profilePictureLink ||

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { NavigationState } from "@react-navigation/native";
 import { UserProfilePageController } from "./UserProfilePageController";
 import { UserContext } from "../../context/UserContext";
 

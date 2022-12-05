@@ -2,6 +2,7 @@ import {
     ImageBackground,
     Linking,
     Text,
+    TouchableHighlight,
     TouchableOpacity,
     View,
 } from "react-native";
@@ -10,6 +11,7 @@ import { OuiRecommendations } from "../../../../data_types";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { BlurView } from "expo-blur";
+import classNames from "classnames";
 
 export function Recommendation(props: { recommendation: OuiRecommendations }) {
     const withShadow = {
@@ -21,6 +23,12 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
             width: 0,
         },
     };
+
+    const tagsClassNames = classNames(
+        "w-auto px-3 py-1 rounded-xl",
+        { "bg-[#2EC03D]": props.recommendation.recommends },
+        { "bg-[#FF5A5A]": !props.recommendation.recommends }
+    );
 
     return (
         <>
@@ -112,15 +120,30 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                 </View>
 
                 {/* Restaurant Address */}
-                <View className={"flex flex-row items-start"}>
-                    <Text className={"text-md text-gray-400"}>
+                <TouchableOpacity
+                    onPress={() => {
+                        const googleLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                            props.recommendation.restaurantName +
+                                ", " +
+                                props.recommendation.restaurantAddress
+                        )}`;
+                        Linking.openURL(googleLink);
+                    }}
+                    className={"flex flex-row items-start"}
+                >
+                    <Text className={"text-xs text-gray-400"}>
                         <IonIcon name={"location-outline"} size={16} />
                         {" " + props.recommendation.restaurantAddress}
                     </Text>
-                </View>
+                </TouchableOpacity>
 
                 {/* Restaurant Image */}
-                <View
+                <TouchableOpacity
+                    onPress={() =>
+                        Linking.openURL(
+                            props.recommendation.restaurantWebsiteLink
+                        )
+                    }
                     className={
                         "h-40 rounded-lg overflow-hidden shadow-2xl p-0.5"
                     }
@@ -148,15 +171,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                                 }}
                             >
                                 <BlurView className={"w-full"} intensity={10}>
-                                    <Text
-                                        onPress={() =>
-                                            Linking.openURL(
-                                                props.recommendation
-                                                    .restaurantWebsiteLink
-                                            )
-                                        }
-                                        className={"text-white mx-2 p-0.5"}
-                                    >
+                                    <Text className={"text-white mx-2 p-0.5"}>
                                         {props.recommendation.restaurantName +
                                             " "}
                                         <FeatherIcon
@@ -168,7 +183,7 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
                             </View>
                         </ImageBackground>
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 {/* for tag */}
                 <View className={"flex flex-row justify-center"}>
@@ -177,15 +192,13 @@ export function Recommendation(props: { recommendation: OuiRecommendations }) {
 
                 {/*Wrapper for tags*/}
                 <View
-                    className={"flex flex-row gap-x-3 justify-start flex-wrap"}
+                    className={
+                        "flex flex-row gap-x-3 justify-start flex-wrap gap-y-1"
+                    }
                 >
                     {/*Single tag*/}
                     {props.recommendation.restaurantForTags.map((tag) => (
-                        <View
-                            className={
-                                "w-auto bg-[#ffb700] px-3 py-1 rounded-xl"
-                            }
-                        >
+                        <View className={tagsClassNames}>
                             <Text className={"text-xs text-white"}>{tag}</Text>
                         </View>
                     ))}

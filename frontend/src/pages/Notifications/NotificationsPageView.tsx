@@ -1,87 +1,145 @@
 import {
     ImageBackground,
+    RefreshControl,
     SafeAreaView,
     ScrollView,
     Text,
     View,
 } from "react-native";
-import BackgroundImage from "./assets/NotificationsBackgroundImage.png";
-import classNames from "classnames";
 import { OuiNotification } from "./types/OuiNotification";
+import Navbar from "../../components/Navbar";
+import React from "react";
+import { Button as RNButton } from "react-native-ui-lib";
+import EntypoIcon from "react-native-vector-icons/Entypo";
+import { UserPreviewInterface } from "../../services/User/UserInterface";
+import UserByUsernameFinder from "./components/UserByUsernameFinder";
+import FriendRequestNotification from "./components/FriendRequestNotification";
+import { FriendListItem } from "./components/FriendListItem/FriendListItem";
 
 export function NotificationsPageView(props: {
     navigation: any;
     notifications: OuiNotification[];
+    closeModal: () => void;
+    openModal: () => void;
+    modalVisible: boolean;
+    loading: boolean;
+    users: Array<UserPreviewInterface>;
+    friends: Array<UserPreviewInterface>;
+    searchUserText: string;
+    updateSearchUserText: (text: string) => void;
+    searchForUsersByUsername: () => void;
+    sendFriendRequest: (recipientId: string, recipientUsername: string) => void;
+    refreshNotifications: () => void;
+    refreshFriendsList: () => void;
+    refreshingFriends: boolean;
+    refreshing: boolean;
+    handleFriendRequest: (
+        notification: OuiNotification,
+        accept: boolean
+    ) => void;
+    handleRemoveFriend: (friendId: string) => void;
 }) {
-    const viewClassnames = classNames("w-full m-auto h-full self-center");
-
-    const NotificationMapping = () => {
+    function masterRefreshControl() {
         return (
-            <>
-                {props.notifications.map((notification) => {
-                    return (
-                        <View
-                            key={notification.id}
-                            className={"flex flex-col justify-center px-5"}
-                        >
-                            <View
-                                className={
-                                    "bg-[#FFB700] opacity-[0.3] h-0.5 w-full"
-                                }
-                            />
-                            <Text className={"text-xl font-bold"}>
-                                {notification.title}
-                            </Text>
-                            <Text className={"text-md"}>
-                                {notification.body}
-                            </Text>
-                            <Text className={"text-sm text-gray"}>
-                                {notification.timestamp}
-                            </Text>
-                            <View
-                                className={
-                                    "bg-[#FFB700] opacity-[0.3] h-0.5 w-full"
-                                }
-                            />
-                        </View>
-                    );
-                })}
-            </>
+            <RefreshControl
+                refreshing={props.refreshingFriends || props.refreshing}
+                onRefresh={() => {
+                    props.refreshFriendsList();
+                    props.refreshNotifications();
+                }}
+            />
         );
-    };
+    }
 
-    const NotificationOutput = () => {
-        if (props.notifications.length > 0) return <NotificationMapping />;
-        else
-            return (
-                <Text className={"text-xl font-bold text-left px-5"}>
-                    No notifications :(
-                </Text>
-            );
-    };
+    function friendRequestRefreshControl() {
+        return (
+            <RefreshControl
+                refreshing={props.refreshing}
+                onRefresh={props.refreshNotifications}
+            />
+        );
+    }
+
+    function friendsListRefreshControl() {
+        return (
+            <RefreshControl
+                refreshing={props.refreshingFriends}
+                onRefresh={props.refreshFriendsList}
+            />
+        );
+    }
 
     return (
-        <ImageBackground source={BackgroundImage}>
-            <SafeAreaView>
-                <View className={viewClassnames}>
-                    {/*Notifications Header */}
-                    <View className={"flex flex-row justify-center my-5"}>
-                        <Text className={"text-3xl font-bold"}>
-                            Notifications
-                        </Text>
+        <SafeAreaView className={"h-full w-full"}>
+            <View className={"flex flex-col flex-1 bg-[#fff]"}>
+                <Navbar navigation={props.navigation} />
+
+                {/* User finder modal */}
+                <UserByUsernameFinder
+                    modalVisible={props.modalVisible}
+                    loading={props.loading}
+                    closeModal={props.closeModal}
+                    users={props.users}
+                    searchUserText={props.searchUserText}
+                    updateSearchUserText={props.updateSearchUserText}
+                    searchForUsersByUsername={props.searchForUsersByUsername}
+                    sendFriendRequest={props.sendFriendRequest}
+                />
+
+                <ScrollView refreshControl={masterRefreshControl()}>
+                    {/* Title */}
+                    <View className={"flex flex-col py-5"}>
+                        <Text className={"text-xl px-5"}>Your friends</Text>
+                        <View className={"w-1/2 bg-[#ffb700] h-1 mx-4"} />
                     </View>
 
-                    {/*Notifications Scroll List*/}
-                    <ScrollView
-                        className={"flex flex-row"}
-                        contentContainerStyle={{
-                            flexGrow: 1,
-                        }}
+                    <View className={"flex flex-col px-5 pb-5"}>
+                        {props.friends.map((friend: UserPreviewInterface) => {
+                            return (
+                                <FriendListItem
+                                    friend={friend}
+                                    handleRemoveFriend={
+                                        props.handleRemoveFriend
+                                    }
+                                    key={friend.id}
+                                />
+                            );
+                        })}
+                    </View>
+
+                    {/* Title */}
+                    <View className={"flex flex-col py-5"}>
+                        <Text className={"text-xl px-5"}>Requests</Text>
+                        <View className={"w-1/2 bg-[#ffb700] h-1 mx-4"} />
+                    </View>
+
+                    <View className={"flex flex-col px-5 pb-5"}>
+                        {props.notifications.map((notification) => {
+                            return (
+                                <FriendRequestNotification
+                                    notification={notification}
+                                    handleFriendRequest={
+                                        props.handleFriendRequest
+                                    }
+                                />
+                            );
+                        })}
+                    </View>
+                </ScrollView>
+            </View>
+            {/* Add friend button button*/}
+            <View className={"flex flex-col"}>
+                <View className={"flex flex-row justify-center items-center"}>
+                    <RNButton
+                        onPress={props.openModal}
+                        borderRadius={10}
+                        label={" Add a friend"}
+                        backgroundColor={"#FFB700"}
                     >
-                        <NotificationOutput />
-                    </ScrollView>
+                        <EntypoIcon name={"plus"} size={24} color={"#fff"} />
+                    </RNButton>
                 </View>
-            </SafeAreaView>
-        </ImageBackground>
+            </View>
+        </SafeAreaView>
     );
 }

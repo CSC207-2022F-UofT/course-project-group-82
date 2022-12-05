@@ -6,6 +6,7 @@ import com.ouieat.models.UpdateUser;
 import com.ouieat.models.User;
 import com.ouieat.models.UserCredentials;
 import com.ouieat.models.UserLogin;
+import com.ouieat.repository.NotificationRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.requests.UserRequests;
 import org.apache.logging.log4j.Level;
@@ -17,10 +18,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     public final UserRepository userRepository;
+    public final NotificationRepository notificationRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(
+        UserRepository userRepository,
+        NotificationRepository notificationRepository
+    ) {
         this.userRepository = userRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @PostMapping(
@@ -62,6 +68,48 @@ public class UserController {
         return UserRequests.getDashboard(
             this.userRepository,
             UserCredentials.fromUserID(userID)
+        );
+    }
+
+    @GetMapping(
+        path = "/getUsersByUsername",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getUsersByUsername(
+        @RequestParam String username,
+        @RequestParam String userId
+    ) {
+        return UserRequests.getUsersByUsername(
+            this.userRepository,
+            this.notificationRepository,
+            UserCredentials.fromUserID(userId),
+            username
+        );
+    }
+
+    @GetMapping(
+        path = "/getFriends",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getUserFriends(@RequestParam String userId) {
+        return UserRequests.getFriends(
+            this.userRepository,
+            UserCredentials.fromUserID(userId)
+        );
+    }
+
+    @GetMapping(
+        path = "/removeFriend",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String removeFriendFromUsers(
+        @RequestParam String userId,
+        @RequestParam String friendId
+    ) {
+        return UserRequests.removeFriendFromUsers(
+            this.userRepository,
+            UserCredentials.fromUserID(userId),
+            friendId
         );
     }
 }

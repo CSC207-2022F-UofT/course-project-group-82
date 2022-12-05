@@ -1,14 +1,14 @@
 package com.ouieat.implementation;
 
 import com.ouieat.OuiLogger;
-import com.ouieat.models.UpdateUser;
-import com.ouieat.models.User;
-import com.ouieat.models.UserCredentials;
+import com.ouieat.models.*;
+import com.ouieat.repository.NotificationRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
 import com.ouieat.responses.UserResponses;
 import com.ouieat.responses.models.ErrorResponseData;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.apache.logging.log4j.Level;
@@ -179,6 +179,138 @@ public class UserImplementation {
             return UserResponses.RegistrationResponse(
                 "failure",
                 "Error while updating the user"
+            );
+        }
+    }
+
+    public static Response getUsersByUsername(
+        UserRepository userRepository,
+        NotificationRepository notificationRepository,
+        String username,
+        String userId
+    ) {
+        try {
+            ArrayList<User> users = new ArrayList<>(userRepository.findAll());
+            ArrayList<Notification> notifications = new ArrayList<>(
+                notificationRepository.findAll()
+            );
+            ArrayList<UserPreview> filteredUsers = new ArrayList<>();
+            for (User u : users) {
+                if (
+                    !u.getId().equals(userId) &&
+                    u
+                        .getUsername()
+                        .toLowerCase()
+                        .contains(username.toLowerCase()) &&
+                    !u.getFriendIds().contains(userId)
+                ) {
+                    filteredUsers.add(new UserPreview(u));
+                }
+            }
+            ArrayList<UserPreview> shallowClonedUsers = new ArrayList<>(
+                filteredUsers
+            );
+            // Get rid of the users that already have friend requests sent
+            for (Notification n : notifications) {
+                if (n.getSenderId().equals(userId)) {
+                    for (UserPreview u : shallowClonedUsers) {
+                        if (u.getId().equals(n.getRecipientId())) {
+                            filteredUsers.remove(u);
+                        }
+                    }
+                }
+            }
+
+            OuiLogger.log(
+                Level.INFO,
+                "Successfully found users: " +
+                filteredUsers.size() +
+                " for username: " +
+                username
+            );
+            return UserResponses.GetUsersByUsernameResponse(filteredUsers);
+        } catch (Exception e) {
+            OuiLogger.log(Level.ERROR, "Failed to get users by username");
+            OuiLogger.log(Level.ERROR, e.getMessage());
+            return ExceptionResponses.UserErrorResponse(
+                "Error while getting users by username"
+            );
+        }
+    }
+
+    public static Response getFriends(
+        UserRepository userRepository,
+        User user
+    ) {
+        try {
+            ArrayList<UserPreview> friendPreviews = new ArrayList<>();
+            for (String friendId : user.getFriendIds()) {
+                ArrayList<User> friend = userRepository.findUserById(friendId);
+                if (friend.size() != 1) {
+                    OuiLogger.log(
+                        Level.ERROR,
+                        "Error getting friends for user: " + user.getUsername()
+                    );
+                    OuiLogger.log(
+                        Level.ERROR,
+                        "No friend found with id: " + friendId
+                    );
+                    return ExceptionResponses.UserErrorResponse(
+                        "Error getting friends for user: " + user.getUsername()
+                    );
+                }
+                friendPreviews.add(new UserPreview(friend.get(0)));
+            }
+            return UserResponses.GetFriendsResponse(friendPreviews);
+        } catch (Exception e) {
+            OuiLogger.log(Level.ERROR, "Failed to get friends");
+            OuiLogger.log(Level.ERROR, e.getMessage());
+            return ExceptionResponses.UserErrorResponse(
+                "Error while getting friends"
+            );
+        }
+    }
+
+    public static Response removeFriend(
+        UserRepository userRepository,
+        User user,
+        String friendId
+    ) {
+        try {
+            ArrayList<User> friend = userRepository.findUserById(friendId);
+            if (friend.size() != 1) {
+                OuiLogger.log(
+                    Level.ERROR,
+                    "Error removing friend for user: " + user.getUsername()
+                );
+                OuiLogger.log(
+                    Level.ERROR,
+                    "No friend found with id: " + friendId
+                );
+                return ExceptionResponses.UserErrorResponse(
+                    "Error removing friend for user: " + user.getUsername()
+                );
+            }
+            User friendUser = friend.get(0);
+
+            // Remove each from the other's friend list and save
+
+            ArrayList<String> userFriendIds = user.getFriendIds();
+            userFriendIds.remove(friendId);
+            user.setFriendIds(userFriendIds);
+            userRepository.save(user);
+
+            ArrayList<String> friendFriendIds = friendUser.getFriendIds();
+            friendFriendIds.remove(user.getId());
+            friendUser.setFriendIds(friendFriendIds);
+            userRepository.save(friendUser);
+
+            return UserResponses.RemoveFriendResponse();
+        } catch (Exception e) {
+            OuiLogger.log(Level.ERROR, "Failed to remove friend");
+            OuiLogger.log(Level.ERROR, e.getMessage());
+            return ExceptionResponses.UserErrorResponse(
+                "Error while removing friend"
             );
         }
     }

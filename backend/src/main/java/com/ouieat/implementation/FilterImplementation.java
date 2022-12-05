@@ -3,7 +3,7 @@ package com.ouieat.implementation;
 import com.ouieat.models.Filter;
 import com.ouieat.models.restaurant.Restaurant;
 import com.ouieat.repository.RestaurantRepository;
-import com.ouieat.responses.FilterResponse;
+import com.ouieat.responses.FilterResponses;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class FilterImplementation {
             );
         }
 
-        return FilterResponse
+        return FilterResponses
             .getFilteredRestaurantsResponse(filteredRestaurants)
             .getJsonString();
     }

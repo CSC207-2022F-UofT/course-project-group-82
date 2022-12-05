@@ -7,6 +7,7 @@ import { getUserDataFromIdService } from "../../services/User/GetById/GetById";
 import { RecommendationInterface } from "../../services/Recommendation/RecommendationInterface";
 import { RestaurantInterface } from "../../services/Restaurants/RestaurantInterface";
 import { OuiRecommendations } from "../../data_types";
+import { getRecommendationsFromFriendsService } from "../../services/Recommendation/Get/GetRecommendationsFromFriends";
 
 export function DashboardPageController(props: {
     userID: string | null;
@@ -33,8 +34,15 @@ export function DashboardPageController(props: {
 
     const onRefresh = useCallback(async () => {
         props.setRefreshing(true);
+        if (!props.userID) {
+            console.error("No user ID found");
+            props.setRefreshing(false);
+            return;
+        }
         let ouiRecommendations = [] as OuiRecommendations[];
-        let recommendationsData = await getAllRecommendationsService();
+        let recommendationsData = await getRecommendationsFromFriendsService(
+            props.userID
+        );
         recommendationsData = (recommendationsData as any)[
             "allRecommendations"
         ];
@@ -64,11 +72,15 @@ export function DashboardPageController(props: {
                 recommendedByProfilePictureLink: user.profilePictureLink,
                 timestamp: recommendation.postDate,
                 recommends: recommendation.recommends,
+                restaurantCoordinates:
+                    restaurant.coordinates.latitude +
+                    "," +
+                    restaurant.coordinates.longitude,
                 restaurantName: restaurant?.name || "Undefined",
                 restaurantAddress: address,
                 restaurantImageLink: restaurant.image_url,
                 restaurantWebsiteLink: restaurant.url,
-                restaurantForTags: restaurant.categories.map((m) => m.title),
+                restaurantForTags: recommendation.recommendationTags,
             });
         }
         props.setRestaurantRecommendations(ouiRecommendations);

@@ -5,6 +5,7 @@ import Recommendation from "./components/Recommendation";
 import Navbar from "../../components/Navbar";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { OuiRecommendations } from "../../data_types";
+import React from "react";
 
 export function DashboardPageView(props: {
     navigation: any;
@@ -53,14 +54,15 @@ export function DashboardPageView(props: {
 
                 {/* All Recommendations */}
                 <View className={"w-full flex flex-1 flex-col"}>
-                    <ScrollView
-                        refreshControl={dashboardRefreshControl()}
-                        contentContainerStyle={{
-                            paddingTop: 15,
-                            paddingHorizontal: 10,
-                        }}
-                    >
-                        <RecommendationMapping />
+                    <ScrollView refreshControl={dashboardRefreshControl()}>
+                        {/* Title */}
+                        <View className={"flex flex-col py-5"}>
+                            <Text className={"text-xl px-5"}>Recent</Text>
+                            <View className={"w-1/2 bg-[#ffb700] h-1 mx-4"} />
+                        </View>
+                        <View className={"px-5 pt-3"}>
+                            <RecommendationMapping />
+                        </View>
                     </ScrollView>
                 </View>
 
