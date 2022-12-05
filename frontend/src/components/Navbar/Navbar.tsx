@@ -116,29 +116,14 @@ export function Navbar(props: { navigation: any }) {
                         <View className={"flex flex-row items-center gap-x-2"}>
                             <TouchableOpacity
                                 style={styles.withShadow}
-                                onPress={showFinderPage}
-                                className={"rounded-full"}
-                            >
-                                <View className={"flex flex-row items-center"}>
-                                    <View className={"shadow-lg rounded-full"}>
-                                        <IonIcon
-                                            name={"search-outline"}
-                                            size={30}
-                                        />
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                                style={styles.withShadow}
                                 onPress={showNotificationsPage}
-                                className={"rounded-full"}
+                                className={"rounded-full bg-[#FFDC25] p-1"}
                             >
                                 <View className={"flex flex-row items-center"}>
                                     <View className={"shadow-lg rounded-full"}>
                                         <IonIcon
                                             name={"notifications-outline"}
-                                            size={30}
+                                            size={24}
                                         />
                                     </View>
                                 </View>

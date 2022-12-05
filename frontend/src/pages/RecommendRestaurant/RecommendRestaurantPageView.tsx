@@ -45,9 +45,10 @@ export function RecommendRestaurantPageView(props: {
                 <Navbar navigation={props.navigation} />
                 {/* Share heading */}
                 <KeyboardAwareScrollView className={"flex flex-col p-5"}>
-                    <Text className={"text-lg font-semibold"}>
-                        Share a recommendation for...
-                    </Text>
+                    <View className={"flex flex-col pb-3"}>
+                        <Text className={"text-xl"}>Recommend</Text>
+                        <View className={"w-1/2 bg-[#ffb700] h-1"} />
+                    </View>
 
                     {/*Modal toggle and selected restaurant preview*/}
                     <SelectedRestaurantPreview {...props} />

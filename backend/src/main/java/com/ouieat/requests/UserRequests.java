@@ -1,9 +1,11 @@
 package com.ouieat.requests;
 
 import com.ouieat.implementation.NotificationImplementation;
+import com.ouieat.implementation.RecommendationImplementation;
 import com.ouieat.implementation.UserImplementation;
 import com.ouieat.models.*;
 import com.ouieat.repository.NotificationRepository;
+import com.ouieat.repository.RecommendationRepository;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.responses.ExceptionResponses;
 import com.ouieat.responses.Response;
@@ -257,6 +259,26 @@ public class UserRequests {
                         userRepository,
                         user,
                         friendID
+                    );
+                }
+            }
+        );
+    }
+
+    public static String getFriendRecommendations(
+        UserRepository userRepository,
+        RecommendationRepository recommendationRepository,
+        UserCredentials userCredentials
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            userCredentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return RecommendationImplementation.getRestaurantRecommendationsFromFriends(
+                        recommendationRepository,
+                        user
                     );
                 }
             }

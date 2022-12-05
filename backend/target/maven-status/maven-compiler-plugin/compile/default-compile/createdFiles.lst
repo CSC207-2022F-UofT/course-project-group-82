@@ -12,6 +12,7 @@ com/ouieat/responses/models/MessageResponseData.class
 com/ouieat/models/Address.class
 com/ouieat/controllers/RootController.class
 com/ouieat/requests/UserActionHandler.class
+com/ouieat/requests/UserRequests$10.class
 com/ouieat/responses/models/LoginResponseData.class
 com/ouieat/OuiLogger.class
 com/ouieat/implementation/FilterImplementation.class

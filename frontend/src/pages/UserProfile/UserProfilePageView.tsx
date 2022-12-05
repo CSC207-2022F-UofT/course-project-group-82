@@ -47,10 +47,11 @@ export function UserProfilePageView(props: {
 
                 <KeyboardAwareScrollView>
                     <View className={"flex flex-col flex-1 p-5"}>
-                        <View className={"flex flex-row"}>
-                            <Text className={"text-lg font-semibold"}>
-                                Edit the user profile...
+                        <View className={"flex flex-col pb-5"}>
+                            <Text className={"text-xl px-5"}>
+                                Edit the profile
                             </Text>
+                            <View className={"w-1/2 bg-[#ffb700] h-1 mx-4"} />
                         </View>
 
                         <View className={"flex flex-col"}>
