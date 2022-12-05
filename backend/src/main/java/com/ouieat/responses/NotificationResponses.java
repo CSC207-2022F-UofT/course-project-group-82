@@ -26,4 +26,22 @@ public class NotificationResponses {
             "client-get"
         );
     }
+
+    public static Response FriendRequestAcceptedResponse() {
+        return new Response(
+            "success",
+            new NullResponseData(),
+            "acceptFriendRequest",
+            "client-get"
+        );
+    }
+
+    public static Response FriendRequestDeclinedResponse() {
+        return new Response(
+            "success",
+            new NullResponseData(),
+            "declineFriendRequest",
+            "client-get"
+        );
+    }
 }

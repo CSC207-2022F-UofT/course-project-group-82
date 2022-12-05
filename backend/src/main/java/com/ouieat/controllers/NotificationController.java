@@ -50,4 +50,40 @@ public class NotificationController {
             friendRequestNotification
         );
     }
+
+    @PostMapping(
+        path = "/acceptFriendRequest",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String handleFriendRequest(
+        @RequestBody Notification friendRequestNotification
+    ) {
+        return UserRequests.handleFriendRequest(
+            this.userRepository,
+            this.notificationRepository,
+            UserCredentials.fromUserID(
+                friendRequestNotification.getRecipientId()
+            ),
+            friendRequestNotification,
+            true
+        );
+    }
+
+    @PostMapping(
+        path = "/declineFriendRequest",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String declineFriendRequest(
+        @RequestBody Notification friendRequestNotification
+    ) {
+        return UserRequests.handleFriendRequest(
+            this.userRepository,
+            this.notificationRepository,
+            UserCredentials.fromUserID(
+                friendRequestNotification.getRecipientId()
+            ),
+            friendRequestNotification,
+            false
+        );
+    }
 }

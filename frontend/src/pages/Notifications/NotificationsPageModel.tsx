@@ -10,8 +10,10 @@ export function NotificationsPageModel(props: { navigation: any }) {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [users, setUsers] = useState<UserPreviewInterface[]>([]);
+    const [friends, setFriends] = useState<UserPreviewInterface[]>([]);
     const [searchUserText, setSearchUserText] = useState<string>("");
     const [refreshing, setRefreshing] = useState<boolean>(false);
+    const [refreshingFriends, setRefreshingFriends] = useState<boolean>(false);
 
     const controllerProps = {
         ...props,
@@ -25,10 +27,14 @@ export function NotificationsPageModel(props: { navigation: any }) {
         setLoading,
         users,
         setUsers,
+        friends,
+        setFriends,
         searchUserText,
         setSearchUserText,
         refreshing,
         setRefreshing,
+        refreshingFriends,
+        setRefreshingFriends,
     };
 
     return <NotificationsPageController {...controllerProps} />;

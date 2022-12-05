@@ -164,6 +164,31 @@ public class UserRequests {
         );
     }
 
+    public static String handleFriendRequest(
+        UserRepository userRepository,
+        NotificationRepository notificationRepository,
+        UserCredentials credentials,
+        Notification friendRequestNotification,
+        boolean accept
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            credentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return NotificationImplementation.handleFriendRequest(
+                        user,
+                        userRepository,
+                        notificationRepository,
+                        friendRequestNotification,
+                        accept
+                    );
+                }
+            }
+        );
+    }
+
     public static String getUserDetails(
         UserRepository userRepository,
         UserCredentials credentials
@@ -195,6 +220,43 @@ public class UserRequests {
                         userRepository,
                         user,
                         updateUser
+                    );
+                }
+            }
+        );
+    }
+
+    public static String getFriends(
+        UserRepository userRepository,
+        UserCredentials userCredentials
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            userCredentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return UserImplementation.getFriends(userRepository, user);
+                }
+            }
+        );
+    }
+
+    public static String removeFriendFromUsers(
+        UserRepository userRepository,
+        UserCredentials userCredentials,
+        String friendID
+    ) {
+        return UserRequests.doUserAction(
+            userRepository,
+            userCredentials,
+            new UserActionHandler() {
+                @Override
+                public Response onUserValidated(User user) {
+                    return UserImplementation.removeFriend(
+                        userRepository,
+                        user,
+                        friendID
                     );
                 }
             }

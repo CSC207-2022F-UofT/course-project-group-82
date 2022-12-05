@@ -38,6 +38,7 @@
 /Users/arib/Library/CloudStorage/OneDrive-UniversityofToronto/Undergraduate Work/F22/CSC207/Exercises/course-project-group-82/backend/src/main/java/com/ouieat/models/UserCredentials.java
 /Users/arib/Library/CloudStorage/OneDrive-UniversityofToronto/Undergraduate Work/F22/CSC207/Exercises/course-project-group-82/backend/src/main/java/com/ouieat/responses/models/NullResponseData.java
 /Users/arib/Library/CloudStorage/OneDrive-UniversityofToronto/Undergraduate Work/F22/CSC207/Exercises/course-project-group-82/backend/src/main/java/com/ouieat/responses/models/UserDetailUpdatedResponseData.java
+/Users/arib/Library/CloudStorage/OneDrive-UniversityofToronto/Undergraduate Work/F22/CSC207/Exercises/course-project-group-82/backend/src/main/java/com/ouieat/responses/models/FriendsResponseData.java
 /Users/arib/Library/CloudStorage/OneDrive-UniversityofToronto/Undergraduate Work/F22/CSC207/Exercises/course-project-group-82/backend/src/main/java/com/ouieat/responses/RestaurantResponses.java
 /Users/arib/Library/CloudStorage/OneDrive-UniversityofToronto/Undergraduate Work/F22/CSC207/Exercises/course-project-group-82/backend/src/main/java/com/ouieat/models/restaurant/Coordinates.java
 /Users/arib/Library/CloudStorage/OneDrive-UniversityofToronto/Undergraduate Work/F22/CSC207/Exercises/course-project-group-82/backend/src/main/java/com/ouieat/responses/ResponseData.java

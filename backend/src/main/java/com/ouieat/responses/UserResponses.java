@@ -65,4 +65,22 @@ public class UserResponses {
             "client"
         );
     }
+
+    public static Response GetFriendsResponse(ArrayList<UserPreview> friends) {
+        return new Response(
+            "success",
+            new FriendsResponseData(friends),
+            "getFriends",
+            "client"
+        );
+    }
+
+    public static Response RemoveFriendResponse() {
+        return new Response(
+            "success",
+            new NullResponseData(),
+            "removeFriend",
+            "client"
+        );
+    }
 }

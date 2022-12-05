@@ -5,6 +5,9 @@ import { getUsersByUsername } from "../../services/User/GetByUsername/GetByUsern
 import { sendFriendRequestToRecipientFromUser } from "../../services/User/Friends/SendFriendRequest";
 import { useCallback, useEffect } from "react";
 import { getUserNotifications } from "../../services/Notifications/GetUserNotifications/GetUserNotifications";
+import { handleFriendRequestService } from "../../services/User/Friends/HandleFriendRequest";
+import { getFriendsRequestService } from "../../services/User/Friends/GetFriendsRequest";
+import { removeFriendService } from "../../services/User/Friends/RemoveFriendRequest";
 
 export function NotificationsPageController(props: {
     navigation: any;
@@ -18,13 +21,18 @@ export function NotificationsPageController(props: {
     setLoading: (loading: boolean) => void;
     users: Array<UserPreviewInterface>;
     setUsers: (users: Array<UserPreviewInterface>) => void;
+    friends: Array<UserPreviewInterface>;
+    setFriends: (friends: Array<UserPreviewInterface>) => void;
     searchUserText: string;
     setSearchUserText: (searchUserText: string) => void;
     refreshing: boolean;
     setRefreshing: (refreshing: boolean) => void;
+    refreshingFriends: boolean;
+    setRefreshingFriends: (refreshingFriends: boolean) => void;
 }) {
     useEffect(() => {
         refreshNotifications();
+        refreshFriendsList();
     }, []);
 
     function closeModal() {
@@ -78,6 +86,24 @@ export function NotificationsPageController(props: {
         props.setLoading(false);
     }
 
+    async function handleFriendRequest(
+        notification: OuiNotification,
+        accept: boolean
+    ) {
+        props.setRefreshing(true);
+        await handleFriendRequestService(notification, accept);
+        await refreshNotifications();
+        props.setRefreshing(false);
+    }
+
+    async function handleRemoveFriend(friendId: string) {
+        if (!props.userID) return;
+        props.setRefreshingFriends(true);
+        await removeFriendService(friendId, props.userID);
+        await refreshFriendsList();
+        props.setRefreshingFriends(false);
+    }
+
     const refreshNotifications = useCallback(async () => {
         props.setRefreshing(true);
         if (!props.userID) {
@@ -88,7 +114,20 @@ export function NotificationsPageController(props: {
         let newNotifications = [] as OuiNotification[];
         newNotifications = await getUserNotifications(props.userID);
         props.setNotifications(newNotifications);
+        await refreshFriendsList();
         props.setRefreshing(false);
+    }, []);
+
+    const refreshFriendsList = useCallback(async () => {
+        props.setRefreshingFriends(true);
+        if (!props.userID) {
+            console.error("User ID is null");
+            props.setRefreshing(false);
+            return;
+        }
+        let newFriends = await getFriendsRequestService(props.userID);
+        props.setFriends(newFriends);
+        props.setRefreshingFriends(false);
     }, []);
 
     const viewProps = {
@@ -100,11 +139,16 @@ export function NotificationsPageController(props: {
         loading: props.loading,
         users: props.users,
         searchUserText: props.searchUserText,
+        friends: props.friends,
         updateSearchUserText: updateSearchUserText,
         searchForUsersByUsername,
         sendFriendRequest,
         refreshing: props.refreshing,
+        refreshingFriends: props.refreshingFriends,
         refreshNotifications,
+        refreshFriendsList,
+        handleFriendRequest,
+        handleRemoveFriend,
     };
 
     return <NotificationsPageView {...viewProps} />;

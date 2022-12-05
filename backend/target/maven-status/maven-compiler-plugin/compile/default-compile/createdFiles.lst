@@ -1,7 +1,9 @@
 com/ouieat/requests/UserRequests.class
+com/ouieat/requests/UserRequests$9.class
 com/ouieat/responses/models/NullResponseData.class
 com/ouieat/models/UserCredentials.class
 com/ouieat/models/UserDashboard.class
+com/ouieat/responses/models/FriendsResponseData.class
 com/ouieat/responses/ExceptionResponses.class
 com/ouieat/requests/UserRequests$6.class
 com/ouieat/requests/FilterRequests.class
@@ -13,6 +15,7 @@ com/ouieat/requests/UserActionHandler.class
 com/ouieat/responses/models/LoginResponseData.class
 com/ouieat/OuiLogger.class
 com/ouieat/implementation/FilterImplementation.class
+com/ouieat/requests/UserRequests$7.class
 com/ouieat/responses/RootResponses.class
 com/ouieat/controllers/ControllerExceptionHandler.class
 com/ouieat/models/Filter.class
@@ -22,6 +25,7 @@ com/ouieat/models/User.class
 com/ouieat/controllers/UserController.class
 com/ouieat/responses/models/ErrorResponseData.class
 com/ouieat/implementation/UserImplementation.class
+com/ouieat/requests/UserRequests$8.class
 com/ouieat/responses/models/DashboardResponseData.class
 com/ouieat/responses/ResponseData.class
 com/ouieat/models/UserLogin.class

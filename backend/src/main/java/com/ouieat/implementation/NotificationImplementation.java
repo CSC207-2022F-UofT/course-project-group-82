@@ -79,4 +79,46 @@ public class NotificationImplementation {
             return ExceptionResponses.UnknownExceptionResponse();
         }
     }
+
+    public static Response handleFriendRequest(
+        User recipientUser,
+        UserRepository userRepository,
+        NotificationRepository notificationRepository,
+        Notification friendRequestNotification,
+        boolean accept
+    ) {
+        try {
+            if (accept) {
+                recipientUser
+                    .getFriendIds()
+                    .add(friendRequestNotification.getSenderId());
+                ArrayList<User> senderUser = userRepository.findUserById(
+                    friendRequestNotification.getSenderId()
+                );
+                if (senderUser.size() == 0) {
+                    OuiLogger.log(
+                        Level.ERROR,
+                        "Could not find sender user for friend request: " +
+                        friendRequestNotification.getSenderId()
+                    );
+                    return ExceptionResponses.UnknownExceptionResponse();
+                }
+                senderUser.get(0).getFriendIds().add(recipientUser.getId());
+                userRepository.save(recipientUser);
+                userRepository.save(senderUser.get(0));
+                notificationRepository.delete(friendRequestNotification);
+                return NotificationResponses.FriendRequestAcceptedResponse();
+            } else {
+                notificationRepository.delete(friendRequestNotification);
+                return NotificationResponses.FriendRequestDeclinedResponse();
+            }
+        } catch (Exception e) {
+            OuiLogger.log(
+                Level.ERROR,
+                "Could not handle friend request for user: " +
+                recipientUser.getUsername()
+            );
+            return ExceptionResponses.UnknownExceptionResponse();
+        }
+    }
 }

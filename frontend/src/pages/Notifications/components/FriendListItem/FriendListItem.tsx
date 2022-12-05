@@ -1,14 +1,10 @@
+import { UserPreviewInterface } from "../../../../services/User/UserInterface";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
-import EntypoIcon from "react-native-vector-icons/Entypo";
 import React from "react";
-import { OuiNotification } from "../../types/OuiNotification";
 
-export function FriendRequestNotification(props: {
-    notification: OuiNotification;
-    handleFriendRequest: (
-        notification: OuiNotification,
-        accept: boolean
-    ) => void;
+export function FriendListItem(props: {
+    friend: UserPreviewInterface;
+    handleRemoveFriend: (friendId: string) => void;
 }) {
     const withShadow = {
         shadowColor: "#000",
@@ -38,8 +34,7 @@ export function FriendRequestNotification(props: {
                                 className={"w-full h-full"}
                                 source={{
                                     uri:
-                                        props.notification
-                                            .senderProfilePictureLink ||
+                                        props.friend.profilePictureLink ||
                                         "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
                                 }}
                             />
@@ -50,51 +45,29 @@ export function FriendRequestNotification(props: {
                     <View className={"flex flex-1 flex-row justify-between"}>
                         <View className={"flex flex-col gap-y-[-3]"}>
                             <Text className={"text-lg font-semibold"}>
-                                {props.notification.senderName}
+                                {props.friend.firstName +
+                                    " " +
+                                    props.friend.lastName}
                             </Text>
                             <Text className={"text-xs text-gray-400"}>
-                                Sent you a friend request
+                                @{props.friend.username}
                             </Text>
                         </View>
                     </View>
 
-                    {/* Toggle Select for Accept/Decline */}
                     <View className={"flex flex-row"}>
-                        {/* Accept Request */}
+                        {/* Remove Friend */}
                         <TouchableOpacity
                             onPress={() => {
-                                props.handleFriendRequest(
-                                    props.notification,
-                                    true
-                                );
+                                props.handleRemoveFriend(props.friend.id);
                             }}
                             className={
-                                "bg-[#2EC03DCC] h-10 w-12 flex flex-col items-center justify-center rounded-l-xl"
+                                "bg-[#FF5A5A] h-10 flex flex-col items-center justify-center rounded-xl"
                             }
                         >
-                            <EntypoIcon
-                                name={"check"}
-                                size={20}
-                                color={"#fff"}
-                            />
-                        </TouchableOpacity>
-                        {/* Decline Request */}
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.handleFriendRequest(
-                                    props.notification,
-                                    false
-                                );
-                            }}
-                            className={
-                                "bg-[#FF5A5ACC] h-10 w-12 flex flex-col items-center justify-center rounded-r-xl"
-                            }
-                        >
-                            <EntypoIcon
-                                name={"cross"}
-                                size={24}
-                                color={"#fff"}
-                            />
+                            <Text className={"text-white text-center p-1"}>
+                                Remove
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>

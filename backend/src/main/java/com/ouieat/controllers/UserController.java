@@ -86,4 +86,30 @@ public class UserController {
             username
         );
     }
+
+    @GetMapping(
+        path = "/getFriends",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getUserFriends(@RequestParam String userId) {
+        return UserRequests.getFriends(
+            this.userRepository,
+            UserCredentials.fromUserID(userId)
+        );
+    }
+
+    @GetMapping(
+        path = "/removeFriend",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String removeFriendFromUsers(
+        @RequestParam String userId,
+        @RequestParam String friendId
+    ) {
+        return UserRequests.removeFriendFromUsers(
+            this.userRepository,
+            UserCredentials.fromUserID(userId),
+            friendId
+        );
+    }
 }
