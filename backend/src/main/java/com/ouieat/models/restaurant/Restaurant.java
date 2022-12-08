@@ -1,13 +1,10 @@
 package com.ouieat.models.restaurant;
 
-import org.springframework.data.annotation.Id;
+import com.ouieat.models.Model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "restaurants")
-public class Restaurant {
-
-    @Id
-    private String id;
+public class Restaurant extends Model {
 
     private String alias;
 
@@ -59,14 +56,6 @@ public class Restaurant {
         this.location = location;
         this.phone = phone;
         this.display_phone = display_phone;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getAlias() {

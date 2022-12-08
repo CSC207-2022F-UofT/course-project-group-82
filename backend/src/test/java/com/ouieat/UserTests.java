@@ -2,8 +2,8 @@ package com.ouieat;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.ouieat.models.User;
-import com.ouieat.models.UserLogin;
+import com.ouieat.models.user.User;
+import com.ouieat.models.user.UserLogin;
 import com.ouieat.repository.UserRepository;
 import com.ouieat.requests.UserRequests;
 import org.apache.logging.log4j.Level;
