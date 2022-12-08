@@ -2,7 +2,7 @@ package com.ouieat;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.ouieat.controllers.RootController;
+import com.ouieat.controllers.root.RootController;
 import com.ouieat.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
