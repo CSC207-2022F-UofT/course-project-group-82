@@ -2,12 +2,14 @@ package com.ouieat.requests.recommendation;
 
 import com.ouieat.implementation.recommendation.RecommendationImplementation;
 import com.ouieat.interactor.recommendation.RecommendationInteractor;
+import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.recommendation.Recommendation;
 import com.ouieat.models.user.User;
 import com.ouieat.requests.handler.AuthenticatedRequest;
 import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,4 +35,9 @@ public class AuthenticatedRecommendationRequest
 
     public FunctionalInterfaces.Function2<RecommendationInteractor, User, Response> getRecommendationsForUser =
         RecommendationImplementation::getRecommendationsForUser;
+
+    @Autowired
+    public AuthenticatedRecommendationRequest(UserInteractor userInteractor){
+        super(userInteractor);
+    }
 }

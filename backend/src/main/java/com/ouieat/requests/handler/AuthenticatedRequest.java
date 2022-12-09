@@ -6,12 +6,17 @@ import com.ouieat.models.user.User;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthenticatedRequest<T extends Interactor<?, ?>>
     extends Request<T> {
 
+    private final UserInteractor userInteractor;
     @Autowired
-    private UserInteractor userInteractor;
+    public AuthenticatedRequest(UserInteractor userInteractor) {
+        this.userInteractor = userInteractor;
+    }
 
     public Response handle(
         T interactor,

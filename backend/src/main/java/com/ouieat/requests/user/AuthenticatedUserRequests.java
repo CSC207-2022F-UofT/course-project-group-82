@@ -8,6 +8,7 @@ import com.ouieat.requests.handler.AuthenticatedRequest;
 import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +33,7 @@ public class AuthenticatedUserRequests
                 interactor.findById(friendID)
             );
         } else {
-            return ExceptionResponses.MissingRequestParametersResponse();
+            return ExceptionResponses.UserErrorResponse("Friend ID is not a friend");
         }
     };
 
@@ -42,12 +43,13 @@ public class AuthenticatedUserRequests
         UpdatedUser updatedUser
     ) -> {
         if (
-            updatedUser.userId == null &&
+            updatedUser == null ||
+            (updatedUser.userId == null &&
             updatedUser.email == null &&
             updatedUser.firstName == null &&
             updatedUser.lastName == null &&
             updatedUser.profilePictureLink == null &&
-            updatedUser.username == null
+            updatedUser.username == null)
         ) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
@@ -58,4 +60,9 @@ public class AuthenticatedUserRequests
             updatedUser
         );
     };
+
+    @Autowired
+    public AuthenticatedUserRequests(UserInteractor userInteractor){
+        super(userInteractor);
+    }
 }

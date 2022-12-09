@@ -3,7 +3,7 @@ package com.ouieat.requests.handler;
 import com.ouieat.interactor.Interactor;
 import com.ouieat.responses.handler.Response;
 
-public abstract class UnauthenticatedRequest<T extends Interactor<?, ?>>
+public class UnauthenticatedRequest<T extends Interactor<?, ?>>
     extends Request<T> {
 
     public <K> Response handle(

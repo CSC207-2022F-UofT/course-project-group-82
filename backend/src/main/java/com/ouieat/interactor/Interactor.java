@@ -23,8 +23,8 @@ public abstract class Interactor<
         this.repository = repository;
     }
 
-    public void save(J entity) {
-        repository.save(entity);
+    public J save(J entity) {
+        return repository.save(entity);
     }
 
     public void delete(J entity) {

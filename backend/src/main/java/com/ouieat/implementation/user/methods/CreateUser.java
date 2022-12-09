@@ -46,12 +46,8 @@ public interface CreateUser {
                 );
             }
             // Save the user after confirming it does not already exist
-            interactor.save(newUser);
-            ArrayList<User> newUsers = interactor.findUserByUsernameAndPassword(
-                newUser.getUsername(),
-                newUser.getPassword()
-            );
-            if (newUsers.size() == 0) {
+            User createdUser = interactor.save(newUser);
+            if (createdUser == null) {
                 return ExceptionResponses.UserErrorResponse(
                     "Unable to create user"
                 );
@@ -60,9 +56,9 @@ public interface CreateUser {
             // Send back the created users id
             OuiLogger.log(
                 Level.INFO,
-                "Created user with id: " + newUsers.get(0).getId()
+                "Created user with id: " + createdUser.getId()
             );
-            return UserResponses.RegistrationResponse(newUsers.get(0).getId());
+            return UserResponses.RegistrationResponse(createdUser.getId());
         } catch (Exception e) {
             OuiLogger.log(
                 Level.ERROR,
