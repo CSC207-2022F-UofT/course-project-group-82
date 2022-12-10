@@ -5,7 +5,6 @@ import com.ouieat.interactor.notification.NotificationInteractor;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

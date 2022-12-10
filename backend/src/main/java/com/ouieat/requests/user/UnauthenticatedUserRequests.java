@@ -4,7 +4,6 @@ import com.ouieat.implementation.user.UserImplementation;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.User;
 import com.ouieat.models.user.UserLogin;
-import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;

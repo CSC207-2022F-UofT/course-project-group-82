@@ -2,7 +2,6 @@ package com.ouieat.implementation.user;
 
 import com.ouieat.implementation.handler.Implementation;
 import com.ouieat.implementation.user.methods.*;
-import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.UpdatedUser;
 import com.ouieat.models.user.User;

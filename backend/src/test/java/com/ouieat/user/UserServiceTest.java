@@ -4,8 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.ouieat.OuiLogger;
-import com.ouieat.handler.ServiceTest;
+import com.ouieat.ServiceTest;
 import com.ouieat.implementation.user.UserImplementation;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.UpdatedUser;
@@ -17,12 +16,8 @@ import com.ouieat.requests.user.UnauthenticatedUserRequests;
 import com.ouieat.responses.handler.Response;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.Level;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserServiceTest
     extends ServiceTest<UserInteractor, AuthenticatedUserRequests, UnauthenticatedUserRequests> {
 
@@ -33,12 +28,6 @@ public class UserServiceTest
             UnauthenticatedUserRequests.class,
             UserImplementation.class
         );
-        OuiLogger.log(Level.DEBUG, "Testing User Service Requests");
-    }
-
-    @AfterAll
-    public void teardown() {
-        OuiLogger.log(Level.DEBUG, "Finished Testing User Service Requests");
     }
 
     //  Route: /register

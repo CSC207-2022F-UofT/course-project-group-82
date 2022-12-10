@@ -1,28 +1,20 @@
 package com.ouieat.recommendation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.in;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.ouieat.OuiLogger;
-import com.ouieat.handler.ServiceTest;
+import com.ouieat.ServiceTest;
 import com.ouieat.implementation.recommendation.RecommendationImplementation;
 import com.ouieat.interactor.recommendation.RecommendationInteractor;
 import com.ouieat.models.recommendation.Recommendation;
 import com.ouieat.requests.recommendation.AuthenticatedRecommendationRequest;
 import com.ouieat.requests.recommendation.UnauthenticatedRecommendationRequest;
-import com.ouieat.requests.user.AuthenticatedUserRequests;
-import com.ouieat.requests.user.UnauthenticatedUserRequests;
 import com.ouieat.responses.handler.Response;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.Level;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RecommendationServiceTest
     extends ServiceTest<RecommendationInteractor, AuthenticatedRecommendationRequest, UnauthenticatedRecommendationRequest> {
 
@@ -32,15 +24,6 @@ public class RecommendationServiceTest
             AuthenticatedRecommendationRequest.class,
             UnauthenticatedRecommendationRequest.class,
             RecommendationImplementation.class
-        );
-        OuiLogger.log(Level.DEBUG, "Testing Recommendation Service Requests");
-    }
-
-    @AfterAll
-    public void teardown() {
-        OuiLogger.log(
-            Level.DEBUG,
-            "Finished Testing Recommendation Service Requests"
         );
     }
 

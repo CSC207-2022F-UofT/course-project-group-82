@@ -5,7 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.ouieat.OuiLogger;
-import com.ouieat.handler.ServiceTest;
+import com.ouieat.ServiceTest;
 import com.ouieat.implementation.notification.NotificationImplementation;
 import com.ouieat.interactor.notification.NotificationInteractor;
 import com.ouieat.models.notification.Notification;
@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.Level;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class NotificationServiceTest
     extends ServiceTest<NotificationInteractor, AuthenticatedNotificationRequest, UnauthenticatedNotificationRequest> {
 
@@ -30,7 +28,6 @@ public class NotificationServiceTest
             UnauthenticatedNotificationRequest.class,
             NotificationImplementation.class
         );
-        OuiLogger.log(Level.DEBUG, "Testing Notification Service Requests");
     }
 
     // Route: /notifications

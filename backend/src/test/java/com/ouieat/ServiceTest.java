@@ -1,4 +1,4 @@
-package com.ouieat.handler;
+package com.ouieat;
 
 import static org.mockito.Mockito.when;
 
@@ -11,16 +11,65 @@ import com.ouieat.requests.handler.UnauthenticatedRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import org.apache.logging.log4j.Level;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class ServiceTest<
     L extends Interactor<?, ?>,
     J extends AuthenticatedRequest<L, ?>,
     K extends UnauthenticatedRequest<L, ?>
 > {
+
+    @BeforeAll
+    public void setup(TestInfo info) {
+        OuiLogger.log(
+            Level.INFO,
+            "--------------------------------------------------"
+        );
+        OuiLogger.log(Level.INFO, "\n");
+        Optional<String> className = info
+            .getTestClass()
+            .map(Class::getSimpleName);
+        OuiLogger.log(
+            Level.INFO,
+            "Starting Testing " + className.orElse("---- ERROR ----")
+        );
+    }
+
+    @BeforeEach
+    public void beforeEach(TestInfo info) {
+        OuiLogger.log(Level.DEBUG, "Testing - " + info.getDisplayName());
+    }
+
+    @AfterEach
+    public void afterEach(TestInfo info) {
+        OuiLogger.log(
+            Level.DEBUG,
+            "Finished Testing - " + info.getDisplayName()
+        );
+    }
+
+    @AfterAll
+    public void teardown(TestInfo info) {
+        Optional<String> className = info
+            .getTestClass()
+            .map(Class::getSimpleName);
+        OuiLogger.log(
+            Level.INFO,
+            "Finished Testing " + className.orElse("---- ERROR ----")
+        );
+        OuiLogger.log(Level.INFO, "\n");
+        OuiLogger.log(
+            Level.INFO,
+            "--------------------------------------------------"
+        );
+    }
 
     public UserInteractor userInteractor;
 

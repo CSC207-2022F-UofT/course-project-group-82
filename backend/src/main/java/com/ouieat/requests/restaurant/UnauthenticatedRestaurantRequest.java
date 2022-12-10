@@ -3,7 +3,6 @@ package com.ouieat.requests.restaurant;
 import com.ouieat.implementation.restaurant.RestaurantImplementation;
 import com.ouieat.interactor.restaurant.RestaurantInteractor;
 import com.ouieat.interactor.user.UserInteractor;
-import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
