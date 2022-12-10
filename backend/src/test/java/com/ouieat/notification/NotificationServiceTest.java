@@ -38,7 +38,6 @@ public class NotificationServiceTest
     @Test
     public void getNotificationsTestInvalidID() {
         Response response = authenticatedRequest.handle(
-            interactor,
             "INVALID_ID",
             authenticatedRequest.getNotifications
         );
@@ -48,7 +47,6 @@ public class NotificationServiceTest
     @Test
     public void getNotificationsTestSuccess() {
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             authenticatedRequest.getNotifications
         );
@@ -60,7 +58,6 @@ public class NotificationServiceTest
     @Test
     public void createFriendRequestTestNullNotification() {
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             null,
             authenticatedRequest.createFriendRequest
@@ -83,7 +80,6 @@ public class NotificationServiceTest
         when(interactor.getNotifications(any(String.class)))
             .thenAnswer(i -> new ArrayList<Notification>());
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             creator,
             authenticatedRequest.createFriendRequest
@@ -105,7 +101,6 @@ public class NotificationServiceTest
             "create-friend-request"
         );
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             creator,
             true,
@@ -127,7 +122,6 @@ public class NotificationServiceTest
         when(interactor.save(any(Notification.class)))
             .thenAnswer(i -> i.getArguments()[0]);
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             creator,
             authenticatedRequest.createFriendRequest
@@ -153,7 +147,6 @@ public class NotificationServiceTest
         Notification notification = (Notification) response.responseData.data;
         response =
             authenticatedRequest.handle(
-                interactor,
                 getTestUserDefault().getId(),
                 notification,
                 true,

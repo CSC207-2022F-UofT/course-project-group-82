@@ -7,6 +7,7 @@ import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +15,14 @@ import org.springframework.stereotype.Service;
 public class UnauthenticatedRestaurantRequest
     extends UnauthenticatedRequest<RestaurantInteractor, RestaurantImplementation> {
 
-    public FunctionalInterfaces.Function2<RestaurantInteractor, String, Response> getRestaurantsByName = (
-        RestaurantInteractor interactor,
-        String name
-    ) -> {
+    public Function<String, Response> getRestaurantsByName = (String name) -> {
         if (name == null || name.isBlank() || name.isEmpty()) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
         return implementation.getRestaurantsByName(name);
     };
 
-    public FunctionalInterfaces.Function2<RestaurantInteractor, String, Response> getRestaurantById = (
-        RestaurantInteractor interactor,
-        String id
-    ) -> {
+    public Function<String, Response> getRestaurantById = (String id) -> {
         if (id == null || id.isBlank() || id.isEmpty()) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }

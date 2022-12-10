@@ -8,6 +8,7 @@ import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,7 @@ import org.springframework.stereotype.Service;
 public class UnauthenticatedUserRequests
     extends UnauthenticatedRequest<UserInteractor, UserImplementation> {
 
-    public FunctionalInterfaces.Function2<UserInteractor, User, Response> createUser = (
-        UserInteractor interactor,
-        User newUser
-    ) -> {
+    public Function<User, Response> createUser = (User newUser) -> {
         // Ensure the new user object is not null
         if (newUser == null) {
             return ExceptionResponses.InvalidUserCredentialsResponse();
@@ -60,20 +58,14 @@ public class UnauthenticatedUserRequests
         return implementation.createUser(newUser);
     };
 
-    public FunctionalInterfaces.Function2<UserInteractor, String, Response> getUsersByUsername = (
-        UserInteractor interactor,
-        String username
-    ) -> {
+    public Function<String, Response> getUsersByUsername = (String username) -> {
         if (username == null || username.length() == 0) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
         return implementation.getUsersByUsername(username);
     };
 
-    public FunctionalInterfaces.Function2<UserInteractor, UserLogin, com.ouieat.responses.handler.Response> loginUser = (
-        UserInteractor interactor,
-        UserLogin userLogin
-    ) -> {
+    public Function<UserLogin, com.ouieat.responses.handler.Response> loginUser = (UserLogin userLogin) -> {
         if (userLogin == null) {
             return com.ouieat.responses.exception.ExceptionResponses.InvalidUserCredentialsResponse();
         }

@@ -36,7 +36,7 @@ public class UserController
     )
     public String createUser(@RequestBody User newUser) {
         return unauthenticatedRequest
-            .handle(interactor, newUser, unauthenticatedRequest.createUser)
+            .handle(newUser, unauthenticatedRequest.createUser)
             .getJsonString();
     }
 
@@ -48,7 +48,7 @@ public class UserController
     )
     public String loginUser(@RequestBody UserLogin userLogin) {
         return unauthenticatedRequest
-            .handle(interactor, userLogin, unauthenticatedRequest.loginUser)
+            .handle(userLogin, unauthenticatedRequest.loginUser)
             .getJsonString();
     }
 
@@ -56,11 +56,7 @@ public class UserController
     @GetMapping(value = "/getUsersByUsername", produces = "application/json")
     public String getUsersByUsername(@RequestParam String username) {
         return unauthenticatedRequest
-            .handle(
-                interactor,
-                username,
-                unauthenticatedRequest.getUsersByUsername
-            )
+            .handle(username, unauthenticatedRequest.getUsersByUsername)
             .getJsonString();
     }
 
@@ -73,7 +69,6 @@ public class UserController
     public String updateUserDetails(@RequestBody UpdatedUser updatedUser) {
         return authenticatedRequest
             .handle(
-                interactor,
                 updatedUser.getUserId(),
                 updatedUser,
                 authenticatedRequest.updateUserDetails
@@ -85,7 +80,7 @@ public class UserController
     @GetMapping(value = "/dashboard", produces = "application/json")
     public String getDashboard(@RequestParam String userID) {
         return authenticatedRequest
-            .handle(interactor, userID, authenticatedRequest.getDashboard)
+            .handle(userID, authenticatedRequest.getDashboard)
             .getJsonString();
     }
 
@@ -93,7 +88,7 @@ public class UserController
     @GetMapping(value = "/getFriends", produces = "application/json")
     public String getFriends(@RequestParam String userID) {
         return authenticatedRequest
-            .handle(interactor, userID, authenticatedRequest.getFriends)
+            .handle(userID, authenticatedRequest.getFriends)
             .getJsonString();
     }
 
@@ -104,12 +99,7 @@ public class UserController
         @RequestParam String friendID
     ) {
         return authenticatedRequest
-            .handle(
-                interactor,
-                userID,
-                friendID,
-                authenticatedRequest.removeFriend
-            )
+            .handle(userID, friendID, authenticatedRequest.removeFriend)
             .getJsonString();
     }
 }

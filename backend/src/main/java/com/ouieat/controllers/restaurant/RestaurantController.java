@@ -32,18 +32,14 @@ public class RestaurantController
     @GetMapping(path = "/getRestaurantsByName", produces = "application/json")
     public String getRestaurantsByName(@RequestParam String name) {
         return unauthenticatedRequest
-            .handle(
-                interactor,
-                name,
-                unauthenticatedRequest.getRestaurantsByName
-            )
+            .handle(name, unauthenticatedRequest.getRestaurantsByName)
             .getJsonString();
     }
 
     @GetMapping(path = "/getRestaurantsById", produces = "application/json")
     public String getRestaurantsById(@RequestParam String id) {
         return unauthenticatedRequest
-            .handle(interactor, id, unauthenticatedRequest.getRestaurantById)
+            .handle(id, unauthenticatedRequest.getRestaurantById)
             .getJsonString();
     }
 }

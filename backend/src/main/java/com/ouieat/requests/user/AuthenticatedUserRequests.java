@@ -8,6 +8,7 @@ import com.ouieat.requests.handler.AuthenticatedRequest;
 import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +16,11 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedUserRequests
     extends AuthenticatedRequest<UserInteractor, UserImplementation> {
 
-    public FunctionalInterfaces.Function2<UserInteractor, User, Response> getDashboard = (
-            interactor1,
-            user
-        ) ->
-        implementation.getDashboard(user);
+    public Function<User, Response> getDashboard = implementation::getDashboard;
 
-    public FunctionalInterfaces.Function2<UserInteractor, User, Response> getFriends = (
-            interactor1,
-            user
-        ) ->
-        implementation.getFriends(user);
+    public Function<User, Response> getFriends = implementation::getFriends;
 
-    public FunctionalInterfaces.Function3<UserInteractor, User, String, Response> removeFriend = (
-        UserInteractor interactor,
+    public FunctionalInterfaces.Function2<User, String, Response> removeFriend = (
         User loggedInUser,
         String friendID
     ) -> {
@@ -44,8 +36,7 @@ public class AuthenticatedUserRequests
         }
     };
 
-    public FunctionalInterfaces.Function3<UserInteractor, User, UpdatedUser, Response> updateUserDetails = (
-        UserInteractor interactor,
+    public FunctionalInterfaces.Function2<User, UpdatedUser, Response> updateUserDetails = (
         User loggedInUser,
         UpdatedUser updatedUser
     ) -> {

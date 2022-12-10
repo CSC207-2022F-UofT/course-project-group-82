@@ -41,7 +41,6 @@ public class RecommendationController
     ) {
         return authenticatedRequest
             .handle(
-                interactor,
                 newRecommendation.getUserId(),
                 newRecommendation,
                 authenticatedRequest.postRecommendation
@@ -55,11 +54,7 @@ public class RecommendationController
     )
     public String getRestaurantRecommendationsForUser(String userId) {
         return authenticatedRequest
-            .handle(
-                interactor,
-                userId,
-                authenticatedRequest.getRecommendationsForUser
-            )
+            .handle(userId, authenticatedRequest.getRecommendationsForUser)
             .getJsonString();
     }
 }

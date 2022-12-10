@@ -9,6 +9,7 @@ import com.ouieat.requests.handler.AuthenticatedRequest;
 import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedRecommendationRequest
     extends AuthenticatedRequest<RecommendationInteractor, RecommendationImplementation> {
 
-    public FunctionalInterfaces.Function3<RecommendationInteractor, User, Recommendation, Response> postRecommendation = (
-        RecommendationInteractor interactor,
+    public FunctionalInterfaces.Function2<User, Recommendation, Response> postRecommendation = (
         User loggedInUser,
         Recommendation recommendation
     ) -> {
@@ -29,10 +29,7 @@ public class AuthenticatedRecommendationRequest
         return implementation.postRecommendation(loggedInUser, recommendation);
     };
 
-    public FunctionalInterfaces.Function2<RecommendationInteractor, User, Response> getRecommendationsForUser = (
-            interactor1,
-            loggedInUser
-        ) ->
+    public Function<User, Response> getRecommendationsForUser = loggedInUser ->
         implementation.getRecommendationsForUser(loggedInUser);
 
     @Autowired

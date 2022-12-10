@@ -34,7 +34,7 @@ public class NotificationController
     @GetMapping(value = "/notifications", produces = "application/json")
     public String getNotificationsForUser(@RequestParam String userId) {
         return authenticatedRequest
-            .handle(interactor, userId, authenticatedRequest.getNotifications)
+            .handle(userId, authenticatedRequest.getNotifications)
             .getJsonString();
     }
 
@@ -53,7 +53,6 @@ public class NotificationController
         );
         return authenticatedRequest
             .handle(
-                interactor,
                 friendRequestNotification.getSenderId(),
                 friendRequestNotification,
                 authenticatedRequest.createFriendRequest
@@ -71,7 +70,6 @@ public class NotificationController
     ) {
         return authenticatedRequest
             .handle(
-                interactor,
                 friendRequestNotification.getRecipientId(),
                 friendRequestNotification,
                 true,
@@ -90,7 +88,6 @@ public class NotificationController
     ) {
         return authenticatedRequest
             .handle(
-                interactor,
                 friendRequestNotification.getRecipientId(),
                 friendRequestNotification,
                 false,

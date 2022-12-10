@@ -58,7 +58,6 @@ public class RecommendationServiceTest
             false
         );
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             recommendation,
             authenticatedRequest.postRecommendation
@@ -70,7 +69,6 @@ public class RecommendationServiceTest
     @Test
     public void postRestaurantRecommendationFail() {
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             null,
             authenticatedRequest.postRecommendation
@@ -92,7 +90,6 @@ public class RecommendationServiceTest
         when(interactor.getRecommendationsForUser(getTestUserDefault().getId()))
             .thenReturn(new ArrayList<>(List.of(recommendation)));
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             authenticatedRequest.getRecommendationsForUser
         );
@@ -105,7 +102,6 @@ public class RecommendationServiceTest
         when(interactor.getRecommendationsForUser(getTestUserDefault().getId()))
             .thenReturn(new ArrayList<>());
         Response response = authenticatedRequest.handle(
-            interactor,
             "INVALID_ID",
             authenticatedRequest.getRecommendationsForUser
         );

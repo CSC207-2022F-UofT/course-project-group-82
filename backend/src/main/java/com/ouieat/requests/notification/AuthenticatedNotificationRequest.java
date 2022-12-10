@@ -10,6 +10,7 @@ import com.ouieat.requests.handler.AuthenticatedRequest;
 import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +18,10 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedNotificationRequest
     extends AuthenticatedRequest<NotificationInteractor, NotificationImplementation> {
 
-    public FunctionalInterfaces.Function2<NotificationInteractor, User, Response> getNotifications = (
-            interactor1,
-            loggedInUser
-        ) ->
-        implementation.getNotifications(loggedInUser);
+    public Function<User, Response> getNotifications =
+        implementation::getNotifications;
 
-    public FunctionalInterfaces.Function3<NotificationInteractor, User, NotificationCreator, Response> createFriendRequest = (
-        NotificationInteractor interactor,
+    public FunctionalInterfaces.Function2<User, NotificationCreator, Response> createFriendRequest = (
         User loggedInUser,
         NotificationCreator notification
     ) -> {
@@ -35,8 +32,7 @@ public class AuthenticatedNotificationRequest
         return implementation.createFriendRequest(loggedInUser, notification);
     };
 
-    public FunctionalInterfaces.Function4<NotificationInteractor, User, Notification, Boolean, Response> handleFriendRequest = (
-        NotificationInteractor interactor,
+    public FunctionalInterfaces.Function3<User, Notification, Boolean, Response> handleFriendRequest = (
         User loggedInUser,
         Notification notification,
         Boolean accept

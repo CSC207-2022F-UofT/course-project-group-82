@@ -46,7 +46,6 @@ public class UserServiceTest
     @Test
     public void createUserTestNullUserData() {
         Response response = unauthenticatedRequest.handle(
-            interactor,
             null,
             unauthenticatedRequest.createUser
         );
@@ -57,7 +56,6 @@ public class UserServiceTest
     public void createUserTestSuccess() {
         when(interactor.save(any(User.class))).thenReturn(getTestUserDefault());
         Response response = unauthenticatedRequest.handle(
-            interactor,
             getTestUserDefault(),
             unauthenticatedRequest.createUser
         );
@@ -72,7 +70,6 @@ public class UserServiceTest
     @Test
     public void loginUserTestNullCredentials() {
         Response response = unauthenticatedRequest.handle(
-            interactor,
             null,
             unauthenticatedRequest.loginUser
         );
@@ -84,7 +81,6 @@ public class UserServiceTest
     public void loginUserTestInvalidCredentials() {
         // Invalid user should throw an error
         Response response = unauthenticatedRequest.handle(
-            interactor,
             new UserLogin("INVALID_USERNAME", "INVALID_PASSWORD"),
             unauthenticatedRequest.loginUser
         );
@@ -101,7 +97,6 @@ public class UserServiceTest
         )
             .thenReturn(new ArrayList<>(List.of(getTestUserDefault())));
         Response response = unauthenticatedRequest.handle(
-            interactor,
             new UserLogin(
                 getTestUserDefault().getUsername(),
                 getTestUserDefault().getPassword()
@@ -117,7 +112,6 @@ public class UserServiceTest
     @Test
     public void updateUserTestNullUpdateUser() {
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             null,
             authenticatedRequest.updateUserDetails
@@ -131,7 +125,6 @@ public class UserServiceTest
         when(interactor.save(any(User.class)))
             .thenAnswer(i -> i.getArguments()[0]);
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             new UpdatedUser(
                 "UPDATE_USERNAME",
@@ -154,7 +147,6 @@ public class UserServiceTest
     public void getDashboardTestInvalidID() {
         // Non existent user id dashboard request
         Response response = authenticatedRequest.handle(
-            interactor,
             "INVALID_ID",
             authenticatedRequest.getDashboard
         );
@@ -167,7 +159,6 @@ public class UserServiceTest
     public void getDashboardTestSuccess() {
         // Valid user id dashboard request
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             authenticatedRequest.getDashboard
         );
@@ -182,7 +173,6 @@ public class UserServiceTest
     public void getUserFriendsTestInvalidLoginID() {
         // Non existent user id friends request
         Response response = authenticatedRequest.handle(
-            interactor,
             "INVALID_ID",
             authenticatedRequest.getFriends
         );
@@ -202,7 +192,6 @@ public class UserServiceTest
             );
         // Valid user id friends request
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             authenticatedRequest.getFriends
         );
@@ -216,7 +205,6 @@ public class UserServiceTest
     public void removeFriendTestInvalidLoginID() {
         // Non existent user id friends request
         Response response = authenticatedRequest.handle(
-            interactor,
             "INVALID_ID",
             "INVALID_FRIEND_ID",
             authenticatedRequest.removeFriend
@@ -230,7 +218,6 @@ public class UserServiceTest
     public void removeFriendTestInvalidFriendID() {
         // Valid user id but not a friend id
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             "INVALID_FRIEND_ID",
             authenticatedRequest.removeFriend
@@ -248,7 +235,6 @@ public class UserServiceTest
             );
         // Valid user id and friend id
         Response response = authenticatedRequest.handle(
-            interactor,
             getTestUserDefault().getId(),
             getTestUserDefault().getFriendIds().get(0),
             authenticatedRequest.removeFriend
