@@ -1,6 +1,6 @@
 package com.ouieat.requests.handler;
 
-import com.ouieat.interactor.Interactor;
+import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.responses.handler.Response;
 
 public class UnauthenticatedRequest<T extends Interactor<?, ?>>
@@ -21,5 +21,9 @@ public class UnauthenticatedRequest<T extends Interactor<?, ?>>
         FunctionalInterfaces.Function3<T, K, L, Response> function
     ) {
         return function.apply(interactor, data1, data2);
+    }
+
+    public UnauthenticatedRequest(T interactor) {
+        super(interactor);
     }
 }

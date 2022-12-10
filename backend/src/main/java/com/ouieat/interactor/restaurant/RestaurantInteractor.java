@@ -1,8 +1,8 @@
 package com.ouieat.interactor.restaurant;
 
-import com.ouieat.interactor.Interactor;
+import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.models.restaurant.Restaurant;
-import com.ouieat.repository.RestaurantRepository;
+import com.ouieat.repository.restaurant.RestaurantRepository;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

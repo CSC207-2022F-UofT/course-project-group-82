@@ -1,11 +1,10 @@
 package com.ouieat.interactor.user;
 
-import com.ouieat.interactor.Interactor;
+import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.models.user.User;
-import com.ouieat.repository.UserRepository;
+import com.ouieat.repository.user.UserRepository;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Repository

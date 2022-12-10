@@ -4,6 +4,7 @@ import com.ouieat.implementation.notification.methods.CreateFriendRequest;
 import com.ouieat.implementation.notification.methods.GetNotifications;
 import com.ouieat.implementation.notification.methods.HandleFriendRequest;
 import com.ouieat.interactor.notification.NotificationInteractor;
+import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.notification.Notification;
 import com.ouieat.models.notification.NotificationCreator;
 import com.ouieat.models.user.User;
@@ -29,12 +30,14 @@ public class NotificationImplementation {
     }
 
     public static Response handleFriendRequest(
+        UserInteractor userInteractor,
         NotificationInteractor interactor,
         User loggedInUser,
         Notification toUpdate,
         Boolean accept
     ) {
         return HandleFriendRequest.apply(
+            userInteractor,
             interactor,
             loggedInUser,
             toUpdate,

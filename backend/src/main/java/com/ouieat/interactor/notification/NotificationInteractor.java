@@ -1,8 +1,8 @@
 package com.ouieat.interactor.notification;
 
-import com.ouieat.interactor.Interactor;
+import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.models.notification.Notification;
-import com.ouieat.repository.NotificationRepository;
+import com.ouieat.repository.notification.NotificationRepository;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -6,6 +6,7 @@ import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +20,10 @@ public class UnauthenticatedRestaurantRequest
         if (name == null || name.isBlank() || name.isEmpty()) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
-        return RestaurantImplementation.getRestaurantsByName(interactor, name);
+        return RestaurantImplementation.getRestaurantsByName(
+            this.interactor,
+            name
+        );
     };
 
     public FunctionalInterfaces.Function2<RestaurantInteractor, String, Response> getRestaurantById = (
@@ -33,6 +37,11 @@ public class UnauthenticatedRestaurantRequest
             return ExceptionResponses.MissingRequestParametersResponse();
         }
 
-        return RestaurantImplementation.getRestaurantById(interactor, id);
+        return RestaurantImplementation.getRestaurantById(this.interactor, id);
     };
+
+    @Autowired
+    public UnauthenticatedRestaurantRequest(RestaurantInteractor interactor) {
+        super(interactor);
+    }
 }

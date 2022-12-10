@@ -1,20 +1,18 @@
 package com.ouieat.requests.handler;
 
-import com.ouieat.interactor.Interactor;
+import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.User;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class AuthenticatedRequest<T extends Interactor<?, ?>>
+public abstract class AuthenticatedRequest<T extends Interactor<?, ?>>
     extends Request<T> {
 
-    private final UserInteractor userInteractor;
-    @Autowired
-    public AuthenticatedRequest(UserInteractor userInteractor) {
+    public UserInteractor userInteractor;
+
+    public AuthenticatedRequest(UserInteractor userInteractor, T interactor) {
+        super(interactor);
         this.userInteractor = userInteractor;
     }
 

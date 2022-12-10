@@ -1,4 +1,4 @@
-package com.ouieat.models;
+package com.ouieat.models.handler;
 
 import org.springframework.data.annotation.Id;
 

@@ -2,8 +2,18 @@ package com.ouieat.requests.notification;
 
 import com.ouieat.interactor.notification.NotificationInteractor;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class UnauthenticatedNotificationRequest
-    extends UnauthenticatedRequest<NotificationInteractor> {}
+    extends UnauthenticatedRequest<NotificationInteractor> {
+
+    @Autowired
+    public UnauthenticatedNotificationRequest(
+        NotificationInteractor interactor
+    ) {
+        super(interactor);
+    }
+}

@@ -1,11 +1,11 @@
-package com.ouieat.repository;
+package com.ouieat.repository.user;
 
 import com.ouieat.models.user.User;
+import com.ouieat.repository.handler.Repository;
 import java.util.ArrayList;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-public interface UserRepository extends MongoRepository<User, String> {
+public interface UserRepository extends Repository<User> {
     @Query("{username:  '?0', password:  '?1'}")
     ArrayList<User> findUserByUsernameAndPassword(
         String username,

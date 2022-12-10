@@ -5,10 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ouieat.OuiLogger;
+import com.ouieat.responses.exception.ExceptionResponses;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
-import com.ouieat.responses.exception.ExceptionResponses;
 import org.apache.logging.log4j.Level;
 
 public class Response {
@@ -19,16 +18,20 @@ public class Response {
 
     // String representation of the origin
     public String origin = StackWalker
-        .getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).walk((s) -> {
+        .getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
+        .walk(s -> {
             Optional<StackWalker.StackFrame> stack = s
-                .dropWhile(f -> f.getClassName().equals(Response.class.getName()) || f.getClassName().equals(ExceptionResponses.class.getName()))
+                .dropWhile(f ->
+                    f.getClassName().equals(Response.class.getName()) ||
+                    f.getClassName().equals(ExceptionResponses.class.getName())
+                )
                 .findFirst();
             if (stack.isPresent()) {
                 return stack.get().getClassName();
             } else {
                 return "Unknown";
             }
-            });
+        });
 
     // String representation of the destination
 

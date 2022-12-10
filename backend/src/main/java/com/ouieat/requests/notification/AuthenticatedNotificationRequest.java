@@ -17,8 +17,14 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedNotificationRequest
     extends AuthenticatedRequest<NotificationInteractor> {
 
-    public FunctionalInterfaces.Function2<NotificationInteractor, User, Response> getNotifications =
-        NotificationImplementation::getNotifications;
+    public FunctionalInterfaces.Function2<NotificationInteractor, User, Response> getNotifications = (
+            interactor1,
+            loggedInUser
+        ) ->
+        NotificationImplementation.getNotifications(
+            this.interactor,
+            loggedInUser
+        );
 
     public FunctionalInterfaces.Function3<NotificationInteractor, User, NotificationCreator, Response> createFriendRequest = (
         NotificationInteractor interactor,
@@ -30,7 +36,7 @@ public class AuthenticatedNotificationRequest
         }
 
         return NotificationImplementation.createFriendRequest(
-            interactor,
+            this.interactor,
             loggedInUser,
             notification
         );
@@ -47,7 +53,8 @@ public class AuthenticatedNotificationRequest
         }
 
         return NotificationImplementation.handleFriendRequest(
-            interactor,
+            this.userInteractor,
+            this.interactor,
             loggedInUser,
             notification,
             accept
@@ -55,7 +62,10 @@ public class AuthenticatedNotificationRequest
     };
 
     @Autowired
-    public AuthenticatedNotificationRequest(UserInteractor userInteractor){
-        super(userInteractor);
+    public AuthenticatedNotificationRequest(
+        UserInteractor userInteractor,
+        NotificationInteractor interactor
+    ) {
+        super(userInteractor, interactor);
     }
 }

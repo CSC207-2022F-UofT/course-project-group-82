@@ -11,7 +11,10 @@ public class AuthenticatedRestaurantRequests
     extends AuthenticatedRequest<RestaurantInteractor> {
 
     @Autowired
-    public AuthenticatedRestaurantRequests(UserInteractor userInteractor){
-        super(userInteractor);
+    public AuthenticatedRestaurantRequests(
+        UserInteractor userInteractor,
+        RestaurantInteractor interactor
+    ) {
+        super(userInteractor, interactor);
     }
 }

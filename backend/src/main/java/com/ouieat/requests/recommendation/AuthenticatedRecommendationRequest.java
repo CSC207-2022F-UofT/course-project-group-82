@@ -27,17 +27,26 @@ public class AuthenticatedRecommendationRequest
             return ExceptionResponses.MissingRequestParametersResponse();
         }
         return RecommendationImplementation.postRecommendation(
-            interactor,
+            this.interactor,
             loggedInUser,
             recommendation
         );
     };
 
-    public FunctionalInterfaces.Function2<RecommendationInteractor, User, Response> getRecommendationsForUser =
-        RecommendationImplementation::getRecommendationsForUser;
+    public FunctionalInterfaces.Function2<RecommendationInteractor, User, Response> getRecommendationsForUser = (
+            interactor1,
+            loggedInUser
+        ) ->
+        RecommendationImplementation.getRecommendationsForUser(
+            this.interactor,
+            loggedInUser
+        );
 
     @Autowired
-    public AuthenticatedRecommendationRequest(UserInteractor userInteractor){
-        super(userInteractor);
+    public AuthenticatedRecommendationRequest(
+        UserInteractor userInteractor,
+        RecommendationInteractor interactor
+    ) {
+        super(userInteractor, interactor);
     }
 }

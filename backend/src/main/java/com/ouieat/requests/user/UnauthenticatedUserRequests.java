@@ -8,6 +8,7 @@ import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -90,4 +91,9 @@ public class UnauthenticatedUserRequests
         }
         return UserImplementation.loginUser(interactor, userLogin);
     };
+
+    @Autowired
+    public UnauthenticatedUserRequests(UserInteractor interactor) {
+        super(interactor);
+    }
 }

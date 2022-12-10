@@ -15,25 +15,33 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedUserRequests
     extends AuthenticatedRequest<UserInteractor> {
 
-    public FunctionalInterfaces.Function2<UserInteractor, User, Response> getDashboard =
-        UserImplementation::getDashboard;
+    public FunctionalInterfaces.Function2<UserInteractor, User, Response> getDashboard = (
+            interactor1,
+            user
+        ) ->
+        UserImplementation.getDashboard(interactor, user);
 
-    public FunctionalInterfaces.Function2<UserInteractor, User, Response> getFriends =
-        UserImplementation::getFriends;
+    public FunctionalInterfaces.Function2<UserInteractor, User, Response> getFriends = (
+            interactor1,
+            user
+        ) ->
+        UserImplementation.getFriends(interactor, user);
 
     public FunctionalInterfaces.Function3<UserInteractor, User, String, Response> removeFriend = (
         UserInteractor interactor,
         User loggedInUser,
         String friendID
     ) -> {
-        if (interactor.findById(friendID) != null) {
+        if (this.interactor.findById(friendID) != null) {
             return UserImplementation.removeFriend(
-                interactor,
+                this.interactor,
                 loggedInUser,
                 interactor.findById(friendID)
             );
         } else {
-            return ExceptionResponses.UserErrorResponse("Friend ID is not a friend");
+            return ExceptionResponses.UserErrorResponse(
+                "Friend ID is not a friend"
+            );
         }
     };
 
@@ -44,25 +52,30 @@ public class AuthenticatedUserRequests
     ) -> {
         if (
             updatedUser == null ||
-            (updatedUser.userId == null &&
-            updatedUser.email == null &&
-            updatedUser.firstName == null &&
-            updatedUser.lastName == null &&
-            updatedUser.profilePictureLink == null &&
-            updatedUser.username == null)
+            (
+                updatedUser.userId == null &&
+                updatedUser.email == null &&
+                updatedUser.firstName == null &&
+                updatedUser.lastName == null &&
+                updatedUser.profilePictureLink == null &&
+                updatedUser.username == null
+            )
         ) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
 
         return UserImplementation.updateUser(
-            interactor,
+            this.interactor,
             loggedInUser,
             updatedUser
         );
     };
 
     @Autowired
-    public AuthenticatedUserRequests(UserInteractor userInteractor){
-        super(userInteractor);
+    public AuthenticatedUserRequests(
+        UserInteractor userInteractor,
+        UserInteractor interactor
+    ) {
+        super(userInteractor, interactor);
     }
 }

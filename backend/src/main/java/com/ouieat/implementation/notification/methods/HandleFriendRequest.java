@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Level;
 
 public interface HandleFriendRequest {
     static Response apply(
+        UserInteractor userInteractor,
         NotificationInteractor interactor,
         User loggedInUser,
         Notification toDelete,
@@ -30,16 +31,16 @@ public interface HandleFriendRequest {
 
                 // Add the friend to the user's friend list
                 loggedInUser.getFriendIds().add(toDelete.getRecipientId());
-                UserInteractor.instance.save(loggedInUser);
+                userInteractor.save(loggedInUser);
 
                 // Find the sender of the friend request
-                User sender = UserInteractor.instance.findById(
+                User sender = userInteractor.findById(
                     toDelete.getRecipientId()
                 );
 
                 // Add the user to the sender's friend list
                 sender.getFriendIds().add(loggedInUser.getId());
-                UserInteractor.instance.save(sender);
+                userInteractor.save(sender);
             } else {
                 // Ensure that the user has not already rejected the friend request
                 if (
