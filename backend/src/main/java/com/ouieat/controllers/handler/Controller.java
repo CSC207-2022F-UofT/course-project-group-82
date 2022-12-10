@@ -8,8 +8,8 @@ import com.ouieat.requests.handler.UnauthenticatedRequest;
 
 public abstract class Controller<
     T extends Interactor<?, ?>,
-    J extends AuthenticatedRequest<T>,
-    K extends UnauthenticatedRequest<T>
+    J extends AuthenticatedRequest<T, ?>,
+    K extends UnauthenticatedRequest<T, ?>
 >
     extends RequestHandler<T, J, K> {
 

@@ -2,6 +2,7 @@ package com.ouieat.handler;
 
 import static org.mockito.Mockito.when;
 
+import com.ouieat.implementation.handler.Implementation;
 import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.User;
@@ -17,8 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public abstract class ServiceTest<
     L extends Interactor<?, ?>,
-    J extends AuthenticatedRequest<L>,
-    K extends UnauthenticatedRequest<L>
+    J extends AuthenticatedRequest<L, ?>,
+    K extends UnauthenticatedRequest<L, ?>
 > {
 
     public UserInteractor userInteractor;
@@ -28,24 +29,36 @@ public abstract class ServiceTest<
     public J authenticatedRequest;
     public K unauthenticatedRequest;
 
-    public ServiceTest(
+    public <M extends Implementation<L>> ServiceTest(
         Class<L> interactorClass,
         Class<? extends J> authClass,
-        Class<? extends K> unAuthClass
+        Class<? extends K> unAuthClass,
+        Class<M> implementationClass
     ) {
         userInteractor = Mockito.mock(UserInteractor.class);
         when(userInteractor.findById(getTestUserDefault().getId()))
             .thenReturn(getTestUserDefault());
         interactor = Mockito.mock(interactorClass);
         try {
+            M implementation = implementationClass
+                .getConstructor(UserInteractor.class, interactorClass)
+                .newInstance(userInteractor, interactor);
             authenticatedRequest =
                 authClass
-                    .getConstructor(UserInteractor.class, interactorClass)
-                    .newInstance(userInteractor, interactor);
+                    .getConstructor(
+                        UserInteractor.class,
+                        interactorClass,
+                        implementationClass
+                    )
+                    .newInstance(userInteractor, interactor, implementation);
             unauthenticatedRequest =
                 unAuthClass
-                    .getConstructor(interactorClass)
-                    .newInstance(interactor);
+                    .getConstructor(
+                        UserInteractor.class,
+                        interactorClass,
+                        implementationClass
+                    )
+                    .newInstance(userInteractor, interactor, implementation);
         } catch (
             InstantiationException
             | IllegalAccessException

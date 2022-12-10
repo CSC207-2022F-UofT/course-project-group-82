@@ -5,8 +5,8 @@ import com.ouieat.interactor.user.UserInteractor;
 
 public abstract class RequestHandler<
     L extends Interactor<?, ?>,
-    J extends AuthenticatedRequest<L>,
-    K extends UnauthenticatedRequest<L>
+    J extends AuthenticatedRequest<L, ?>,
+    K extends UnauthenticatedRequest<L, ?>
 > {
 
     public UserInteractor userInteractor;

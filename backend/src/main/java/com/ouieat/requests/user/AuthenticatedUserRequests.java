@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticatedUserRequests
-    extends AuthenticatedRequest<UserInteractor> {
+    extends AuthenticatedRequest<UserInteractor, UserImplementation> {
 
     public FunctionalInterfaces.Function2<UserInteractor, User, Response> getDashboard = (
             interactor1,
             user
         ) ->
-        UserImplementation.getDashboard(interactor, user);
+        implementation.getDashboard(user);
 
     public FunctionalInterfaces.Function2<UserInteractor, User, Response> getFriends = (
             interactor1,
             user
         ) ->
-        UserImplementation.getFriends(interactor, user);
+        implementation.getFriends(user);
 
     public FunctionalInterfaces.Function3<UserInteractor, User, String, Response> removeFriend = (
         UserInteractor interactor,
@@ -33,8 +33,7 @@ public class AuthenticatedUserRequests
         String friendID
     ) -> {
         if (this.interactor.findById(friendID) != null) {
-            return UserImplementation.removeFriend(
-                this.interactor,
+            return implementation.removeFriend(
                 loggedInUser,
                 interactor.findById(friendID)
             );
@@ -64,18 +63,15 @@ public class AuthenticatedUserRequests
             return ExceptionResponses.MissingRequestParametersResponse();
         }
 
-        return UserImplementation.updateUser(
-            this.interactor,
-            loggedInUser,
-            updatedUser
-        );
+        return implementation.updateUser(loggedInUser, updatedUser);
     };
 
     @Autowired
     public AuthenticatedUserRequests(
         UserInteractor userInteractor,
-        UserInteractor interactor
+        UserInteractor interactor,
+        UserImplementation implementation
     ) {
-        super(userInteractor, interactor);
+        super(userInteractor, interactor, implementation);
     }
 }

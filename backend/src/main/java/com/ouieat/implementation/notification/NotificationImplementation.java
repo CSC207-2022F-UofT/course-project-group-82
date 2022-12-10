@@ -1,5 +1,6 @@
 package com.ouieat.implementation.notification;
 
+import com.ouieat.implementation.handler.Implementation;
 import com.ouieat.implementation.notification.methods.CreateFriendRequest;
 import com.ouieat.implementation.notification.methods.GetNotifications;
 import com.ouieat.implementation.notification.methods.HandleFriendRequest;
@@ -12,26 +13,28 @@ import com.ouieat.responses.handler.Response;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationImplementation {
+public class NotificationImplementation
+    extends Implementation<NotificationInteractor> {
 
-    public static Response getNotifications(
-        NotificationInteractor interactor,
-        User loggedInUser
+    public NotificationImplementation(
+        UserInteractor userInteractor,
+        NotificationInteractor interactor
     ) {
+        super(userInteractor, interactor);
+    }
+
+    public Response getNotifications(User loggedInUser) {
         return GetNotifications.apply(interactor, loggedInUser);
     }
 
-    public static Response createFriendRequest(
-        NotificationInteractor interactor,
+    public Response createFriendRequest(
         User loggedInUser,
         NotificationCreator toCreate
     ) {
         return CreateFriendRequest.apply(interactor, loggedInUser, toCreate);
     }
 
-    public static Response handleFriendRequest(
-        UserInteractor userInteractor,
-        NotificationInteractor interactor,
+    public Response handleFriendRequest(
         User loggedInUser,
         Notification toUpdate,
         Boolean accept

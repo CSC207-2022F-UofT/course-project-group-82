@@ -15,16 +15,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticatedNotificationRequest
-    extends AuthenticatedRequest<NotificationInteractor> {
+    extends AuthenticatedRequest<NotificationInteractor, NotificationImplementation> {
 
     public FunctionalInterfaces.Function2<NotificationInteractor, User, Response> getNotifications = (
             interactor1,
             loggedInUser
         ) ->
-        NotificationImplementation.getNotifications(
-            this.interactor,
-            loggedInUser
-        );
+        implementation.getNotifications(loggedInUser);
 
     public FunctionalInterfaces.Function3<NotificationInteractor, User, NotificationCreator, Response> createFriendRequest = (
         NotificationInteractor interactor,
@@ -35,11 +32,7 @@ public class AuthenticatedNotificationRequest
             return ExceptionResponses.MissingRequestParametersResponse();
         }
 
-        return NotificationImplementation.createFriendRequest(
-            this.interactor,
-            loggedInUser,
-            notification
-        );
+        return implementation.createFriendRequest(loggedInUser, notification);
     };
 
     public FunctionalInterfaces.Function4<NotificationInteractor, User, Notification, Boolean, Response> handleFriendRequest = (
@@ -52,9 +45,7 @@ public class AuthenticatedNotificationRequest
             return ExceptionResponses.MissingRequestParametersResponse();
         }
 
-        return NotificationImplementation.handleFriendRequest(
-            this.userInteractor,
-            this.interactor,
+        return implementation.handleFriendRequest(
             loggedInUser,
             notification,
             accept
@@ -64,8 +55,9 @@ public class AuthenticatedNotificationRequest
     @Autowired
     public AuthenticatedNotificationRequest(
         UserInteractor userInteractor,
-        NotificationInteractor interactor
+        NotificationInteractor interactor,
+        NotificationImplementation implementation
     ) {
-        super(userInteractor, interactor);
+        super(userInteractor, interactor, implementation);
     }
 }

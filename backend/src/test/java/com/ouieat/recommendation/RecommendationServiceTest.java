@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.ouieat.OuiLogger;
 import com.ouieat.handler.ServiceTest;
+import com.ouieat.implementation.recommendation.RecommendationImplementation;
 import com.ouieat.interactor.recommendation.RecommendationInteractor;
 import com.ouieat.models.recommendation.Recommendation;
 import com.ouieat.requests.recommendation.AuthenticatedRecommendationRequest;
@@ -29,7 +30,8 @@ public class RecommendationServiceTest
         super(
             RecommendationInteractor.class,
             AuthenticatedRecommendationRequest.class,
-            UnauthenticatedRecommendationRequest.class
+            UnauthenticatedRecommendationRequest.class,
+            RecommendationImplementation.class
         );
         OuiLogger.log(Level.DEBUG, "Testing Recommendation Service Requests");
     }

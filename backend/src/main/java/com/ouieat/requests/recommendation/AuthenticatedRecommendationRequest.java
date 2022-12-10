@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticatedRecommendationRequest
-    extends AuthenticatedRequest<RecommendationInteractor> {
+    extends AuthenticatedRequest<RecommendationInteractor, RecommendationImplementation> {
 
     public FunctionalInterfaces.Function3<RecommendationInteractor, User, Recommendation, Response> postRecommendation = (
         RecommendationInteractor interactor,
@@ -26,27 +26,21 @@ public class AuthenticatedRecommendationRequest
         ) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
-        return RecommendationImplementation.postRecommendation(
-            this.interactor,
-            loggedInUser,
-            recommendation
-        );
+        return implementation.postRecommendation(loggedInUser, recommendation);
     };
 
     public FunctionalInterfaces.Function2<RecommendationInteractor, User, Response> getRecommendationsForUser = (
             interactor1,
             loggedInUser
         ) ->
-        RecommendationImplementation.getRecommendationsForUser(
-            this.interactor,
-            loggedInUser
-        );
+        implementation.getRecommendationsForUser(loggedInUser);
 
     @Autowired
     public AuthenticatedRecommendationRequest(
         UserInteractor userInteractor,
-        RecommendationInteractor interactor
+        RecommendationInteractor interactor,
+        RecommendationImplementation implementation
     ) {
-        super(userInteractor, interactor);
+        super(userInteractor, interactor, implementation);
     }
 }

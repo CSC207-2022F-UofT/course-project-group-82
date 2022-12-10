@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UnauthenticatedUserRequests
-    extends UnauthenticatedRequest<UserInteractor> {
+    extends UnauthenticatedRequest<UserInteractor, UserImplementation> {
 
     public FunctionalInterfaces.Function2<UserInteractor, User, Response> createUser = (
         UserInteractor interactor,
@@ -57,7 +57,7 @@ public class UnauthenticatedUserRequests
         ) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
-        return UserImplementation.createUser(interactor, newUser);
+        return implementation.createUser(newUser);
     };
 
     public FunctionalInterfaces.Function2<UserInteractor, String, Response> getUsersByUsername = (
@@ -67,7 +67,7 @@ public class UnauthenticatedUserRequests
         if (username == null || username.length() == 0) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
-        return UserImplementation.getUsersByUsername(interactor, username);
+        return implementation.getUsersByUsername(username);
     };
 
     public FunctionalInterfaces.Function2<UserInteractor, UserLogin, com.ouieat.responses.handler.Response> loginUser = (
@@ -89,11 +89,15 @@ public class UnauthenticatedUserRequests
         ) {
             return com.ouieat.responses.exception.ExceptionResponses.MissingRequestParametersResponse();
         }
-        return UserImplementation.loginUser(interactor, userLogin);
+        return implementation.loginUser(userLogin);
     };
 
     @Autowired
-    public UnauthenticatedUserRequests(UserInteractor interactor) {
-        super(interactor);
+    public UnauthenticatedUserRequests(
+        UserInteractor userInteractor,
+        UserInteractor interactor,
+        UserImplementation implementation
+    ) {
+        super(userInteractor, interactor, implementation);
     }
 }

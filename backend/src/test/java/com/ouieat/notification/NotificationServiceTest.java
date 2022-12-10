@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.ouieat.OuiLogger;
 import com.ouieat.handler.ServiceTest;
+import com.ouieat.implementation.notification.NotificationImplementation;
 import com.ouieat.interactor.notification.NotificationInteractor;
 import com.ouieat.models.notification.Notification;
 import com.ouieat.models.notification.NotificationCreator;
@@ -26,7 +27,8 @@ public class NotificationServiceTest
         super(
             NotificationInteractor.class,
             AuthenticatedNotificationRequest.class,
-            UnauthenticatedNotificationRequest.class
+            UnauthenticatedNotificationRequest.class,
+            NotificationImplementation.class
         );
         OuiLogger.log(Level.DEBUG, "Testing Notification Service Requests");
     }

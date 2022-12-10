@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 
 import com.ouieat.OuiLogger;
 import com.ouieat.handler.ServiceTest;
+import com.ouieat.implementation.restaurant.RestaurantImplementation;
 import com.ouieat.interactor.restaurant.RestaurantInteractor;
 import com.ouieat.models.restaurant.Category;
 import com.ouieat.models.restaurant.Coordinates;
@@ -26,7 +27,8 @@ public class RestaurantServiceTest
         super(
             RestaurantInteractor.class,
             AuthenticatedRestaurantRequests.class,
-            UnauthenticatedRestaurantRequest.class
+            UnauthenticatedRestaurantRequest.class,
+            RestaurantImplementation.class
         );
         OuiLogger.log(Level.DEBUG, "Testing Restaurant Service Requests");
     }

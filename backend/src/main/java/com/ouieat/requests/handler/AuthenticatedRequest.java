@@ -1,19 +1,23 @@
 package com.ouieat.requests.handler;
 
+import com.ouieat.implementation.handler.Implementation;
 import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.User;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
 
-public abstract class AuthenticatedRequest<T extends Interactor<?, ?>>
-    extends Request<T> {
+public abstract class AuthenticatedRequest<
+    T extends Interactor<?, ?>, J extends Implementation<T>
+>
+    extends Request<T, J> {
 
-    public UserInteractor userInteractor;
-
-    public AuthenticatedRequest(UserInteractor userInteractor, T interactor) {
-        super(interactor);
-        this.userInteractor = userInteractor;
+    public AuthenticatedRequest(
+        UserInteractor userInteractor,
+        T interactor,
+        J implementation
+    ) {
+        super(userInteractor, interactor, implementation);
     }
 
     public Response handle(

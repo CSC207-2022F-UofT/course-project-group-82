@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.ouieat.OuiLogger;
 import com.ouieat.handler.ServiceTest;
+import com.ouieat.implementation.user.UserImplementation;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.UpdatedUser;
 import com.ouieat.models.user.User;
@@ -29,7 +30,8 @@ public class UserServiceTest
         super(
             UserInteractor.class,
             AuthenticatedUserRequests.class,
-            UnauthenticatedUserRequests.class
+            UnauthenticatedUserRequests.class,
+            UserImplementation.class
         );
         OuiLogger.log(Level.DEBUG, "Testing User Service Requests");
     }

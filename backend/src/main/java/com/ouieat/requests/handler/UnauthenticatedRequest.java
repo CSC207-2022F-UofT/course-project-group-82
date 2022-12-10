@@ -1,10 +1,14 @@
 package com.ouieat.requests.handler;
 
+import com.ouieat.implementation.handler.Implementation;
 import com.ouieat.interactor.handler.Interactor;
+import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.responses.handler.Response;
 
-public class UnauthenticatedRequest<T extends Interactor<?, ?>>
-    extends Request<T> {
+public class UnauthenticatedRequest<
+    T extends Interactor<?, ?>, J extends Implementation<T>
+>
+    extends Request<T, J> {
 
     public <K> Response handle(
         T interactor,
@@ -23,7 +27,11 @@ public class UnauthenticatedRequest<T extends Interactor<?, ?>>
         return function.apply(interactor, data1, data2);
     }
 
-    public UnauthenticatedRequest(T interactor) {
-        super(interactor);
+    public UnauthenticatedRequest(
+        UserInteractor userInteractor,
+        T interactor,
+        J implementation
+    ) {
+        super(userInteractor, interactor, implementation);
     }
 }
