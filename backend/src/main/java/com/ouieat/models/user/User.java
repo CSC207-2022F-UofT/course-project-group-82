@@ -36,8 +36,8 @@ public class User extends Model {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.postIds = new ArrayList<String>();
-        this.friendIds = new ArrayList<String>();
+        this.postIds = new ArrayList<>();
+        this.friendIds = new ArrayList<>();
     }
 
     public String getFirstName() {

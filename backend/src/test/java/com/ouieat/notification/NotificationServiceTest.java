@@ -126,18 +126,18 @@ public class NotificationServiceTest
         assertThat(response.status).isEqualTo("success");
         when(interactor.getNotifications(any(String.class)))
             .thenAnswer(i ->
-                new ArrayList<Notification>(
-                    List.of(
-                        new Notification(
-                            creator.getSenderName(),
-                            creator.getSenderId(),
-                            creator.getSenderProfilePictureLink(),
-                            creator.getRecipientId(),
-                            creator.getRecipientName(),
-                            creator.getType()
-                        )
+                    new ArrayList<>(
+                            List.of(
+                                    new Notification(
+                                            creator.getSenderName(),
+                                            creator.getSenderId(),
+                                            creator.getSenderProfilePictureLink(),
+                                            creator.getRecipientId(),
+                                            creator.getRecipientName(),
+                                            creator.getType()
+                                    )
+                            )
                     )
-                )
             );
         when(userInteractor.findById(creator.getRecipientId()))
             .thenReturn(getTestUserSeeded(Math.random()));

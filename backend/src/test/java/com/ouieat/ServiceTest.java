@@ -71,9 +71,9 @@ public abstract class ServiceTest<
         );
     }
 
-    public UserInteractor userInteractor;
+    public final UserInteractor userInteractor;
 
-    public L interactor;
+    public final L interactor;
 
     public J authenticatedRequest;
     public K unauthenticatedRequest;
@@ -137,9 +137,9 @@ public abstract class ServiceTest<
             "TEST_FIRST_NAME",
             "TEST_LAST_NAME",
             "",
-            "##123TEST_USERNAME123##" + id.toString(),
+            "##123TEST_USERNAME123##" + id,
             "TEST_PASSWORD",
-            "##123TEST_EMAIL123##" + id.toString()
+            "##123TEST_EMAIL123##" + id
         );
         newUser.setId(id);
         return newUser;
@@ -152,7 +152,7 @@ public abstract class ServiceTest<
             "",
             "##123TEST_USERNAME123##" + seed.toString(),
             "TEST_PASSWORD",
-            "##123TEST_EMAIL123##" + seed.toString()
+            "##123TEST_EMAIL123##" + seed
         );
         newUser.setId(
             "TEST_USER_ID" + seed + Math.random() * seed.toString().length()

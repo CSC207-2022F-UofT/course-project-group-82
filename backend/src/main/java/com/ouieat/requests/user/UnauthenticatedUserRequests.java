@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class UnauthenticatedUserRequests
     extends UnauthenticatedRequest<UserInteractor, UserImplementation> {
 
-    public Function<User, Response> createUser = (User newUser) -> {
+    public final Function<User, Response> createUser = (User newUser) -> {
         // Ensure the new user object is not null
         if (newUser == null) {
             return ExceptionResponses.InvalidUserCredentialsResponse();
@@ -57,14 +57,14 @@ public class UnauthenticatedUserRequests
         return implementation.createUser(newUser);
     };
 
-    public Function<String, Response> getUsersByUsername = (String username) -> {
+    public final Function<String, Response> getUsersByUsername = (String username) -> {
         if (username == null || username.length() == 0) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
         return implementation.getUsersByUsername(username);
     };
 
-    public Function<UserLogin, com.ouieat.responses.handler.Response> loginUser = (UserLogin userLogin) -> {
+    public final Function<UserLogin, com.ouieat.responses.handler.Response> loginUser = (UserLogin userLogin) -> {
         if (userLogin == null) {
             return com.ouieat.responses.exception.ExceptionResponses.InvalidUserCredentialsResponse();
         }

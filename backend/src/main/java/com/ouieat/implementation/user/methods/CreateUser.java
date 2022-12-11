@@ -13,7 +13,7 @@ public interface CreateUser {
     static Response apply(UserInteractor interactor, User newUser) {
         class CheckForDuplicateUsers {
 
-            boolean duplicatesFound = false;
+            boolean duplicatesFound;
 
             CheckForDuplicateUsers(UserInteractor userInteractor, User user) {
                 this.duplicatesFound = checkForDuplicates(userInteractor, user);
