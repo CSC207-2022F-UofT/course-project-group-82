@@ -1,6 +1,6 @@
 package com.ouieat.models.user;
 
-import com.ouieat.models.Model;
+import com.ouieat.models.handler.Model;
 import java.util.ArrayList;
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -1,7 +1,6 @@
 package com.ouieat.models.notification;
 
-import com.ouieat.models.Model;
-import org.springframework.data.annotation.Id;
+import com.ouieat.models.handler.Model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "notifications")

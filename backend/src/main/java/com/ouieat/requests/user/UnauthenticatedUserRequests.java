@@ -4,20 +4,18 @@ import com.ouieat.implementation.user.UserImplementation;
 import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.user.User;
 import com.ouieat.models.user.UserLogin;
-import com.ouieat.requests.handler.FunctionalInterfaces;
 import com.ouieat.requests.handler.UnauthenticatedRequest;
 import com.ouieat.responses.exception.ExceptionResponses;
 import com.ouieat.responses.handler.Response;
+import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UnauthenticatedUserRequests
-    extends UnauthenticatedRequest<UserInteractor> {
+    extends UnauthenticatedRequest<UserInteractor, UserImplementation> {
 
-    public FunctionalInterfaces.Function2<UserInteractor, User, Response> createUser = (
-        UserInteractor interactor,
-        User newUser
-    ) -> {
+    public Function<User, Response> createUser = (User newUser) -> {
         // Ensure the new user object is not null
         if (newUser == null) {
             return ExceptionResponses.InvalidUserCredentialsResponse();
@@ -56,23 +54,17 @@ public class UnauthenticatedUserRequests
         ) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
-        return UserImplementation.createUser(interactor, newUser);
+        return implementation.createUser(newUser);
     };
 
-    public FunctionalInterfaces.Function2<UserInteractor, String, Response> getUsersByUsername = (
-        UserInteractor interactor,
-        String username
-    ) -> {
+    public Function<String, Response> getUsersByUsername = (String username) -> {
         if (username == null || username.length() == 0) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
-        return UserImplementation.getUsersByUsername(interactor, username);
+        return implementation.getUsersByUsername(username);
     };
 
-    public FunctionalInterfaces.Function2<UserInteractor, UserLogin, com.ouieat.responses.handler.Response> loginUser = (
-        UserInteractor interactor,
-        UserLogin userLogin
-    ) -> {
+    public Function<UserLogin, com.ouieat.responses.handler.Response> loginUser = (UserLogin userLogin) -> {
         if (userLogin == null) {
             return com.ouieat.responses.exception.ExceptionResponses.InvalidUserCredentialsResponse();
         }
@@ -88,6 +80,15 @@ public class UnauthenticatedUserRequests
         ) {
             return com.ouieat.responses.exception.ExceptionResponses.MissingRequestParametersResponse();
         }
-        return UserImplementation.loginUser(interactor, userLogin);
+        return implementation.loginUser(userLogin);
     };
+
+    @Autowired
+    public UnauthenticatedUserRequests(
+        UserInteractor userInteractor,
+        UserInteractor interactor,
+        UserImplementation implementation
+    ) {
+        super(userInteractor, interactor, implementation);
+    }
 }

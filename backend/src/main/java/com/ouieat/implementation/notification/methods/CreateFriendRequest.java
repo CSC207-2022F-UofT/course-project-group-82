@@ -21,7 +21,7 @@ public interface CreateFriendRequest {
             if (
                 loggedInUser.getFriendIds().contains(toCreate.getRecipientId())
             ) {
-                return ExceptionResponses.ClientExceptionResponse();
+                return ExceptionResponses.UserErrorResponse("Already friends");
             }
 
             // Check if they have already sent a friend request
@@ -35,7 +35,9 @@ public interface CreateFriendRequest {
                             .equals(toCreate.getRecipientId())
                     )
             ) {
-                return ExceptionResponses.ClientExceptionResponse();
+                return ExceptionResponses.UserErrorResponse(
+                    "Sender already sent a friend request"
+                );
             }
             if (
                 interactor
@@ -45,7 +47,9 @@ public interface CreateFriendRequest {
                         notification.getSenderId().equals(loggedInUser.getId())
                     )
             ) {
-                return ExceptionResponses.ClientExceptionResponse();
+                return ExceptionResponses.UserErrorResponse(
+                    "Recipient already sent a friend request"
+                );
             }
 
             Notification notification = new Notification(

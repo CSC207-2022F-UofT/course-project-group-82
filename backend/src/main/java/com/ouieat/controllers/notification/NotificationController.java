@@ -1,8 +1,9 @@
 package com.ouieat.controllers.notification;
 
 import com.ouieat.OuiLogger;
-import com.ouieat.controllers.Controller;
+import com.ouieat.controllers.handler.Controller;
 import com.ouieat.interactor.notification.NotificationInteractor;
+import com.ouieat.interactor.user.UserInteractor;
 import com.ouieat.models.notification.Notification;
 import com.ouieat.models.notification.NotificationCreator;
 import com.ouieat.requests.notification.AuthenticatedNotificationRequest;
@@ -12,32 +13,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class NotificationController extends Controller<NotificationInteractor> {
-
-    private final UnauthenticatedNotificationRequest unauthenticatedNotificationRequest;
-    private final AuthenticatedNotificationRequest authenticatedNotificationRequest;
+public class NotificationController
+    extends Controller<NotificationInteractor, AuthenticatedNotificationRequest, UnauthenticatedNotificationRequest> {
 
     @Autowired
     public NotificationController(
+        UserInteractor userInteractor,
         NotificationInteractor notificationInteractor,
         UnauthenticatedNotificationRequest unauthenticatedNotificationRequest,
         AuthenticatedNotificationRequest authenticatedNotificationRequest
     ) {
-        super(notificationInteractor);
-        this.unauthenticatedNotificationRequest =
-            unauthenticatedNotificationRequest;
-        this.authenticatedNotificationRequest =
-            authenticatedNotificationRequest;
+        super(
+            userInteractor,
+            notificationInteractor,
+            authenticatedNotificationRequest,
+            unauthenticatedNotificationRequest
+        );
     }
 
     @GetMapping(value = "/notifications", produces = "application/json")
     public String getNotificationsForUser(@RequestParam String userId) {
-        return authenticatedNotificationRequest
-            .handle(
-                interactor,
-                userId,
-                authenticatedNotificationRequest.getNotifications
-            )
+        return authenticatedRequest
+            .handle(userId, authenticatedRequest.getNotifications)
             .getJsonString();
     }
 
@@ -54,12 +51,11 @@ public class NotificationController extends Controller<NotificationInteractor> {
             "Creating friend request notification: " +
             friendRequestNotification.getSenderId()
         );
-        return authenticatedNotificationRequest
+        return authenticatedRequest
             .handle(
-                interactor,
                 friendRequestNotification.getSenderId(),
                 friendRequestNotification,
-                authenticatedNotificationRequest.createFriendRequest
+                authenticatedRequest.createFriendRequest
             )
             .getJsonString();
     }
@@ -72,13 +68,12 @@ public class NotificationController extends Controller<NotificationInteractor> {
     public String handleFriendRequest(
         @RequestBody Notification friendRequestNotification
     ) {
-        return authenticatedNotificationRequest
+        return authenticatedRequest
             .handle(
-                interactor,
                 friendRequestNotification.getRecipientId(),
                 friendRequestNotification,
                 true,
-                authenticatedNotificationRequest.handleFriendRequest
+                authenticatedRequest.handleFriendRequest
             )
             .getJsonString();
     }
@@ -91,22 +86,13 @@ public class NotificationController extends Controller<NotificationInteractor> {
     public String declineFriendRequest(
         @RequestBody Notification friendRequestNotification
     ) {
-        return authenticatedNotificationRequest
+        return authenticatedRequest
             .handle(
-                interactor,
                 friendRequestNotification.getRecipientId(),
                 friendRequestNotification,
                 false,
-                authenticatedNotificationRequest.handleFriendRequest
+                authenticatedRequest.handleFriendRequest
             )
             .getJsonString();
-    }
-
-    public UnauthenticatedNotificationRequest getUnauthenticatedNotificationRequest() {
-        return unauthenticatedNotificationRequest;
-    }
-
-    public AuthenticatedNotificationRequest getAuthenticatedNotificationRequest() {
-        return authenticatedNotificationRequest;
     }
 }

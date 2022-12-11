@@ -1,8 +1,8 @@
 package com.ouieat.interactor.recommendation;
 
-import com.ouieat.interactor.Interactor;
+import com.ouieat.interactor.handler.Interactor;
 import com.ouieat.models.recommendation.Recommendation;
-import com.ouieat.repository.RecommendationRepository;
+import com.ouieat.repository.recommendation.RecommendationRepository;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

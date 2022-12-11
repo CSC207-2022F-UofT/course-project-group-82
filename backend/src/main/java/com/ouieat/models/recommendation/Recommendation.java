@@ -1,6 +1,6 @@
 package com.ouieat.models.recommendation;
 
-import com.ouieat.models.Model;
+import com.ouieat.models.handler.Model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("recommendations")
