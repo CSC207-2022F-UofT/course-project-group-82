@@ -3,6 +3,7 @@
 # Oui-Eat
 
 ![Stars](https://img.shields.io/github/stars/CSC207-2022F-UofT/course-project-group-82?style=social)
+[![Java CI with Maven](https://github.com/CSC207-2022F-UofT/course-project-group-82/actions/workflows/maven.yml/badge.svg)](https://github.com/CSC207-2022F-UofT/course-project-group-82/actions/workflows/maven.yml)
 
 _The answer to the age-old question: "Where do you want to eat?"_
 
