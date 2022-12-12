@@ -32,4 +32,4 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - uses: education/autograding@v1
+    - uses: education/autograding@v3
