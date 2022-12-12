@@ -14,13 +14,7 @@ jobs:
     name: EAS Build Android
     runs-on: ubuntu-latest
     steps:
-      - name: Check for EXPO_TOKEN_SECRET
-        run: |
-          if [ -z "${{ secrets.EXPO_TOKEN_SECRET }}" ]; then
-            echo "You must provide an EXPO_TOKEN_SECRET secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-            exit 1
-          fi
-
+    
       - name: Checkout repository
         uses: actions/checkout@v2
 
