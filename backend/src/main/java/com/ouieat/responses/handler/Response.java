@@ -14,10 +14,10 @@ public class Response {
 
     public final String dateTime = LocalDateTime.now().toString();
 
-    public String status;
+    public final String status;
 
     // String representation of the origin
-    public String origin = StackWalker
+    public final String origin = StackWalker
         .getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
         .walk(s -> {
             Optional<StackWalker.StackFrame> stack = s
@@ -35,7 +35,7 @@ public class Response {
 
     // String representation of the destination
 
-    public ResponseData<?> responseData;
+    public final ResponseData<?> responseData;
 
     public Response(
         @JsonProperty("status") String status,

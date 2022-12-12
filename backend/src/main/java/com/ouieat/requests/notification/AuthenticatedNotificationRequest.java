@@ -18,10 +18,10 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedNotificationRequest
     extends AuthenticatedRequest<NotificationInteractor, NotificationImplementation> {
 
-    public Function<User, Response> getNotifications =
+    public final Function<User, Response> getNotifications =
         implementation::getNotifications;
 
-    public FunctionalInterfaces.Function2<User, NotificationCreator, Response> createFriendRequest = (
+    public final FunctionalInterfaces.Function2<User, NotificationCreator, Response> createFriendRequest = (
         User loggedInUser,
         NotificationCreator notification
     ) -> {
@@ -32,7 +32,7 @@ public class AuthenticatedNotificationRequest
         return implementation.createFriendRequest(loggedInUser, notification);
     };
 
-    public FunctionalInterfaces.Function3<User, Notification, Boolean, Response> handleFriendRequest = (
+    public final FunctionalInterfaces.Function3<User, Notification, Boolean, Response> handleFriendRequest = (
         User loggedInUser,
         Notification notification,
         Boolean accept

@@ -8,11 +8,11 @@ public abstract class Request<
     T extends Interactor<?, ?>, J extends Implementation<T>
 > {
 
-    public UserInteractor userInteractor;
+    public final UserInteractor userInteractor;
 
-    public J implementation;
+    public final J implementation;
 
-    public T interactor;
+    public final T interactor;
 
     public Request(
         UserInteractor userInteractor,
