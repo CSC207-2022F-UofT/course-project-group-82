@@ -47,7 +47,7 @@
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#FFFFFF"
             },
-            "package": "com.ouieat.frontend"
+            "package": "com.arihantbapna.frontend"
         },
         "web": {
             "favicon": "./assets/favicon.png"
