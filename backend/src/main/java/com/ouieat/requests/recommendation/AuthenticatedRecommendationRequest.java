@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedRecommendationRequest
     extends AuthenticatedRequest<RecommendationInteractor, RecommendationImplementation> {
 
-    public FunctionalInterfaces.Function2<User, Recommendation, Response> postRecommendation = (
+    public final FunctionalInterfaces.Function2<User, Recommendation, Response> postRecommendation = (
         User loggedInUser,
         Recommendation recommendation
     ) -> {
@@ -29,7 +29,7 @@ public class AuthenticatedRecommendationRequest
         return implementation.postRecommendation(loggedInUser, recommendation);
     };
 
-    public Function<User, Response> getRecommendationsForUser = loggedInUser ->
+    public final Function<User, Response> getRecommendationsForUser = loggedInUser ->
         implementation.getRecommendationsForUser(loggedInUser);
 
     @Autowired

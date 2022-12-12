@@ -9,12 +9,12 @@ public abstract class RequestHandler<
     K extends UnauthenticatedRequest<L, ?>
 > {
 
-    public UserInteractor userInteractor;
+    public final UserInteractor userInteractor;
 
-    public L interactor;
+    public final L interactor;
 
-    public J authenticatedRequest;
-    public K unauthenticatedRequest;
+    public final J authenticatedRequest;
+    public final K unauthenticatedRequest;
 
     public RequestHandler(
         UserInteractor userInteractor,

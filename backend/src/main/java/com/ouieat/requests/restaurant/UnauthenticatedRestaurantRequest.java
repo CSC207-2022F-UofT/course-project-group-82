@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 public class UnauthenticatedRestaurantRequest
     extends UnauthenticatedRequest<RestaurantInteractor, RestaurantImplementation> {
 
-    public Function<String, Response> getRestaurantsByName = (String name) -> {
+    public final Function<String, Response> getRestaurantsByName = (String name) -> {
         if (name == null || name.isBlank() || name.isEmpty()) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }
         return implementation.getRestaurantsByName(name);
     };
 
-    public Function<String, Response> getRestaurantById = (String id) -> {
+    public final Function<String, Response> getRestaurantById = (String id) -> {
         if (id == null || id.isBlank() || id.isEmpty()) {
             return ExceptionResponses.MissingRequestParametersResponse();
         }

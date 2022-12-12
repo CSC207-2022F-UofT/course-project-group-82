@@ -2,7 +2,7 @@ package com.ouieat.models.user;
 
 public class UserCredentials {
 
-    String userID;
+    final String userID;
 
     private UserCredentials(String userID) {
         this.userID = userID;

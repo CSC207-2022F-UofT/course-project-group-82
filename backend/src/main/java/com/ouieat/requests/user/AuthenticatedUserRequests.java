@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 public class AuthenticatedUserRequests
     extends AuthenticatedRequest<UserInteractor, UserImplementation> {
 
-    public Function<User, Response> getDashboard = implementation::getDashboard;
+    public final Function<User, Response> getDashboard = implementation::getDashboard;
 
-    public Function<User, Response> getFriends = implementation::getFriends;
+    public final Function<User, Response> getFriends = implementation::getFriends;
 
-    public FunctionalInterfaces.Function2<User, String, Response> removeFriend = (
+    public final FunctionalInterfaces.Function2<User, String, Response> removeFriend = (
         User loggedInUser,
         String friendID
     ) -> {
@@ -36,7 +36,7 @@ public class AuthenticatedUserRequests
         }
     };
 
-    public FunctionalInterfaces.Function2<User, UpdatedUser, Response> updateUserDetails = (
+    public final FunctionalInterfaces.Function2<User, UpdatedUser, Response> updateUserDetails = (
         User loggedInUser,
         UpdatedUser updatedUser
     ) -> {

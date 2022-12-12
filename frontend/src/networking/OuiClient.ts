@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_BASE } from "../../env";
 import { APIResponse } from "./OuiResponse";
+const API_BASE = "http://20.55.113.243:8080/";
 
 export class OuiClient {
     static async get<T>(
